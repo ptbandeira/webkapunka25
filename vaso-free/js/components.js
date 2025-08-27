@@ -20,42 +20,28 @@ class SiteHeader extends HTMLElement {
 
                 <ul class="list-unstyled d-lg-flex justify-content-md-between align-items-center">
                   <li class="nav-item">
+                    <a class="nav-link ms-0" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="science.html">Science</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="protocols.html">Protocols</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="results.html">Results</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="clinics.html">For Clinics</a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link ms-0" href="about.html">About</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link ms-0" href="shop.html">Shop</a>
+                    <a class="nav-link ms-0" href="blog.html">Blog</a>
                   </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle ms-0" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pages<svg class="bi" width="18" height="18"><use xlink:href="#chevron-down"></use></svg></a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a href="about.html" class="dropdown-item fs-5 fw-medium">About <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="shop.html" class="dropdown-item fs-5 fw-medium">Shop <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="single-product.html" class="dropdown-item fs-5 fw-medium">Single Product <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="login.html" class="dropdown-item fs-5 fw-medium">Account <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="cart.html" class="dropdown-item fs-5 fw-medium">Cart <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="checkout.html" class="dropdown-item fs-5 fw-medium">Checkout <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="blog.html" class="dropdown-item fs-5 fw-medium">Blog <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="single-post.html" class="dropdown-item fs-5 fw-medium">Single Post <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="contact.html" class="dropdown-item fs-5 fw-medium">Contact <span class="text-primary">(PRO)</span></a>
-                      </li>
-                    </ul>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="contact.html">Contact</a>
                   </li>
                 </ul>
 
@@ -75,45 +61,8 @@ class SiteHeader extends HTMLElement {
                   <li class="nav-item">
                     <a class="nav-link me-0" href="login.html">Account</a>
                   </li>
-                  <li class="cart-dropdown nav-item dropdown">
-                    <a class="nav-link dropdown-toggle me-0" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Cart(2)</a>
-                    <div class="dropdown-menu dropdown-menu-end p-3">
-                      <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-primary">Your cart</span>
-                        <span class="badge bg-primary rounded-pill">2</span>
-                      </h4>
-                      <ul class="list-group mb-3">
-                        <li class="list-group-item bg-transparent border-dark d-flex justify-content-between lh-sm">
-                          <div>
-                            <h5 class="card-title fs-3 text-capitalize">
-                              <a href="single-product.html">Matt Black</a>
-                            </h5>
-                            <small class="text-body-secondary">Soft texture matt coated.</small>
-                          </div>
-                          <span class="text-primary">$120</span>
-                        </li>
-                        <li class="list-group-item bg-transparent border-dark d-flex justify-content-between lh-sm">
-                          <div>
-                            <h5 class="card-title fs-3 text-capitalize">
-                              <a href="single-product.html">Shiny Pot</a>
-                            </h5>
-                            <small class="text-body-secondary">This pot is ceramic.</small>
-                          </div>
-                          <span class="text-primary">$870</span>
-                        </li>
-                        <li class="list-group-item bg-transparent border-dark d-flex justify-content-between">
-                          <span class="text-uppercase"><b>Total (USD)</b></span>
-                          <strong>$990</strong>
-                        </li>
-                      </ul>
-                      <div class="d-flex flex-wrap justify-content-center">
-                        <a class="w-100 btn btn-dark mb-1" type="submit">View Cart</a>
-                        <a class="w-100 btn btn-primary" type="submit">Go to checkout</a>
-                      </div>
-                    </div>
-                  </li>
                 </ul>
-              </ul>
+                </ul>
             </div>
           </div>
         </div>
