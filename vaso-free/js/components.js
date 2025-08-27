@@ -15,10 +15,8 @@ class SiteHeader extends HTMLElement {
               </a>
               <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
             </div>
-            <div class="offcanvas-body">
-              <ul id="navbar" class="navbar-nav w-100 d-flex justify-content-between align-items-center">
-
-                <ul class="list-unstyled d-lg-flex justify-content-md-between align-items-center">
+            <div id="navbar" class="offcanvas-body w-100 d-flex justify-content-between align-items-center">
+              <ul class="list-unstyled d-lg-flex justify-content-md-between align-items-center">
                   <li class="nav-item">
                     <a class="nav-link ms-0" href="index.html">Home</a>
                   </li>
@@ -99,7 +97,6 @@ class SiteHeader extends HTMLElement {
                     </div>
                   </li>
                 </ul>
-              </ul>
             </div>
           </div>
         </div>
