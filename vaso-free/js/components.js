@@ -79,41 +79,14 @@ class HeroSection extends HTMLElement {
       <div class="swiper main-swiper">
         <div class="swiper-wrapper">
           <div class="swiper-slide" style="background-image: url(images/banner-image.jpg); background-size: cover; background-repeat: no-repeat; height: 100vh; background-position: center;">
-            <div class="container ">
-              <div class="row">
-                <div class="offset-md-1 col-md-6">
-                  <div class="banner-content">
-                    <h2>Ceramic soft pot</h2>
-                    <p class="fs-3">This ceramic soft pot is specially designed by concept of traditional designs.</p>
-                    <a href="single-product.html" class="btn">Shop Now</a>
-                  </div>
-                </div>
-                <div class="col-md-5"></div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide" style="background-image: url(images/banner-image1.jpg); background-size: cover; background-repeat: no-repeat; height: 100vh; background-position: center;">
-            <div class="container">
-              <div class="row">
-                <div class="offset-md-6 col-md-6">
-                  <div class="banner-content">
-                    <h2>Shiny Black Pot</h2>
-                    <p class="fs-3">Beautiful shiny black pot is designed for minimalist decors.</p>
-                    <a href="single-product.html" class="btn">Shop Now</a>
-                  </div>
-                </div>
-                <div class="col-md-5"></div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide" style="background-image: url(images/banner-image2.jpg); background-size: cover; background-repeat: no-repeat; height: 100vh; background-position: center;">
             <div class="container">
               <div class="row">
                 <div class="offset-md-1 col-md-6">
                   <div class="banner-content">
-                    <h2>Shell Shape Decor</h2>
-                    <p class="fs-3">Buy this beautiful unique pieces of shell shape vase decors for your plants of room.</p>
-                    <a href="single-product.html" class="btn">Shop Now</a>
+                    <h1>Post-procedure skin recovery that patients feel and clinics trust.</h1>
+                    <p class="fs-3">Short subhead with social proof placeholder.</p>
+                    <a href="#" class="btn me-2">Talk to our team</a>
+                    <a href="clinics.html" class="btn btn-outline-dark">For Clinics</a>
                   </div>
                 </div>
                 <div class="col-md-5"></div>
