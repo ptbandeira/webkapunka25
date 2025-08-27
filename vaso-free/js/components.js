@@ -20,42 +20,28 @@ class SiteHeader extends HTMLElement {
 
                 <ul class="list-unstyled d-lg-flex justify-content-md-between align-items-center">
                   <li class="nav-item">
+                    <a class="nav-link ms-0" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="science.html">Science</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="protocols.html">Protocols</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="results.html">Results</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="for-clinics.html">For Clinics</a>
+                  </li>
+                  <li class="nav-item">
                     <a class="nav-link ms-0" href="about.html">About</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link ms-0" href="shop.html">Shop</a>
+                    <a class="nav-link ms-0" href="blog.html">Blog</a>
                   </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle ms-0" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pages<svg class="bi" width="18" height="18"><use xlink:href="#chevron-down"></use></svg></a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <a href="about.html" class="dropdown-item fs-5 fw-medium">About <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="shop.html" class="dropdown-item fs-5 fw-medium">Shop <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="single-product.html" class="dropdown-item fs-5 fw-medium">Single Product <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="login.html" class="dropdown-item fs-5 fw-medium">Account <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="cart.html" class="dropdown-item fs-5 fw-medium">Cart <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="checkout.html" class="dropdown-item fs-5 fw-medium">Checkout <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="blog.html" class="dropdown-item fs-5 fw-medium">Blog <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="single-post.html" class="dropdown-item fs-5 fw-medium">Single Post <span class="text-primary">(PRO)</span></a>
-                      </li>
-                      <li>
-                        <a href="contact.html" class="dropdown-item fs-5 fw-medium">Contact <span class="text-primary">(PRO)</span></a>
-                      </li>
-                    </ul>
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="contact.html">Contact</a>
                   </li>
                 </ul>
 
@@ -198,16 +184,28 @@ class SiteFooter extends HTMLElement {
                   <h4 class="widget-title pb-2">Quick Links</h4>
                   <ul class="menu-list list-unstyled">
                     <li class="menu-item pb-2">
+                      <a href="index.html">Home</a>
+                    </li>
+                    <li class="menu-item pb-2">
+                      <a href="science.html">Science</a>
+                    </li>
+                    <li class="menu-item pb-2">
+                      <a href="protocols.html">Protocols</a>
+                    </li>
+                    <li class="menu-item pb-2">
+                      <a href="results.html">Results</a>
+                    </li>
+                    <li class="menu-item pb-2">
+                      <a href="for-clinics.html">For Clinics</a>
+                    </li>
+                    <li class="menu-item pb-2">
                       <a href="about.html">About</a>
                     </li>
                     <li class="menu-item pb-2">
-                      <a href="shop.html">Shop</a>
+                      <a href="blog.html">Blog</a>
                     </li>
                     <li class="menu-item pb-2">
                       <a href="contact.html">Contact</a>
-                    </li>
-                    <li class="menu-item pb-2">
-                      <a href="login.html">Account</a>
                     </li>
                   </ul>
                 </div>
