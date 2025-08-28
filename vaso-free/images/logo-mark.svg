@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="48" viewBox="0 0 180 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(6,4)">
+    <path d="M30 0C24 9 14 14 14 26C14 36.493 22.507 45 33 45C43.493 45 52 36.493 52 26C52 14 42 9 36 0Z" fill="#111111"/>
+    <path d="M39 16c-4 4-7 9-7 14 0 2.2.6 4.2 1.6 5.9-5.1-1.5-8.6-6.2-8.6-11.7 0-6.5 5.4-10.4 10.6-12.7 1.1-.5 2.2 1 1.4 2.1z" fill="#FFFFFF" fill-opacity=".18"/>
+    <path d="M54 14c-3-3-8-3-11 0 3 2 8 2 11 0z" fill="#1E7D57"/>
+  </g>
+  <g transform="translate(80,32)">
+    <text x="0" y="0" font-family="Italiana, 'Times New Roman', serif" font-size="24" fill="#111111" letter-spacing=".5">Kapunka</text>
+  </g>
+</svg>
