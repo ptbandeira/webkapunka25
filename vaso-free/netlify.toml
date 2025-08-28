@@ -1,4 +1,0 @@
-[build]
-  publish = "vaso-free"
-  command = ""  # static site, no build step
-
