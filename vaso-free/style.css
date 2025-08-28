@@ -990,3 +990,16 @@ h5.widget-title {
   .navbar .logo-word{font-size:68px}
 }
 #footer .brand{margin-bottom:.5rem}
+
+/* --- Force larger navbar logo (override vendor max-height) --- */
+.site-header .navbar .navbar-brand img.logo-icon { 
+  max-height: none !important; 
+  height: 72px !important;    /* tweak this */
+}
+.site-header .navbar .navbar-brand .logo-word { 
+  font-size: 52px !important; /* tweak this */
+  line-height: 1;
+}
+@media (min-width: 992px){
+  .site-header .navbar { padding-top: 10px; padding-bottom: 10px; } /* avoid cropping when taller */
+}
