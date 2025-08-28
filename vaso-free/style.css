@@ -975,31 +975,3 @@ h5.widget-title {
 .post-navigation:focus svg {
   fill: var(--primary-color);
 }
-
-/* Kapunka logo sizing */
-.logo{height:40px;width:auto}
-@media (min-width:992px){.navbar .logo{height:48px}}
-#footer .logo{height:40px}
-
-/* --- Kapunka brand --- */
-.brand{display:inline-flex;align-items:center;gap:12px;line-height:1}
-.logo-icon{height:44px;width:auto}
-.logo-word{font-family:"Italiana", serif;font-size:32px;letter-spacing:.02em;color:#111}
-@media (min-width:992px){
-  .navbar .logo-icon{height: 100px;width:auto}
-  .navbar .logo-word{font-size:68px}
-}
-#footer .brand{margin-bottom:.5rem}
-
-/* --- Force larger navbar logo (override vendor max-height) --- */
-.site-header .navbar .navbar-brand img.logo-icon { 
-  max-height: none !important; 
-  height: 72px !important;    /* tweak this */
-}
-.site-header .navbar .navbar-brand .logo-word { 
-  font-size: 52px !important; /* tweak this */
-  line-height: 1;
-}
-@media (min-width: 992px){
-  .site-header .navbar { padding-top: 10px; padding-bottom: 10px; } /* avoid cropping when taller */
-}

@@ -5,13 +5,13 @@ class SiteHeader extends HTMLElement {
       <nav id="header-nav" class="navbar navbar-expand-lg px-3">
         <div class="container">
           <a class="navbar-brand d-lg-none" href="index.html">
-            <img src="images/logo-wordmark.svg" class="logo" alt="Kapunka">
+            <img src="images/logo-icon.svg" class="logo">
           </a>
           <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">Menu</button>
           <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
             <div class="offcanvas-header px-4 pb-0">
               <a class="navbar-brand" href="index.html">
-                <img src="images/logo-wordmark.svg" class="logo" alt="Kapunka">
+                <img src="images/logo-icon.svg" class="logo">
               </a>
               <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
             </div>
@@ -20,47 +20,47 @@ class SiteHeader extends HTMLElement {
 
                 <ul class="list-unstyled d-lg-flex justify-content-md-between align-items-center">
                   <li class="nav-item">
-                    <a class="nav-link ms-0" href="about.html">About Kapunka</a>
+                    <a class="nav-link ms-0" href="about.html">About</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link ms-0" href="shop.html">Shop</a>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle ms-0" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Explore<svg class="bi" width="18" height="18"><use xlink:href="#chevron-down"></use></svg></a>
+                    <a class="nav-link dropdown-toggle ms-0" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Pages<svg class="bi" width="18" height="18"><use xlink:href="#chevron-down"></use></svg></a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a href="about.html" class="dropdown-item fs-5 fw-medium">About Kapunka</a>
+                        <a href="about.html" class="dropdown-item fs-5 fw-medium">About <span class="text-primary">(PRO)</span></a>
                       </li>
                       <li>
-                        <a href="shop.html" class="dropdown-item fs-5 fw-medium">Shop</a>
+                        <a href="shop.html" class="dropdown-item fs-5 fw-medium">Shop <span class="text-primary">(PRO)</span></a>
                       </li>
                       <li>
-                        <a href="single-product.html" class="dropdown-item fs-5 fw-medium">Product Details</a>
+                        <a href="single-product.html" class="dropdown-item fs-5 fw-medium">Single Product <span class="text-primary">(PRO)</span></a>
                       </li>
                       <li>
-                        <a href="login.html" class="dropdown-item fs-5 fw-medium">My Account</a>
+                        <a href="login.html" class="dropdown-item fs-5 fw-medium">Account <span class="text-primary">(PRO)</span></a>
                       </li>
                       <li>
-                        <a href="cart.html" class="dropdown-item fs-5 fw-medium">Cart</a>
+                        <a href="cart.html" class="dropdown-item fs-5 fw-medium">Cart <span class="text-primary">(PRO)</span></a>
                       </li>
                       <li>
-                        <a href="checkout.html" class="dropdown-item fs-5 fw-medium">Checkout</a>
+                        <a href="checkout.html" class="dropdown-item fs-5 fw-medium">Checkout <span class="text-primary">(PRO)</span></a>
                       </li>
                       <li>
-                        <a href="blog.html" class="dropdown-item fs-5 fw-medium">Journal</a>
+                        <a href="blog.html" class="dropdown-item fs-5 fw-medium">Blog <span class="text-primary">(PRO)</span></a>
                       </li>
                       <li>
-                        <a href="single-post.html" class="dropdown-item fs-5 fw-medium">Article</a>
+                        <a href="single-post.html" class="dropdown-item fs-5 fw-medium">Single Post <span class="text-primary">(PRO)</span></a>
                       </li>
                       <li>
-                        <a href="contact.html" class="dropdown-item fs-5 fw-medium">Contact</a>
+                        <a href="contact.html" class="dropdown-item fs-5 fw-medium">Contact <span class="text-primary">(PRO)</span></a>
                       </li>
                     </ul>
                   </li>
                 </ul>
 
                 <a class="navbar-brand d-none d-lg-block me-0" href="index.html">
-                  <img src="images/logo-wordmark.svg" class="logo" alt="Kapunka">
+                  <img src="images/logo-icon.svg" class="logo">
                 </a>
 
                 <ul class="list-unstyled d-lg-flex justify-content-between align-items-center">
@@ -134,9 +134,9 @@ class HeroSection extends HTMLElement {
               <div class="row">
                 <div class="offset-md-1 col-md-6">
                   <div class="banner-content">
-                    <h2>Pure Argan Oil</h2>
-                    <p class="fs-3">Cold-pressed, single-ingredient care for face, body, and hair.</p>
-                    <a href="single-product.html" class="btn">Shop Argan Oil</a>
+                    <h2>Ceramic soft pot</h2>
+                    <p class="fs-3">This ceramic soft pot is specially designed by concept of traditional designs.</p>
+                    <a href="single-product.html" class="btn">Shop Now</a>
                   </div>
                 </div>
                 <div class="col-md-5"></div>
@@ -148,9 +148,9 @@ class HeroSection extends HTMLElement {
               <div class="row">
                 <div class="offset-md-6 col-md-6">
                   <div class="banner-content">
-                    <h2>Glow Serum</h2>
-                    <p class="fs-3">Argan oil + Vitamin E for daily radiance without the heaviness.</p>
-                    <a href="single-product.html" class="btn">Shop Serum</a>
+                    <h2>Shiny Black Pot</h2>
+                    <p class="fs-3">Beautiful shiny black pot is designed for minimalist decors.</p>
+                    <a href="single-product.html" class="btn">Shop Now</a>
                   </div>
                 </div>
                 <div class="col-md-5"></div>
@@ -162,9 +162,9 @@ class HeroSection extends HTMLElement {
               <div class="row">
                 <div class="offset-md-1 col-md-6">
                   <div class="banner-content">
-                    <h2>Hair &amp; Body Oils</h2>
-                    <p class="fs-3">Light blends that absorb fast and leave a soft, healthy sheen.</p>
-                    <a href="single-product.html" class="btn">Shop Oils</a>
+                    <h2>Shell Shape Decor</h2>
+                    <p class="fs-3">Buy this beautiful unique pieces of shell shape vase decors for your plants of room.</p>
+                    <a href="single-product.html" class="btn">Shop Now</a>
                   </div>
                 </div>
                 <div class="col-md-5"></div>
@@ -189,8 +189,8 @@ class SiteFooter extends HTMLElement {
             <div class="row d-flex flex-wrap justify-content-between">
               <div class="col-lg-3 col-sm-6 pb-3" data-aos="fade" data-aos-easing="ease-in" data-aos-duration="1000" data-aos-once="true">
                 <div class="footer-menu">
-                  <img src="images/logo-wordmark.svg" alt="Kapunka" class="logo mb-2">
-                  <p>Simple, effective skincare centred on cold-pressed argan oil. Light textures. No perfume. Bottled in the EU.</p>
+                  <img src="images/logo-icon.svg" alt="logo" class="mb-2">
+                  <p>Nunc tristique facilisis consectetur vivamus ut porta porta aliquam vitae vehicula leo nullam urna lectus.</p>
                 </div>
               </div>
               <div class="col-lg-2 col-sm-6 pb-3" data-aos="fade" data-aos-easing="ease-in" data-aos-duration="1200" data-aos-once="true">
@@ -198,7 +198,7 @@ class SiteFooter extends HTMLElement {
                   <h4 class="widget-title pb-2">Quick Links</h4>
                   <ul class="menu-list list-unstyled">
                     <li class="menu-item pb-2">
-                      <a href="about.html">About Kapunka</a>
+                      <a href="about.html">About</a>
                     </li>
                     <li class="menu-item pb-2">
                       <a href="shop.html">Shop</a>
@@ -207,7 +207,7 @@ class SiteFooter extends HTMLElement {
                       <a href="contact.html">Contact</a>
                     </li>
                     <li class="menu-item pb-2">
-                      <a href="login.html">My Account</a>
+                      <a href="login.html">Account</a>
                     </li>
                   </ul>
                 </div>
@@ -217,13 +217,13 @@ class SiteFooter extends HTMLElement {
                   <h4 class="widget-title pb-2">Contact info</h4>
                   <ul class="menu-list list-unstyled">
                     <li class="menu-item pb-2">
-                      <a href="#">Warsaw, Poland</a>
+                      <a href="#">Tea Berry, Marinette, USA</a>
                     </li>
                     <li class="menu-item pb-2">
-                      <a href="#">+48 000 000 000</a>
+                      <a href="#">+55 111 222 333 44</a>
                     </li>
                     <li class="menu-item pb-2">
-                      <a href="mailto:hello@kapunka.co">hello@kapunka.co</a>
+                      <a href="mailto:">yourinfo@gmail.com</a>
                     </li>
                   </ul>
                 </div>
@@ -231,41 +231,41 @@ class SiteFooter extends HTMLElement {
               <div class="col-lg-3 col-sm-6 pb-3" data-aos="fade" data-aos-easing="ease-in" data-aos-duration="1600" data-aos-once="true">
                 <div class="footer-menu">
                   <h4 class="widget-title pb-2">Social info</h4>
-                  <p>Follow Kapunka for launches, routines, and tips.</p>
+                  <p>You can follow us on our social platforms to get updates.</p>
                   <div class="social-links">
                     <ul class="d-flex list-unstyled">
                       <li>
                         <a href="#">
                           <svg class="facebook">
-                            <use xlink:href="#facebook"></use>
+                            <use xlink:href="#facebook">
                           </svg>
                         </a>
                       </li>
                       <li>
                         <a href="#">
                           <svg class="instagram">
-                            <use xlink:href="#instagram"></use>
+                            <use xlink:href="#instagram">
                           </svg>
                         </a>
                       </li>
                       <li>
                         <a href="#">
                           <svg class="twitter">
-                            <use xlink:href="#twitter"></use>
+                            <use xlink:href="#twitter">
                           </svg>
                         </a>
                       </li>
                       <li>
                         <a href="#">
                           <svg class="linkedin">
-                            <use xlink:href="#linkedin"></use>
+                            <use xlink:href="#linkedin">
                           </svg>
                         </a>
                       </li>
                       <li>
                         <a href="#">
                           <svg class="youtube">
-                            <use xlink:href="#youtube"></use>
+                            <use xlink:href="#youtube">
                           </svg>
                         </a>
                       </li>
@@ -284,7 +284,7 @@ class SiteFooter extends HTMLElement {
         <div class="row d-flex flex-wrap justify-content-between">
           <div class="col-12">
             <div class="copyright">
-              <p>© Copyright 2025 Kapunka. Design by <a href="https://templatesjungle.com/" target="_blank"><b>TemplatesJungle</b></a></p>
+              <p>© Copyright 2023 Vaso. Design by <a href="https://templatesjungle.com/" target="_blank"><b>TemplatesJungle</b></a></p>
             </div>
           </div>
         </div>
