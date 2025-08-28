@@ -986,7 +986,7 @@ h5.widget-title {
 .logo-icon{height:44px;width:auto}
 .logo-word{font-family:"Italiana", serif;font-size:32px;letter-spacing:.02em;color:#111}
 @media (min-width:992px){
-  .navbar .logo-icon{height:62px}
+  .navbar .logo-icon{height: 100px;width:auto}
   .navbar .logo-word{font-size:68px}
 }
 #footer .brand{margin-bottom:.5rem}
