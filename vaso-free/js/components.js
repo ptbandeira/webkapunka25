@@ -20,16 +20,19 @@ class SiteHeader extends HTMLElement {
 
                 <ul class="list-unstyled d-lg-flex justify-content-md-between align-items-center">
                   <li class="nav-item">
-                    <a class="nav-link ms-0" href="about.html">About Kapunka</a>
+                    <a class="nav-link ms-0" href="about.html">About</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link ms-0" href="shop.html">Shop</a>
                   </li>
-                  <li class="nav-item dropdown">
+                  <li class="nav-item">
+                    <a class="nav-link ms-0" href="contact.html">Contact</a>
+                  </li>
+                  <li class="nav-item dropdown" hidden>
                     <a class="nav-link dropdown-toggle ms-0" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Explore<svg class="bi" width="18" height="18"><use xlink:href="#chevron-down"></use></svg></a>
                     <ul class="dropdown-menu">
                       <li>
-                        <a href="about.html" class="dropdown-item fs-5 fw-medium">About Kapunka</a>
+                        <a href="about.html" class="dropdown-item fs-5 fw-medium">About</a>
                       </li>
                       <li>
                         <a href="shop.html" class="dropdown-item fs-5 fw-medium">Shop</a>
@@ -86,7 +89,7 @@ class SiteHeader extends HTMLElement {
                         <li class="list-group-item bg-transparent border-dark d-flex justify-content-between lh-sm">
                           <div>
                             <h5 class="card-title fs-3 text-capitalize">
-                              <a href="single-product.html">Matt Black</a>
+                              <a href="single-product.html">Argan Oil 30ml</a>
                             </h5>
                             <small class="text-body-secondary">Soft texture matt coated.</small>
                           </div>
@@ -95,7 +98,7 @@ class SiteHeader extends HTMLElement {
                         <li class="list-group-item bg-transparent border-dark d-flex justify-content-between lh-sm">
                           <div>
                             <h5 class="card-title fs-3 text-capitalize">
-                              <a href="single-product.html">Shiny Pot</a>
+                              <a href="single-product.html">Argan Oil 100ml</a>
                             </h5>
                             <small class="text-body-secondary">This pot is ceramic.</small>
                           </div>
