@@ -1,3 +1,11 @@
+:root {
+  --brand-ink: #1b1b1b;
+  --brand-bg: #ffffff;
+  --brand-primary: #b8892d; /* warm gold */
+  --brand-accent: #e9dec5;  /* soft sand */
+  --radius: 14px;
+  --space: 12px;
+}
 /*
 Theme Name: Vaso
 Theme URI: https://templatesjungle.com/
@@ -48,10 +56,10 @@ CSS STRUCTURE:
 /** 1. VARIABLES
 --------------------------------------------------------------*/
 :root {
-  --accent-color: #777777;
-  --white-color: #fff;
-  --black-color: #151412;
-  --light-dark: #36332f;
+  --accent-color: var(--brand-primary);
+  --white-color: var(--brand-bg);
+  --black-color: var(--brand-ink);
+  --light-dark: var(--brand-ink);
   --gray-color: #f3f3f3;
   --gray-color-300: #f7f7f7;
   --gray-color-400: #efefef;
@@ -59,12 +67,12 @@ CSS STRUCTURE:
   --gray-color-600: #999999;
   --gray-color-800: #3a3a3a;
   --light-gray-color: #d7dddf;
-  --primary-color: #87826e;
+  --primary-color: var(--brand-primary);
   --bs-primary-rgb: 135, 130, 110;
   --light-color: #f8f9fa;
-  --dark-color: #212529;
+  --dark-color: var(--brand-ink);
   --light-blue-color: #edf1f3;
-  --navbar-color-color: #131814;
+  --navbar-color-color: var(--brand-ink);
   --swiper-theme-color: #4a4a4a;
   --swiper-pagination-color: #4a4a4a;
 }
@@ -145,10 +153,10 @@ p {
   letter-spacing: normal;
   font-size: 1.125rem;
   font-weight: 300;
-  color: var(--light-dark);
+  color: var(--brand-ink);
 }
 ul {
-  color: var(--light-dark);
+  color: var(--brand-ink);
 }
 ul.inner-list li {
   font-size: 1.2em;
@@ -328,7 +336,7 @@ input {
 /* - Image Hover Effects
 ------------------------------------------------------------- */
 .zoom-effect {
-  background-color: #f5f3ef;
+  background-color: var(--brand-accent);
   overflow: hidden;
 }
 img.zoom-in {
@@ -391,7 +399,7 @@ img.zoom-in {
   left: -50%;
   height: 9px;
   width: 30%;
-  background-color: #b7b4ab;
+  background-color: var(--brand-accent);
   -webkit-animation: lineAnim 1.6s linear infinite;
   -moz-animation: lineAnim 1.6s linear infinite;
   animation: lineAnim 1.6s linear infinite;
@@ -685,7 +693,7 @@ img.zoom-in {
 }
 .modal-content {
   padding: 0;
-  background-color: #f5f3ef;
+  background-color: var(--brand-accent);
   border: none;
   border-radius: 0;
 }
