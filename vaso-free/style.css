@@ -1017,3 +1017,6 @@ h5.widget-title {
 /* Kapunka: logo size only (keep template layout) */
 .site-header .navbar .navbar-brand img.logo{max-height:60px !important;height:auto;width:auto}
 #footer img.logo{max-height:48px !important;height:auto;width:auto}
+
+/* Kapunka: footer logo size */
+#footer img.logo{max-height:44px !important;height:auto !important;width:auto !important}
