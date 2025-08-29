@@ -138,8 +138,8 @@ class HeroSection extends HTMLElement {
                 <div class="offset-md-1 col-md-6">
                   <div class="banner-content">
                     <h2>Pure Argan Oil</h2>
-                    <p class="fs-3">Cold-pressed, single-ingredient care for face, body, and hair.</p>
-                    <a href="single-product.html" class="btn">Shop Argan Oil</a>
+                    <p class="fs-3">Cold-pressed in Morocco. Nothing added, nothing diluted.</p>
+                    <a href="single-product.html" class="btn">Shop Now</a>
                   </div>
                 </div>
                 <div class="col-md-5"></div>
@@ -151,8 +151,8 @@ class HeroSection extends HTMLElement {
               <div class="row">
                 <div class="offset-md-6 col-md-6">
                   <div class="banner-content">
-                    <h2>Glow Serum</h2>
-                    <p class="fs-3">Argan oil + Vitamin E for daily radiance without the heaviness.</p>
+                    <h2>For Skin, Hair &amp; Nails</h2>
+                    <p class="fs-3">Deep moisture, natural shine, fast absorption.</p>
                     <a href="single-product.html" class="btn">Shop Serum</a>
                   </div>
                 </div>
@@ -165,8 +165,8 @@ class HeroSection extends HTMLElement {
               <div class="row">
                 <div class="offset-md-1 col-md-6">
                   <div class="banner-content">
-                    <h2>Hair &amp; Body Oils</h2>
-                    <p class="fs-3">Light blends that absorb fast and leave a soft, healthy sheen.</p>
+                    <h2>Kapunka Quality</h2>
+                    <p class="fs-3">Ethically sourced. Small-batch bottled. Every lot lab-tested.</p>
                     <a href="single-product.html" class="btn">Shop Oils</a>
                   </div>
                 </div>
