@@ -516,6 +516,16 @@ img.zoom-in {
     height: 32px;
   }
 }
+
+/* Center the desktop brand exactly in the navbar */
+@media (min-width: 992px) {
+  #header-nav .offcanvas-body { position: relative; }
+  #header-nav .navbar-brand.d-lg-block {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 .navbar-toggler svg.navbar-icon {
   width: 50px;
   height: 50px;
