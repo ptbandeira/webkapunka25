@@ -137,9 +137,9 @@ class HeroSection extends HTMLElement {
               <div class="row">
                 <div class="offset-md-1 col-md-6">
                   <div class="banner-content">
-                    <h2>Pure Argan Oil</h2>
-                    <p class="fs-3">Cold-pressed in Morocco. Nothing added, nothing diluted.</p>
-                    <a href="single-product.html" class="btn">Shop Now</a>
+                    <h2>Pure Argan Oil for Skin Recovery</h2>
+                    <p class="fs-3">Single-ingredient care. 100% organic, cold-pressed, and fragrance-free.</p>
+                    <a href="single-product.html" class="btn">Shop the Oil</a>
                   </div>
                 </div>
                 <div class="col-md-5"></div>
@@ -151,9 +151,9 @@ class HeroSection extends HTMLElement {
               <div class="row">
                 <div class="offset-md-6 col-md-6">
                   <div class="banner-content">
-                    <h2>For Skin, Hair &amp; Nails</h2>
-                    <p class="fs-3">Deep moisture, natural shine, fast absorption.</p>
-                    <a href="single-product.html" class="btn">Shop Serum</a>
+                    <h2>Calm, Repair, Protect</h2>
+                    <p class="fs-3">Helps restore the skin barrier and ease redness after procedures or everyday stress.</p>
+                    <a href="single-product.html" class="btn">See How It Works</a>
                   </div>
                 </div>
                 <div class="col-md-5"></div>
@@ -165,9 +165,9 @@ class HeroSection extends HTMLElement {
               <div class="row">
                 <div class="offset-md-1 col-md-6">
                   <div class="banner-content">
-                    <h2>Kapunka Quality</h2>
-                    <p class="fs-3">Ethically sourced. Small-batch bottled. Every lot lab-tested.</p>
-                    <a href="single-product.html" class="btn">Shop Oils</a>
+                    <h2>Clinic-Grade. Kind to Skin.</h2>
+                    <p class="fs-3">Used by healthcare pros. Safe for sensitive skin and for family use.</p>
+                    <a href="single-product.html" class="btn">For Clinics</a>
                   </div>
                 </div>
                 <div class="col-md-5"></div>
