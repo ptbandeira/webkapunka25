@@ -506,15 +506,33 @@ img.zoom-in {
 .site-header.sticky {
   background-color: var(--white-color);
 }
+/* Ensure navbar has a stable height to prevent layout shift */
+#header-nav { min-height: 84px; }
 .navbar-brand .logo {
-  height: 28px;
+  height: 84px;
   width: auto;
   display: block;
+  max-height: 12vh;
+}
+/* Responsive logo sizing to avoid overflow on small screens */
+@media (max-width: 575.98px) {
+  .navbar-brand .logo { height: 64px; }
+  #header-nav { min-height: 64px; }
+}
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .navbar-brand .logo { height: 72px; }
+  #header-nav { min-height: 72px; }
+}
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .navbar-brand .logo { height: 84px; }
+  #header-nav { min-height: 84px; }
 }
 @media (min-width: 992px) {
   .navbar-brand .logo {
-    height: 32px;
+    height: 96px;
+    max-height: 14vh;
   }
+  #header-nav { min-height: 96px; }
 }
 
 /* Center the desktop brand exactly in the navbar */
