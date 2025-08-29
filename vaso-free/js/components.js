@@ -296,7 +296,7 @@ class SiteFooter extends HTMLElement {
         <div class="row d-flex flex-wrap justify-content-between">
           <div class="col-12">
             <div class="copyright">
-              <p>© Copyright 2025 Kapunka. Design by <a href="https://templatesjungle.com/" target="_blank"><b>TemplatesJungle</b></a></p>
+              <p>© Copyright 2025 Kapunka. Design by <a href="https://kapunkargan.com/" target="_blank"><b>Kapunkargan</b></a></p>
             </div>
           </div>
         </div>
