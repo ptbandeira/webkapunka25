@@ -5,13 +5,13 @@ class SiteHeader extends HTMLElement {
       <nav id="header-nav" class="navbar navbar-expand-lg px-3">
         <div class="container">
           <a class="navbar-brand d-lg-none" href="index.html">
-            <img src="images/kapunka-wordmark.svg" class="logo">
+            <img src="images/kapunka-wordmark.svg" class="logo" alt="Kapunka">
           </a>
           <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">Menu</button>
           <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
             <div class="offcanvas-header px-4 pb-0">
               <a class="navbar-brand" href="index.html">
-                <img src="images/kapunka-wordmark.svg" class="logo">
+                <img src="images/kapunka-wordmark.svg" class="logo" alt="Kapunka">
               </a>
               <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
             </div>
@@ -60,7 +60,7 @@ class SiteHeader extends HTMLElement {
                 </ul>
 
                 <a class="navbar-brand d-none d-lg-block me-0" href="index.html">
-                  <img src="images/kapunka-wordmark.svg" class="logo">
+                  <img src="images/kapunka-wordmark.svg" class="logo" alt="Kapunka">
                 </a>
 
                 <ul class="list-unstyled d-lg-flex justify-content-between align-items-center">

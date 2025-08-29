@@ -506,6 +506,16 @@ img.zoom-in {
 .site-header.sticky {
   background-color: var(--white-color);
 }
+.navbar-brand .logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+@media (min-width: 992px) {
+  .navbar-brand .logo {
+    height: 32px;
+  }
+}
 .navbar-toggler svg.navbar-icon {
   width: 50px;
   height: 50px;
