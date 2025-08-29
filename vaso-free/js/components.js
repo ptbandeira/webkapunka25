@@ -201,7 +201,7 @@ class SiteFooter extends HTMLElement {
                   <h4 class="widget-title pb-2">Quick Links</h4>
                   <ul class="menu-list list-unstyled">
                     <li class="menu-item pb-2">
-                      <a href="about.html">About Kapunka</a>
+                      <a href="about.html">About</a>
                     </li>
                     <li class="menu-item pb-2">
                       <a href="shop.html">Shop</a>
@@ -210,7 +210,16 @@ class SiteFooter extends HTMLElement {
                       <a href="contact.html">Contact</a>
                     </li>
                     <li class="menu-item pb-2">
-                      <a href="login.html">My Account</a>
+                      <a href="faq.html">FAQs</a>
+                    </li>
+                    <li class="menu-item pb-2">
+                      <a href="shipping-returns.html">Shipping &amp; Returns</a>
+                    </li>
+                    <li class="menu-item pb-2">
+                      <a href="privacy.html">Privacy</a>
+                    </li>
+                    <li class="menu-item pb-2">
+                      <a href="terms.html">Terms</a>
                     </li>
                   </ul>
                 </div>
