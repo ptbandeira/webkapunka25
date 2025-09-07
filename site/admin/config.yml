@@ -67,3 +67,34 @@ collections:
         fields:
           - { label: "Question", name: "q", widget: "string" }
           - { label: "Answer", name: "a", widget: "text" }
+
+  # Per-language simple pages (title/body) — preview-only mapping
+  - name: "pages_en"
+    label: "Pages (EN)"
+    folder: "site/content/en/pages"
+    create: true
+    extension: "json"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "text", required: false }
+
+  - name: "pages_pt"
+    label: "Páginas (PT)"
+    folder: "site/content/pt/pages"
+    create: true
+    extension: "json"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Corpo", name: "body", widget: "text", required: false }
+
+  - name: "pages_es"
+    label: "Páginas (ES)"
+    folder: "site/content/es/pages"
+    create: true
+    extension: "json"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Cuerpo", name: "body", widget: "text", required: false }

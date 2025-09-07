@@ -1,6 +1,1 @@
-{
-  "takeover": false,
-  "sections": [
-    { "type": "text", "heading": "Our Story", "body": "Edit this in the CMS. Tell the Kapunka origin, sourcing, and quality work.", "align": "left" }
-  ]
-}
+{ "title": "Sobre", "body": "Edite este texto em PT." }
