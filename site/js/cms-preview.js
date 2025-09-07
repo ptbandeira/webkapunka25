@@ -33,6 +33,40 @@
       setText('aboutBody', about.body);   // if id exists
       setAbout(about.title, about.body);  // fallback into #about structure
     };
+
+    // About page: set main title and first paragraph
+    window.__applyAbout = function(data){
+      const title = data && data.title; const body = data && data.body;
+      const main = document.querySelector('section-wrapper .container .row .col-md-8') || document.querySelector('h1')?.parentElement;
+      if (main){
+        const h1 = main.querySelector('h1') || document.querySelector('h1');
+        const p  = main.querySelector('p');
+        if (h1 && title!=null) h1.textContent = title;
+        if (p && body!=null)  p.textContent  = body;
+      }
+    };
+
+    // Shop page: set page title only
+    window.__applyShop = function(data){
+      const title = data && data.title;
+      const h1 = document.querySelector('section-wrapper h1') || document.querySelector('h1');
+      if (h1 && title!=null) h1.textContent = title;
+    };
+
+    // Contact page: title, intro, and email link
+    window.__applyContact = function(data){
+      const title = data && data.title; const intro = data && data.intro; const email = data && data.email;
+      const main = document.querySelector('section-wrapper .container .row .col-md-8') || document.querySelector('h1')?.parentElement;
+      if (main){
+        const h1 = main.querySelector('h1') || document.querySelector('h1');
+        const pIntro = main.querySelector('p');
+        if (h1 && title!=null) h1.textContent = title;
+        if (pIntro && intro!=null) pIntro.textContent = intro;
+        if (email){
+          const a = main.querySelector('a[href^="mailto:"]');
+          if (a){ a.textContent = email; a.setAttribute('href', 'mailto:' + email); }
+        }
+      }
+    };
   }catch(e){ /* preview must never break */ }
 })();
-

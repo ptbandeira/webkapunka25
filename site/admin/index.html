@@ -34,6 +34,63 @@
         });
         return h(Frame);
       });
+
+      // About: preview-only safe mapping
+      CMS.registerPreviewTemplate('about', ({ entry }) => {
+        const data = entry.get('data').toJS();
+        const Frame = createClass({
+          componentDidMount() {
+            const iframe = this.base.querySelector('iframe');
+            if (!iframe) return;
+            iframe.addEventListener('load', () => {
+              try {
+                const w = iframe.contentWindow;
+                if (w && typeof w.__applyAbout === 'function') w.__applyAbout(data);
+              } catch (e) {}
+            });
+          },
+          render() { return h('iframe', { src: '/about.html?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
+        });
+        return h(Frame);
+      });
+
+      // Shop: preview-only safe mapping
+      CMS.registerPreviewTemplate('shop', ({ entry }) => {
+        const data = entry.get('data').toJS();
+        const Frame = createClass({
+          componentDidMount() {
+            const iframe = this.base.querySelector('iframe');
+            if (!iframe) return;
+            iframe.addEventListener('load', () => {
+              try {
+                const w = iframe.contentWindow;
+                if (w && typeof w.__applyShop === 'function') w.__applyShop(data);
+              } catch (e) {}
+            });
+          },
+          render() { return h('iframe', { src: '/shop.html?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
+        });
+        return h(Frame);
+      });
+
+      // Contact: preview-only safe mapping
+      CMS.registerPreviewTemplate('contact', ({ entry }) => {
+        const data = entry.get('data').toJS();
+        const Frame = createClass({
+          componentDidMount() {
+            const iframe = this.base.querySelector('iframe');
+            if (!iframe) return;
+            iframe.addEventListener('load', () => {
+              try {
+                const w = iframe.contentWindow;
+                if (w && typeof w.__applyContact === 'function') w.__applyContact(data);
+              } catch (e) {}
+            });
+          },
+          render() { return h('iframe', { src: '/contact.html?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
+        });
+        return h(Frame);
+      });
     </script>
   </body>
   

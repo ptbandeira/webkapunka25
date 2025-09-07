@@ -20,6 +20,30 @@ collections:
           - { label: "About Title", name: "about.title", widget: "string" }
           - { label: "About Body", name: "about.body", widget: "text" }
 
+      - label: "About"
+        name: "about"
+        file: "site/content/pages/about.json"
+        format: "json"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "text" }
+
+      - label: "Shop"
+        name: "shop"
+        file: "site/content/pages/shop.json"
+        format: "json"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+
+      - label: "Contact"
+        name: "contact"
+        file: "site/content/pages/contact.json"
+        format: "json"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Intro", name: "intro", widget: "text", required: false }
+          - { label: "Email", name: "email", widget: "string", required: false }
+
   - name: "products"
     label: "Products"
     file: "site/content/products.json"
@@ -43,4 +67,3 @@ collections:
         fields:
           - { label: "Question", name: "q", widget: "string" }
           - { label: "Answer", name: "a", widget: "text" }
-
