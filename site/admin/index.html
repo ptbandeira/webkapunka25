@@ -60,6 +60,14 @@
           const entry = this.props.entry;
           const sections = entry.getIn(["data","sections"]) || [];
 
+          const priceFmt = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+          const fmtPrice = (val) => {
+            if (val == null || val === '') return '€…';
+            const num = typeof val === 'number' ? val : Number(String(val).replace(/[^\d.,-]/g,'').replace(',','.'));
+            if (!isFinite(num)) return String(val);
+            return priceFmt.format(num);
+          };
+
           return h("div", {}, kids(sections, (s) => {
             const t = s.get ? s.get("type") : s.type;
 
@@ -91,7 +99,7 @@
                     ),
                     h("div", { className: "card-detail pt-3 pb-2" }, [
                       h("h5", {}, p.name || "Product"),
-                      h("div", { className: "price" }, (p && p.price!=null) ? (String(p.price).includes("€") ? p.price : ("€" + p.price)) : "€…")
+                      h("div", { className: "price" }, fmtPrice(p.price))
                     ])
                   ])
                 );

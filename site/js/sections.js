@@ -44,6 +44,14 @@
     return t.content.firstElementChild;
   };
 
+  const priceFmt = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  function fmtPrice(val){
+    if (val == null || val === '') return '€…';
+    const num = typeof val === 'number' ? val : Number(String(val).replace(/[^\d.,-]/g,'').replace(',','.'));
+    if (!isFinite(num)) return String(val);
+    return priceFmt.format(num);
+  }
+
   function renderSection(s) {
     switch (s.type) {
       case "hero": {
@@ -140,7 +148,7 @@
               </div>
               <div class="card-detail text-center pt-3 pb-2">
                 <h5 class="card-title fs-4">${p.name}</h5>
-                <span class="item-price text-primary fs-4 fw-light">${String(p.price).includes('€') ? p.price : `€${p.price}`}</span>
+                <span class="item-price text-primary fs-4 fw-light">${fmtPrice(p.price)}</span>
               </div>
             </div>
           </div>
