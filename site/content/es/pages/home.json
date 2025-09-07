@@ -1,0 +1,8 @@
+{ "takeover": false, "sections": [
+  { "type": "hero", "title": "Calma, Repara, Protege", "subtitle": "Ayuda a restaurar la barrera cutánea y a reducir el enrojecimiento tras procedimientos o el día a día.", "align": "left", "background_image":"images/video-image.jpg" },
+  { "type": "text", "heading": "Un Ingrediente. Resultados Reales.", "body": "Kapunka es una marca con mentalidad clínica basada en un único ingrediente excepcional: aceite de argán 100% orgánico, prensado en frío y testado en laboratorio.", "align":"left" },
+  { "type": "productGrid", "title": "Más Vendidos", "source": "products.json", "how_many": 6 },
+  { "type": "faqs", "title": "FAQs", "source":"faqs.json" },
+  { "type": "banner", "heading": "Para Clínicas", "button_label":"Colabora con nosotros", "button_link":"contact.html", "background_image":"images/banner-img3.jpg" },
+  { "type": "video", "youtube_url":"https://www.youtube.com/embed/Gr9cKIjsyJk?rel=0&modestbranding=1", "caption":"KAPUNKA • ACEITE DE ARGÁN PURO • PRENSADO EN FRÍO •" }
+]}
