@@ -122,7 +122,6 @@ collections:
                   - { label: "Body", name: "body", widget: "text" }
                   - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
 
-  # Keep these simple page collections for later localization work
   - name: "pages_en"
     label: "Pages (EN)"
     folder: "site/content/en/pages"
@@ -158,24 +157,28 @@ collections:
 
   - name: "products"
     label: "Products"
-    file: "site/content/products.json"
-    fields:
+    files:
       - label: "Products"
-        name: "items"
-        widget: "list"
+        name: "products"
+        file: "site/content/products.json"
         fields:
-          - { label: "Name", name: "name", widget: "string" }
-          - { label: "Price (EUR)", name: "price", widget: "number" }
-          - { label: "Image", name: "image", widget: "string" }
-          - { label: "Link", name: "link", widget: "string", required: false }
+          - { label: "Products", name: "items", widget: "list",
+              fields: [
+                { label: "Name", name: "name", widget: "string" },
+                { label: "Price (EUR)", name: "price", widget: "number" },
+                { label: "Image", name: "image", widget: "string" },
+                { label: "Link", name: "link", widget: "string", required: false }
+              ] }
 
   - name: "faqs"
     label: "FAQs"
-    file: "site/content/faqs.json"
-    fields:
-      - label: "FAQ Items"
-        name: "items"
-        widget: "list"
+    files:
+      - label: "FAQs"
+        name: "faqs"
+        file: "site/content/faqs.json"
         fields:
-          - { label: "Question", name: "q", widget: "string" }
-          - { label: "Answer", name: "a", widget: "text" }
+          - { label: "FAQ Items", name: "items", widget: "list",
+              fields: [
+                { label: "Question", name: "q", widget: "string" },
+                { label: "Answer", name: "a", widget: "text" }
+              ] }
