@@ -1,1 +1,6 @@
-{ "takeover": false, "title":"Our Story", "body":"We bottle 100% pure, cold-pressed argan oil from Moroccan co-ops. No fillers, no perfume—just the good stuff.\n\nEvery batch is small-run and lab-tested. Skin, hair, nails—one bottle that does it all." }
+{
+  "takeover": false,
+  "sections": [
+    { "type": "text", "heading": "Our Story", "body": "Edit this in the CMS. Tell the Kapunka origin, sourcing, and quality work.", "align": "left" }
+  ]
+}
