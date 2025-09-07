@@ -46,27 +46,35 @@ collections:
 
   - name: "products"
     label: "Products"
-    file: "site/content/products.json"
-    fields:
-      - label: "Items"
-        name: "items"
-        widget: "list"
+    files:
+      - label: "Product List"
+        name: "product_list"
+        file: "site/content/products.json"
+        format: "json"
         fields:
-          - { label: "Name", name: "name", widget: "string" }
-          - { label: "Price (EUR)", name: "price", widget: "number" }
-          - { label: "Image", name: "image", widget: "string" }
-          - { label: "Link", name: "link", widget: "string", required: false }
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Price (EUR)", name: "price", widget: "number" }
+              - { label: "Image", name: "image", widget: "string" }
+              - { label: "Link", name: "link", widget: "string", required: false }
 
   - name: "faqs"
     label: "FAQs"
-    file: "site/content/faqs.json"
-    fields:
-      - label: "FAQ Items"
-        name: "items"
-        widget: "list"
+    files:
+      - label: "FAQ Entries"
+        name: "faq_entries"
+        file: "site/content/faqs.json"
+        format: "json"
         fields:
-          - { label: "Question", name: "q", widget: "string" }
-          - { label: "Answer", name: "a", widget: "text" }
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Question", name: "q", widget: "string" }
+              - { label: "Answer", name: "a", widget: "text" }
 
   # Per-language simple pages (title/body) — preview-only mapping
   - name: "pages_en"
