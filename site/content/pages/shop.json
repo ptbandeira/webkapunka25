@@ -1,7 +1,6 @@
 {
-  "takeover": true,
+  "takeover": false,
   "sections": [
-    { "type": "text", "heading": "Shop Kapunka", "body": "Best-sellers and bundles.", "align": "center" },
-    { "type": "productGrid", "title": "Products", "source": "products.json", "count": 12 }
+    { "type": "productGrid", "title": "Best-Sellers", "source": "products.json", "count": 6 }
   ]
 }
