@@ -3,5 +3,21 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo 'No tests'"
+  },
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptbandeira/webkapunka25.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ptbandeira/webkapunka25/issues"
+  },
+  "homepage": "https://github.com/ptbandeira/webkapunka25#readme",
+  "dependencies": {
+    "cheerio": "^1.1.2"
   }
 }
