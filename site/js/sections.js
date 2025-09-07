@@ -5,14 +5,14 @@
     "/about.html": "about",
     "/shop.html": "shop",
     "/contact.html": "contact",
-    "/faq.html": "home" // keep as-is unless you build a dedicated FAQ page JSON
+    "/faq.html": "faqs-page" // map to dedicated FAQs page JSON
   };
 
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
   const slug = map[path];
   if (!slug) return;
 
-  const contentUrl = `site/content/pages/${slug}.json`;
+  const contentUrl = `/content/pages/${slug}.json`;
 
   function ensureMount() {
     let mount = document.getElementById("sectionsMount");
@@ -129,7 +129,7 @@
 
   async function hydrateProducts(container, source, count) {
     try {
-      const res = await fetch(`site/content/${source}`);
+      const res = await fetch(`/content/${source}`);
       const data = await res.json();
       (data.items || []).slice(0, count || 6).forEach(p => {
         container.appendChild(h(`
@@ -140,7 +140,7 @@
               </div>
               <div class="card-detail text-center pt-3 pb-2">
                 <h5 class="card-title fs-4">${p.name}</h5>
-                <span class="item-price text-primary fs-4 fw-light">€${p.price}</span>
+                <span class="item-price text-primary fs-4 fw-light">${String(p.price).includes('€') ? p.price : `€${p.price}`}</span>
               </div>
             </div>
           </div>
@@ -151,7 +151,7 @@
 
   async function hydrateFaqs(container, source) {
     try {
-      const res = await fetch(`site/content/${source}`);
+      const res = await fetch(`/content/${source}`);
       const data = await res.json();
       (data.items || []).forEach(f => {
         container.appendChild(h(`

@@ -45,7 +45,7 @@
             (sections.toArray ? sections.toArray() : sections).forEach(function(s){
               if ((s.get && s.get("type")==="productGrid") || s.type==="productGrid"){
                 source = (s.get ? s.get("source") : s.source) || "products.json";
-                howMany = parseInt((s.get ? s.get("how_many") : s.how_many) || 6, 10);
+                howMany = parseInt((s.get ? s.get("count") : s.count) || 6, 10);
               }
             });
 
@@ -86,12 +86,12 @@
                 return h("div", { className: "col-md-4 mb-4", key: i },
                   h("div", { className: "product-card text-center" }, [
                     h("div", { className: "image-holder zoom-effect" },
-                      p.image ? h("img", { src: "/" + p.image, alt: p.title || "Product", className: "img-fluid" }) :
+                      p.image ? h("img", { src: "/" + p.image, alt: p.name || "Product", className: "img-fluid" }) :
                                 h("div", { style:{background:"#eee",height:"200px"} })
                     ),
                     h("div", { className: "card-detail pt-3 pb-2" }, [
-                      h("h5", {}, p.title || "Product"),
-                      h("div", { className: "price" }, p.price || "€…")
+                      h("h5", {}, p.name || "Product"),
+                      h("div", { className: "price" }, (p && p.price!=null) ? (String(p.price).includes("€") ? p.price : ("€" + p.price)) : "€…")
                     ])
                   ])
                 );
