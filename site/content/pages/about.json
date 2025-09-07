@@ -1,6 +1,4 @@
 {
-  "takeover": false,
-  "sections": [
-    { "type": "text", "heading": "Our Story", "body": "Edit this in the CMS. Tell the Kapunka origin, sourcing, and quality work.", "align": "left" }
-  ]
+  "title": "Our story",
+  "body": "We bottle 100% pure, cold-pressed argan oil from Moroccan co-ops. No fillers, no perfume—just the good stuff."
 }

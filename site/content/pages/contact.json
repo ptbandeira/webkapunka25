@@ -1,6 +1,5 @@
 {
-  "takeover": false,
-  "sections": [
-    { "type": "text", "heading": "Contact", "body": "Email: info@kapunkargan.com\nPhone: +48 000 000 000\nAddress: Warsaw, Poland", "align": "left" }
-  ]
+  "title": "Contact",
+  "intro": "Questions or wholesale? We’ll reply within 1 business day.",
+  "email": "hello@kapunka.com"
 }

@@ -1,0 +1,23 @@
+name: Visual Lock
+on:
+  pull_request:
+    types: [opened, synchronize, edited, reopened]
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect blocked changes
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          if echo "$PR_TITLE" | grep -qi '^VISUAL:'; then
+            echo "Visual changes explicitly allowed by title."
+            exit 0
+          fi
+          git fetch origin ${{ github.base_ref }} --depth=1
+          git diff --name-only origin/${{ github.base_ref }}...HEAD > changed.txt
+          BLOCKED='^site/index\.html$|^site/about\.html$|^site/shop\.html$|^site/contact\.html$|^site/style\.css$|^site/css/|^site/js/components\.js$|^site/js/script\.js$|^site/js/plugins\.js$|^site/images/'
+          if grep -E "$BLOCKED" changed.txt; then
+            echo "::error::Found changes in protected visual files. Use 'VISUAL:' in the PR title to proceed."
+            exit 1
+          fi

@@ -9,137 +9,123 @@
   <body>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script src="/js/cms-preview.js"></script>
     <script>
       const h = window.h;
       const createClass = window.createClass;
 
-      CMS.registerPreviewStyle("/css/bootstrap.min.css");
-      CMS.registerPreviewStyle("/style.css?v=footer-fix1");
-
-      function kids(list, mapFn){
-        if (!list || !list.map) return [];
-        const mapped = list.map(mapFn);
-        return mapped && mapped.toArray ? mapped.toArray() : mapped;
-      }
-      function Section(cls, children){
-        return h("section-wrapper", { className: cls || "padding-xlarge" },
-          h("div", { className: "container" }, children)
-        );
-      }
-
-      const HomePreview = createClass({
-        getInitialState: function(){ return { products: [] }; },
-
-        componentDidMount: function () {
-          this.loadProducts(this.props.entry);
-        },
-        componentDidUpdate: function(prevProps){
-          if (prevProps.entry !== this.props.entry) this.loadProducts(this.props.entry);
-        },
-
-        loadProducts: function(entry){
-          try{
-            const sections = entry.getIn(["data","sections"]) || [];
-            let source = "products.json", howMany = 6;
-
-            (sections.toArray ? sections.toArray() : sections).forEach(function(s){
-              if ((s.get && s.get("type")==="productGrid") || s.type==="productGrid"){
-                source = (s.get ? s.get("source") : s.source) || "products.json";
-                howMany = parseInt((s.get ? s.get("how_many") : s.how_many) || 6, 10);
-              }
+      // Load site in an iframe and apply preview data safely (no layout changes)
+      CMS.registerPreviewTemplate('home', ({ entry }) => {
+        const data = entry.get('data').toJS();
+        const Frame = createClass({
+          componentDidMount() {
+            const iframe = this.base.querySelector('iframe');
+            if (!iframe) return;
+            iframe.addEventListener('load', () => {
+              try {
+                const w = iframe.contentWindow;
+                if (w && typeof w.__applyHome === 'function') {
+                  w.__applyHome(data);
+                }
+              } catch (e) { /* preview should never crash */ }
             });
-
-            fetch("/content/" + String(source).replace(/^\/?content\//,""))
-              .then(r => r.ok ? r.json() : null)
-              .then(j => this.setState({ products: (j && j.items) ? j.items.slice(0, howMany) : [] }))
-              .catch(() => this.setState({ products: [] }));
-          } catch(e){ /* preview should never crash */ }
-        },
-
-        render: function () {
-          const entry = this.props.entry;
-          const sections = entry.getIn(["data","sections"]) || [];
-
-          return h("div", {}, kids(sections, (s) => {
-            const t = s.get ? s.get("type") : s.type;
-
-            if (t === "hero") {
-              const align = s.get("align");
-              const cls = align==="center" ? "text-center" : align==="right" ? "text-end" : "";
-              const bg  = (s.get ? s.get("background_image") : s.background_image);
-              return Section("padding-xlarge", [
-                bg ? h("div", { style: { backgroundImage: "url(/" + bg + ")", backgroundSize:"cover", height:"200px" } }) : null,
-                h("h1", { className: cls }, (s.get ? s.get("title") : s.title)),
-                (s.get ? s.get("subtitle") : s.subtitle) ? h("p", {}, (s.get ? s.get("subtitle") : s.subtitle)) : null
-              ]);
-            }
-
-            if (t === "text") {
-              return Section(null, [
-                (s.get ? s.get("heading") : s.heading) ? h("h3", { className: "py-3" }, (s.get ? s.get("heading") : s.heading)) : null,
-                (s.get ? s.get("body") : s.body) ? h("p", {}, (s.get ? s.get("body") : s.body)) : null
-              ]);
-            }
-
-            if (t === "productGrid") {
-              const cards = (this.state.products || []).map(function(p, i){
-                return h("div", { className: "col-md-4 mb-4", key: i },
-                  h("div", { className: "product-card text-center" }, [
-                    h("div", { className: "image-holder zoom-effect" },
-                      p.image ? h("img", { src: "/" + p.image, alt: p.title || "Product", className: "img-fluid" }) :
-                                h("div", { style:{background:"#eee",height:"200px"} })
-                    ),
-                    h("div", { className: "card-detail pt-3 pb-2" }, [
-                      h("h5", {}, p.title || "Product"),
-                      h("div", { className: "price" }, p.price || "€…")
-                    ])
-                  ])
-                );
-              });
-
-              return Section("product-store", [
-                h("div", { className: "display-header d-flex justify-content-between pb-4" },
-                  [h("h3", { className: "mt-3" }, (s.get ? s.get("title") : s.title) || "Products")]
-                ),
-                h("div", { className: "row" }, cards.length ? cards : [h("div",{style:{height:"200px",background:"#eee"}})])
-              ]);
-            }
-
-            if (t === "faqs") {
-              return Section(null, [
-                h("h3", { className: "text-center mb-5" }, (s.get ? s.get("title") : s.title) || "FAQs"),
-                h("div", { className: "accordion accordion-flush" },
-                  h("div", { className: "accordion-item" }, [
-                    h("h4", { className: "accordion-header" },
-                      h("button", { className: "accordion-button collapsed", type: "button" }, "Question")
-                    ),
-                    h("div", { className: "accordion-body" }, h("p", {}, "Answer"))
-                  ])
-                )
-              ]);
-            }
-
-            if (t === "banner") {
-              const bg = (s.get ? s.get("background_image") : s.background_image);
-              return h("section-wrapper", { className: "position-relative" },
-                h("div", { style: { backgroundImage: bg ? "url(/"+bg+")" : "", backgroundSize:"cover", height:"180px" } },
-                  h("div", { className: "banner-content-text position-absolute" }, [
-                    h("h2", {}, (s.get ? s.get("heading") : s.heading) || "Banner")
-                  ])
-                )
-              );
-            }
-
-            if (t === "video") {
-              return Section(null, [h("div", { className: "ratio ratio-16x9", style: { background: "#000" } })]);
-            }
-
-            return h("div", {}, "Unknown section");
-          }));
-        }
+          },
+          render() { return h('iframe', { src: '/?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
+        });
+        return h(Frame);
       });
 
-      CMS.registerPreviewTemplate("home", HomePreview);
+      // About: preview-only safe mapping
+      CMS.registerPreviewTemplate('about', ({ entry }) => {
+        const data = entry.get('data').toJS();
+        const Frame = createClass({
+          componentDidMount() {
+            const iframe = this.base.querySelector('iframe');
+            if (!iframe) return;
+            iframe.addEventListener('load', () => {
+              try {
+                const w = iframe.contentWindow;
+                if (w && typeof w.__applyAbout === 'function') w.__applyAbout(data);
+              } catch (e) {}
+            });
+          },
+          render() { return h('iframe', { src: '/about.html?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
+        });
+        return h(Frame);
+      });
+
+      // Shop: preview-only safe mapping
+      CMS.registerPreviewTemplate('shop', ({ entry }) => {
+        const data = entry.get('data').toJS();
+        const Frame = createClass({
+          componentDidMount() {
+            const iframe = this.base.querySelector('iframe');
+            if (!iframe) return;
+            iframe.addEventListener('load', () => {
+              try {
+                const w = iframe.contentWindow;
+                if (w && typeof w.__applyShop === 'function') w.__applyShop(data);
+              } catch (e) {}
+            });
+          },
+          render() { return h('iframe', { src: '/shop.html?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
+        });
+        return h(Frame);
+      });
+
+      // Contact: preview-only safe mapping
+      CMS.registerPreviewTemplate('contact', ({ entry }) => {
+        const data = entry.get('data').toJS();
+        const Frame = createClass({
+          componentDidMount() {
+            const iframe = this.base.querySelector('iframe');
+            if (!iframe) return;
+            iframe.addEventListener('load', () => {
+              try {
+                const w = iframe.contentWindow;
+                if (w && typeof w.__applyContact === 'function') w.__applyContact(data);
+              } catch (e) {}
+            });
+          },
+          render() { return h('iframe', { src: '/contact.html?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
+        });
+        return h(Frame);
+      });
+
+      function pagePathForSlug(slug){
+        switch(String(slug||'').toLowerCase()){
+          case 'about': return '/about.html';
+          case 'shop': return '/shop.html';
+          case 'contact': return '/contact.html';
+          default: return '/index.html';
+        }
+      }
+
+      function registerLangPreview(collName, lang){
+        CMS.registerPreviewTemplate(collName, ({ entry }) => {
+          const data = entry.get('data').toJS();
+          const slug = entry.get('slug');
+          const Frame = createClass({
+            componentDidMount(){
+              const iframe = this.base.querySelector('iframe');
+              if (!iframe) return;
+              iframe.addEventListener('load', () => {
+                try{
+                  const w = iframe.contentWindow;
+                  if (w && typeof w.__applyPage === 'function') w.__applyPage(data);
+                }catch(e){}
+              });
+            },
+            render(){ return h('iframe', { src: pagePathForSlug(slug)+`?cms-preview=1&lang=${lang}` , style:{width:'100%',height:'90vh',border:0} }); }
+          });
+          return h(Frame);
+        });
+      }
+
+      registerLangPreview('pages_en', 'en');
+      registerLangPreview('pages_pt', 'pt');
+      registerLangPreview('pages_es', 'es');
     </script>
   </body>
+  
 </html>
