@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: ptbandeira/webkapunka25
+  name: git-gateway
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
