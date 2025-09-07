@@ -1,41 +1,58 @@
 (function () {
+  const SUPPORTED_LANGS = ["en", "pt", "es"];
   const map = {
     "/": "home",
     "/index.html": "home",
     "/about.html": "about",
     "/shop.html": "shop",
     "/contact.html": "contact",
-    "/faq.html": "faqs-page" // map to dedicated FAQs page JSON
+    "/faq.html": "faqs-page" // dedicated FAQs page JSON
   };
 
-  const path = window.location.pathname.replace(/\/+$/, "") || "/";
-  const slug = map[path];
+  const rawPath = window.location.pathname.replace(/\/+$/, "") || "/";
+  const pathLangMatch = rawPath.match(/^\/(en|pt|es)(\/|$)/i);
+  const pathLang = pathLangMatch ? pathLangMatch[1].toLowerCase() : null;
+  const url = new URL(window.location.href);
+  const qpLang = (url.searchParams.get("lang") || "").toLowerCase();
+  const lang = SUPPORTED_LANGS.includes(qpLang) ? qpLang : (SUPPORTED_LANGS.includes(pathLang) ? pathLang : null);
+
+  const normalizedPath = lang ? rawPath.replace(new RegExp(`^/${lang}`), "") || "/" : rawPath;
+  const slug = map[normalizedPath];
   if (!slug) return;
 
-  const contentUrl = `/content/pages/${slug}.json`;
+  const basePages = lang ? `/content/${lang}/pages` : `/content/pages`;
+  const contentUrl = `${basePages}/${slug}.json`;
 
   function ensureMount() {
-    let mount = document.getElementById("sectionsMount");
+    // prefer cmsMount for design-lock; migrate legacy sectionsMount id if present
+    let mount = document.getElementById("cmsMount") || document.getElementById("sectionsMount");
     if (!mount) {
       mount = document.createElement("div");
-      mount.id = "sectionsMount";
+      mount.id = "cmsMount";
       const header = document.querySelector("site-header, header");
       if (header && header.parentNode) header.parentNode.insertBefore(mount, header.nextElementSibling);
       else document.body.insertBefore(mount, document.body.firstChild);
+    } else if (mount.id === "sectionsMount") {
+      // migrate legacy id
+      mount.id = "cmsMount";
     }
     return mount;
   }
 
   function toggleStatic(takeover) {
+    document.body.classList.toggle("cms-takeover", !!takeover);
+    // Also hide between header and footer non-destructively (legacy behavior)
     const header = document.querySelector("site-header, header");
     const footer = document.querySelector("site-footer, footer");
     const siblings = [];
     let node = header ? header.nextElementSibling : document.body.firstElementChild;
     while (node && node !== footer) {
-      if (node.id !== "sectionsMount") siblings.push(node);
+      if (node.id !== "cmsMount") siblings.push(node);
       node = node.nextElementSibling;
     }
     siblings.forEach(el => { el.style.display = takeover ? "none" : ""; });
+    const staticMain = document.getElementById("staticMain");
+    if (staticMain) staticMain.style.display = takeover ? "none" : "";
   }
 
   const h = (html) => {
@@ -137,6 +154,7 @@
 
   async function hydrateProducts(container, source, count) {
     try {
+      // products are shared (no per-lang file yet)
       const res = await fetch(`/content/${source}`);
       const data = await res.json();
       (data.items || []).slice(0, count || 6).forEach(p => {
@@ -159,7 +177,9 @@
 
   async function hydrateFaqs(container, source) {
     try {
-      const res = await fetch(`/content/${source}`);
+      // try language-specific faqs first, then fallback
+      let res = await fetch(lang ? `/content/${lang}/${source}` : `/content/${source}`);
+      if (!res.ok && lang) res = await fetch(`/content/${source}`);
       const data = await res.json();
       (data.items || []).forEach(f => {
         container.appendChild(h(`
