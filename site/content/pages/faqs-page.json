@@ -1,7 +1,16 @@
 {
-  "takeover": true,
+  "takeover": false,
   "sections": [
-    { "type": "text", "heading": "FAQs", "body": "Common questions about purity, usage, and shipping.", "align": "center" },
-    { "type": "faqs", "title": "FAQs", "source": "faqs.json" }
+    {
+      "type": "text",
+      "heading": "FAQs",
+      "body": "Common questions about purity, usage, and shipping.",
+      "align": "center"
+    },
+    {
+      "type": "faqs",
+      "title": "FAQs",
+      "source": "faqs.json"
+    }
   ]
 }
