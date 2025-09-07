@@ -2,7 +2,7 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "images/uploads"
+media_folder: "site/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
@@ -11,9 +11,10 @@ collections:
     files:
       - label: "Home"
         name: "home"
-        file: "content/pages/home.json"
+        file: "site/content/pages/home.json"
         format: "json"
         fields:
+          - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
           - label: "Sections"
             name: "sections"
             widget: "list"
@@ -23,7 +24,7 @@ collections:
                 widget: "object"
                 fields:
                   - { label: "Title", name: "title", widget: "string" }
-                  - { label: "Subtitle", name: "subtitle", widget: "text" }
+                  - { label: "Subtitle", name: "subtitle", widget: "text", required: false }
                   - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
                   - { label: "Background image", name: "background_image", widget: "string", required: false }
                   - { label: "CTA label", name: "cta_label", widget: "string", required: false }
