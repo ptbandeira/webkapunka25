@@ -29,8 +29,8 @@ $('.product-store .product-card').each((i, el) => {
   const priceTxt = $el.find('.item-price').first().text().trim().replace(/[^\d.,]/g,'');
   const price = Number(priceTxt.replace(',','.')) || null;
   const image = abs($el.find('img').attr('src') || '');
-  const link = $el.find('.card-title a').attr('href') || '#';
-  products.push({ name, price, image, link });
+  const url = $el.find('.card-title a').attr('href') || '#';
+  products.push({ name, price, image, url });
 });
 
 /* --- FAQs (accordion) --- */

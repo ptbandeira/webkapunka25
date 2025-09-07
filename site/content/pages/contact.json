@@ -1,11 +1,6 @@
 {
   "takeover": false,
   "sections": [
-    {
-      "type": "text",
-      "heading": "Get in touch",
-      "body": "Warsaw, Poland\n+48 000 000 000\ninfo@kapunkargan.com",
-      "align": "left"
-    }
+    { "type": "text", "heading": "Contact", "body": "Email: info@kapunkargan.com\nPhone: +48 000 000 000\nAddress: Warsaw, Poland", "align": "left" }
   ]
 }

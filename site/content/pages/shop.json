@@ -1,11 +1,6 @@
 {
   "takeover": false,
   "sections": [
-    {
-      "type": "productGrid",
-      "title": "Best-Sellers",
-      "source": "products.json",
-      "count": 6
-    }
+    { "type": "productGrid", "title": "Best-Sellers", "source": "products.json", "count": 6 }
   ]
 }

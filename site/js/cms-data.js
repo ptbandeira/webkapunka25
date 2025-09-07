@@ -48,13 +48,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Products (Swiper slides)
   const prods = await getJSON("/content/products.json");
-  const priceFmt = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-  const fmtPrice = (val) => {
-    if (val == null || val === '') return '€…';
-    const num = typeof val === 'number' ? val : Number(String(val).replace(/[^\d.,-]/g,'').replace(',','.'));
-    if (!isFinite(num)) return String(val);
-    return priceFmt.format(num);
-  };
   if (prods && Array.isArray(prods.items)) {
     const wrap = document.getElementById("productWrapper");
     if (wrap) {
@@ -75,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <h5 class="card-title fs-3 text-capitalize">
                   <a href="${p.link || '#'}">${p.name}</a>
                 </h5>
-                <span class="item-price text-primary fs-3 fw-light">${fmtPrice(p.price)}</span>
+                <span class="item-price text-primary fs-3 fw-light">${p.price}</span>
               </div>
             </div>
           </div>

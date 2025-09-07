@@ -45,7 +45,7 @@
             (sections.toArray ? sections.toArray() : sections).forEach(function(s){
               if ((s.get && s.get("type")==="productGrid") || s.type==="productGrid"){
                 source = (s.get ? s.get("source") : s.source) || "products.json";
-                howMany = parseInt((s.get ? s.get("count") : s.count) || 6, 10);
+                howMany = parseInt((s.get ? s.get("how_many") : s.how_many) || 6, 10);
               }
             });
 
@@ -59,14 +59,6 @@
         render: function () {
           const entry = this.props.entry;
           const sections = entry.getIn(["data","sections"]) || [];
-
-          const priceFmt = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-          const fmtPrice = (val) => {
-            if (val == null || val === '') return '€…';
-            const num = typeof val === 'number' ? val : Number(String(val).replace(/[^\d.,-]/g,'').replace(',','.'));
-            if (!isFinite(num)) return String(val);
-            return priceFmt.format(num);
-          };
 
           return h("div", {}, kids(sections, (s) => {
             const t = s.get ? s.get("type") : s.type;
@@ -94,12 +86,12 @@
                 return h("div", { className: "col-md-4 mb-4", key: i },
                   h("div", { className: "product-card text-center" }, [
                     h("div", { className: "image-holder zoom-effect" },
-                      p.image ? h("img", { src: "/" + p.image, alt: p.name || "Product", className: "img-fluid" }) :
+                      p.image ? h("img", { src: "/" + p.image, alt: p.title || "Product", className: "img-fluid" }) :
                                 h("div", { style:{background:"#eee",height:"200px"} })
                     ),
                     h("div", { className: "card-detail pt-3 pb-2" }, [
-                      h("h5", {}, p.name || "Product"),
-                      h("div", { className: "price" }, fmtPrice(p.price))
+                      h("h5", {}, p.title || "Product"),
+                      h("div", { className: "price" }, p.price || "€…")
                     ])
                   ])
                 );
