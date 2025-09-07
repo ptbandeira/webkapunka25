@@ -7,18 +7,44 @@
     <title>Content Manager</title>
   </head>
   <body>
-    <!-- Netlify Identity widget handles the invite token + login -->
+    <!-- Netlify Identity (invite + login) -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
     <!-- Decap CMS app -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
-    <!-- After login, send user back to /admin/ -->
     <script>
+      // Use your site styles in the preview so it looks familiar
+      CMS.registerPreviewStyle("/css/bootstrap.min.css");
+      CMS.registerPreviewStyle("/style.css?v=footer-fix1");
+
+      // Minimal About preview (renders the title/body like your About block)
+      var AboutPreview = createClass({
+        render: function () {
+          var entry = this.props.entry;
+          var title = entry.getIn(["data","title"]) || "Our story";
+          var body  = entry.getIn(["data","body"])  || "";
+          var image = entry.getIn(["data","image"]);
+
+          return h("section", { className: "padding-xlarge" }, [
+            h("div", { className: "container" }, [
+              h("span", { className: "title-accent fs-6 text-uppercase" }, "About Kapunka"),
+              h("h3", { className: "py-3" }, title),
+              h("p",  {}, body),
+              image ? h("img", { src: image, alt: title, style: { maxWidth: "100%", marginTop: "1rem" } }) : null
+            ])
+          ]);
+        }
+      });
+
+      // Tie the preview to the "about" collection we defined in config.yml
+      CMS.registerPreviewTemplate("about", AboutPreview);
+
+      // After login, send user back to /admin/
       if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", (user) => {
+        window.netlifyIdentity.on("init", function(user) {
           if (!user) {
-            window.netlifyIdentity.on("login", () => {
+            window.netlifyIdentity.on("login", function() {
               document.location.href = "/admin/";
             });
           }
