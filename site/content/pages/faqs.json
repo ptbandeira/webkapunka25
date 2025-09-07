@@ -1,6 +1,10 @@
 {
   "takeover": false,
   "sections": [
-    { "type": "faqs", "title": "FAQs", "source": "faqs.json" }
+    {
+      "type": "faqs",
+      "title": "FAQs",
+      "source": "faqs.json"
+    }
   ]
 }
