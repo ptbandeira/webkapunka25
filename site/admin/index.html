@@ -7,40 +7,60 @@
     <title>Content Manager</title>
   </head>
   <body>
-    <!-- Netlify Identity (invite + login) -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-    <!-- Decap CMS app -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
     <script>
-      // Use your site styles in the preview so it looks familiar
       CMS.registerPreviewStyle("/css/bootstrap.min.css");
       CMS.registerPreviewStyle("/style.css?v=footer-fix1");
 
-      // Minimal About preview (renders the title/body like your About block)
+      // About preview
       var AboutPreview = createClass({
         render: function () {
-          var entry = this.props.entry;
-          var title = entry.getIn(["data","title"]) || "Our story";
-          var body  = entry.getIn(["data","body"])  || "";
-          var image = entry.getIn(["data","image"]);
-
-          return h("section", { className: "padding-xlarge" }, [
-            h("div", { className: "container" }, [
-              h("span", { className: "title-accent fs-6 text-uppercase" }, "About Kapunka"),
-              h("h3", { className: "py-3" }, title),
-              h("p",  {}, body),
-              image ? h("img", { src: image, alt: title, style: { maxWidth: "100%", marginTop: "1rem" } }) : null
+          var e = this.props.entry, t = e.getIn(["data","title"])||"Our story", b = e.getIn(["data","body"])||"", img = e.getIn(["data","image"]);
+          return h("section",{className:"padding-xlarge"},[
+            h("div",{className:"container"},[
+              h("span",{className:"title-accent fs-6 text-uppercase"},"About Kapunka"),
+              h("h3",{className:"py-3"},t),
+              h("p",{},b),
+              img ? h("img",{src:img, alt:t, style:{maxWidth:"100%",marginTop:"1rem"}}): null
             ])
           ]);
         }
       });
-
-      // Tie the preview to the "about" collection we defined in config.yml
       CMS.registerPreviewTemplate("about", AboutPreview);
 
-      // After login, send user back to /admin/
+      // FAQs preview
+      var FaqsPreview = createClass({
+        render: function () {
+          var items = this.props.entry.getIn(["data","items"]) || [];
+          return h("div",{className:"accordion accordion-flush"}, items.map(function(it,i){
+            return h("div",{className:"accordion-item",key:i},[
+              h("h4",{className:"accordion-header"},h("button",{className:"accordion-button collapsed",type:"button"}, it.get("q")||"Question")),
+              h("div",{className:"accordion-body"}, h("p",{}, it.get("a")||"Answer"))
+            ]);
+          }));
+        }
+      });
+      CMS.registerPreviewTemplate("faqs", FaqsPreview);
+
+      // Products preview
+      var ProductsPreview = createClass({
+        render: function () {
+          var items = this.props.entry.getIn(["data","items"]) || [];
+          return h("div",{className:"row"}, items.map(function(p,i){
+            return h("div",{className:"col-md-4 mb-4",key:i},[
+              h("div",{className:"product-card text-center"},[
+                h("img",{src:p.get("image")||"", alt:p.get("name")||"", style:{maxWidth:"100%"} }),
+                h("h5",{}, p.get("name")||"Product"),
+                h("div",{className:"price"}, p.get("price")||"")
+              ])
+            ]);
+          }));
+        }
+      });
+      CMS.registerPreviewTemplate("products", ProductsPreview);
+
+      // Identity login redirect
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", function(user) {
           if (!user) {
