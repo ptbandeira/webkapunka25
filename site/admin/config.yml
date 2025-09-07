@@ -6,12 +6,10 @@ media_folder: "site/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  # =============== PAGE BUILDER (Home) EN/PT/ES ===============
+  # ===== Page Builder (files) =====
   - name: "pages"
     label: "Pages (builder)"
     files:
-
-      # -------- EN --------
       - label: "Home"
         name: "home"
         file: "site/content/pages/home.json"
@@ -32,7 +30,6 @@ collections:
                   - { label: "Background image", name: "background_image", widget: "string", required: false }
                   - { label: "CTA label", name: "cta_label", widget: "string", required: false }
                   - { label: "CTA link", name: "cta_link", widget: "string", required: false }
-
               - label: "Text Block"
                 name: "text"
                 widget: "object"
@@ -40,22 +37,19 @@ collections:
                   - { label: "Heading", name: "heading", widget: "string" }
                   - { label: "Body", name: "body", widget: "text" }
                   - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
-
               - label: "Product Grid"
                 name: "productGrid"
                 widget: "object"
                 fields:
                   - { label: "Title", name: "title", widget: "string" }
-                  - { label: "Source file", name: "source", widget: "string", default: "site/content/products.json" }
+                  - { label: "Source file", name: "source", widget: "string", default: "products.json" }
                   - { label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50 }
-
               - label: "FAQs"
                 name: "faqs"
                 widget: "object"
                 fields:
                   - { label: "Title", name: "title", widget: "string" }
-                  - { label: "Source file", name: "source", widget: "string", default: "site/content/faqs.json" }
-
+                  - { label: "Source file", name: "source", widget: "string", default: "faqs.json" }
               - label: "Banner"
                 name: "banner"
                 widget: "object"
@@ -64,7 +58,6 @@ collections:
                   - { label: "Button label", name: "button_label", widget: "string", required: false }
                   - { label: "Button link", name: "button_link", widget: "string", required: false }
                   - { label: "Background image", name: "background_image", widget: "string" }
-
               - label: "Video"
                 name: "video"
                 widget: "object"
@@ -72,13 +65,12 @@ collections:
                   - { label: "YouTube URL", name: "youtube_url", widget: "string" }
                   - { label: "Caption text", name: "caption", widget: "string", required: false }
 
-      # -------- PT --------
-      - label: "Home (PT)"
-        name: "home_pt"
-        file: "site/content/pt/pages/home.json"
+      - label: "About"
+        name: "about"
+        file: "site/content/pages/about.json"
         format: "json"
         fields:
-          - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
+          - { label: "Take over page", name: "takeover", widget: "boolean", default: true }
           - label: "Sections"
             name: "sections"
             widget: "list"
@@ -93,7 +85,6 @@ collections:
                   - { label: "Background image", name: "background_image", widget: "string", required: false }
                   - { label: "CTA label", name: "cta_label", widget: "string", required: false }
                   - { label: "CTA link", name: "cta_link", widget: "string", required: false }
-
               - label: "Text Block"
                 name: "text"
                 widget: "object"
@@ -101,22 +92,19 @@ collections:
                   - { label: "Heading", name: "heading", widget: "string" }
                   - { label: "Body", name: "body", widget: "text" }
                   - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
-
               - label: "Product Grid"
                 name: "productGrid"
                 widget: "object"
                 fields:
                   - { label: "Title", name: "title", widget: "string" }
-                  - { label: "Source file", name: "source", widget: "string", default: "site/content/products.json" }
+                  - { label: "Source file", name: "source", widget: "string", default: "products.json" }
                   - { label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50 }
-
               - label: "FAQs"
                 name: "faqs"
                 widget: "object"
                 fields:
                   - { label: "Title", name: "title", widget: "string" }
-                  - { label: "Source file", name: "source", widget: "string", default: "site/content/faqs.json" }
-
+                  - { label: "Source file", name: "source", widget: "string", default: "faqs.json" }
               - label: "Banner"
                 name: "banner"
                 widget: "object"
@@ -125,7 +113,6 @@ collections:
                   - { label: "Button label", name: "button_label", widget: "string", required: false }
                   - { label: "Button link", name: "button_link", widget: "string", required: false }
                   - { label: "Background image", name: "background_image", widget: "string" }
-
               - label: "Video"
                 name: "video"
                 widget: "object"
@@ -133,13 +120,12 @@ collections:
                   - { label: "YouTube URL", name: "youtube_url", widget: "string" }
                   - { label: "Caption text", name: "caption", widget: "string", required: false }
 
-      # -------- ES --------
-      - label: "Home (ES)"
-        name: "home_es"
-        file: "site/content/es/pages/home.json"
+      - label: "Shop"
+        name: "shop"
+        file: "site/content/pages/shop.json"
         format: "json"
         fields:
-          - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
+          - { label: "Take over page", name: "takeover", widget: "boolean", default: true }
           - label: "Sections"
             name: "sections"
             widget: "list"
@@ -154,7 +140,6 @@ collections:
                   - { label: "Background image", name: "background_image", widget: "string", required: false }
                   - { label: "CTA label", name: "cta_label", widget: "string", required: false }
                   - { label: "CTA link", name: "cta_link", widget: "string", required: false }
-
               - label: "Text Block"
                 name: "text"
                 widget: "object"
@@ -162,22 +147,19 @@ collections:
                   - { label: "Heading", name: "heading", widget: "string" }
                   - { label: "Body", name: "body", widget: "text" }
                   - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
-
               - label: "Product Grid"
                 name: "productGrid"
                 widget: "object"
                 fields:
                   - { label: "Title", name: "title", widget: "string" }
-                  - { label: "Source file", name: "source", widget: "string", default: "site/content/products.json" }
-                  - { label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50 }
-
+                  - { label: "Source file", name: "source", widget: "string", default: "products.json" }
+                  - { label: "How many", name: "count", widget: "number", default: 12, min: 1, max: 100 }
               - label: "FAQs"
                 name: "faqs"
                 widget: "object"
                 fields:
                   - { label: "Title", name: "title", widget: "string" }
-                  - { label: "Source file", name: "source", widget: "string", default: "site/content/faqs.json" }
-
+                  - { label: "Source file", name: "source", widget: "string", default: "faqs.json" }
               - label: "Banner"
                 name: "banner"
                 widget: "object"
@@ -186,7 +168,6 @@ collections:
                   - { label: "Button label", name: "button_label", widget: "string", required: false }
                   - { label: "Button link", name: "button_link", widget: "string", required: false }
                   - { label: "Background image", name: "background_image", widget: "string" }
-
               - label: "Video"
                 name: "video"
                 widget: "object"
@@ -194,7 +175,117 @@ collections:
                   - { label: "YouTube URL", name: "youtube_url", widget: "string" }
                   - { label: "Caption text", name: "caption", widget: "string", required: false }
 
-  # =============== SIMPLE PAGES BY LANGUAGE ===============
+      - label: "Contact"
+        name: "contact"
+        file: "site/content/pages/contact.json"
+        format: "json"
+        fields:
+          - { label: "Take over page", name: "takeover", widget: "boolean", default: true }
+          - label: "Sections"
+            name: "sections"
+            widget: "list"
+            types:
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Subtitle", name: "subtitle", widget: "text", required: false }
+                  - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
+                  - { label: "Background image", name: "background_image", widget: "string", required: false }
+                  - { label: "CTA label", name: "cta_label", widget: "string", required: false }
+                  - { label: "CTA link", name: "cta_link", widget: "string", required: false }
+              - label: "Text Block"
+                name: "text"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - { label: "Body", name: "body", widget: "text" }
+                  - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
+              - label: "Product Grid"
+                name: "productGrid"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Source file", name: "source", widget: "string", default: "products.json" }
+                  - { label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50 }
+              - label: "FAQs"
+                name: "faqs"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Source file", name: "source", widget: "string", default: "faqs.json" }
+              - label: "Banner"
+                name: "banner"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - { label: "Button label", name: "button_label", widget: "string", required: false }
+                  - { label: "Button link", name: "button_link", widget: "string", required: false }
+                  - { label: "Background image", name: "background_image", widget: "string" }
+              - label: "Video"
+                name: "video"
+                widget: "object"
+                fields:
+                  - { label: "YouTube URL", name: "youtube_url", widget: "string" }
+                  - { label: "Caption text", name: "caption", widget: "string", required: false }
+
+      - label: "FAQs Page"
+        name: "faqs_page"
+        file: "site/content/pages/faqs-page.json"
+        format: "json"
+        fields:
+          - { label: "Take over page", name: "takeover", widget: "boolean", default: true }
+          - label: "Sections"
+            name: "sections"
+            widget: "list"
+            types:
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Subtitle", name: "subtitle", widget: "text", required: false }
+                  - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
+                  - { label: "Background image", name: "background_image", widget: "string", required: false }
+                  - { label: "CTA label", name: "cta_label", widget: "string", required: false }
+                  - { label: "CTA link", name: "cta_link", widget: "string", required: false }
+              - label: "Text Block"
+                name: "text"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - { label: "Body", name: "body", widget: "text" }
+                  - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
+              - label: "Product Grid"
+                name: "productGrid"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Source file", name: "source", widget: "string", default: "products.json" }
+                  - { label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50 }
+              - label: "FAQs"
+                name: "faqs"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Source file", name: "source", widget: "string", default: "faqs.json" }
+              - label: "Banner"
+                name: "banner"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - { label: "Button label", name: "button_label", widget: "string", required: false }
+                  - { label: "Button link", name: "button_link", widget: "string", required: false }
+                  - { label: "Background image", name: "background_image", widget: "string" }
+              - label: "Video"
+                name: "video"
+                widget: "object"
+                fields:
+                  - { label: "YouTube URL", name: "youtube_url", widget: "string" }
+                  - { label: "Caption text", name: "caption", widget: "string", required: false }
+
+  # ===== Simple language buckets (optional basic pages) =====
   - name: "pages_en"
     label: "Pages (EN)"
     folder: "site/content/en/pages"
@@ -228,7 +319,7 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Body", name: "body", widget: "text" }
 
-  # =============== SHARED DATA ===============
+  # ===== Shared content =====
   - name: "products"
     label: "Products"
     files:
@@ -241,16 +332,16 @@ collections:
             name: "items"
             widget: "list"
             fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Price (EUR)", name: "price", widget: "number", value_type: "float", min: 0 }
-              - { label: "Image path", name: "image", widget: "string" }
-              - { label: "Product link", name: "link", widget: "string", required: false }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Price (€)", name: "price", widget: "number", min: 0 }
+              - { label: "Image (path)", name: "image", widget: "string" }
+              - { label: "Product URL", name: "url", widget: "string" }
 
   - name: "faqs"
     label: "FAQs"
     files:
-      - label: "FAQ List"
-        name: "faq_list"
+      - label: "FAQ Entries"
+        name: "faq_entries"
         file: "site/content/faqs.json"
         format: "json"
         fields:
@@ -258,5 +349,5 @@ collections:
             name: "items"
             widget: "list"
             fields:
-              - { label: "Question", name: "question", widget: "string" }
-              - { label: "Answer", name: "answer", widget: "text" }
+              - { label: "Question", name: "q", widget: "string" }
+              - { label: "Answer", name: "a", widget: "text" }
