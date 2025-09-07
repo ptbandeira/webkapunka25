@@ -1,8 +1,42 @@
-{ "takeover": false, "sections": [
-  { "type": "hero", "title": "Acalma, Repara, Protege", "subtitle": "Ajuda a restaurar a barreira cutânea e a reduzir a vermelhidão após procedimentos ou stress diário.", "align": "left", "background_image":"images/video-image.jpg" },
-  { "type": "text", "heading": "Um Ingrediente. Resultados Reais.", "body": "A Kapunka é uma marca com foco clínico, construída em torno de um único ingrediente de excelência: óleo de argão 100% orgânico, prensado a frio e testado em laboratório.", "align":"left" },
-  { "type": "productGrid", "title": "Mais Vendidos", "source": "products.json", "how_many": 6 },
-  { "type": "faqs", "title": "Perguntas Frequentes", "source":"faqs.json" },
-  { "type": "banner", "heading": "Para Clínicas", "button_label":"Seja parceiro", "button_link":"contact.html", "background_image":"images/banner-img3.jpg" },
-  { "type": "video", "youtube_url":"https://www.youtube.com/embed/Gr9cKIjsyJk?rel=0&modestbranding=1", "caption":"KAPUNKA • ÓLEO DE ARGÃO PURO • PRENSADO A FRIO •" }
-]}
+{
+  "sections": [
+    {
+      "type": "hero",
+      "title": "Calm, Repair, Protect",
+      "subtitle": "Helps restore the skin barrier and ease redness after procedures or everyday stress.",
+      "align": "left",
+      "background_image": "/images/video-image.jpg",
+      "cta_label": "See How It Works",
+      "cta_link": "#about"
+    },
+    {
+      "type": "text",
+      "heading": "One ingredient. Real results.",
+      "body": "Kapunka is a clinic-minded skincare brand built around a single, exceptional ingredient: 100% organic argan oil, cold-pressed and lab-tested. Made to calm irritation, support healing, and protect the skin barrier—without perfume, preservatives, or fillers.",
+      "align": "center"
+    },
+    {
+      "type": "productGrid",
+      "title": "Best-Sellers",
+      "source": "products.json", 
+      "count": 6
+    },
+    {
+      "type": "faqs",
+      "title": "FAQs",
+      "source": "faqs.json"
+    },
+    {
+      "type": "banner",
+      "heading": "For Clinics",
+      "button_label": "Partner with us",
+      "button_link": "contact.html",
+      "background_image": "/images/banner-img3.jpg"
+    },
+    {
+      "type": "video",
+      "youtube_url": "https://www.youtube.com/embed/Gr9cKIjsyJk?rel=0&modestbranding=1",
+      "caption": "KAPUNKA • PURE ARGAN OIL • COLD-PRESSED • SKIN • HAIR • NAILS •"
+    }
+  ]
+}

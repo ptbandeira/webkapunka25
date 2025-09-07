@@ -1,8 +1,10 @@
 {
   "items": [
-    { "id":"p30",  "title":"Argan Oil 30ml",  "image":"images/product-item1.jpg", "price":"€19" },
-    { "id":"p50",  "title":"Argan Oil 50ml",  "image":"images/product-item2.jpg", "price":"€29" },
-    { "id":"p100", "title":"Argan Oil 100ml", "image":"images/product-item3.jpg", "price":"€49" },
-    { "id":"gift", "title":"Gift Set",        "image":"images/product-item5.jpg", "price":"€79" }
+    { "slug": "30ml",  "name": "Argan Oil 30ml",  "price": "€19", "image": "/images/product-item1.jpg", "link": "product-30ml.html" },
+    { "slug": "50ml",  "name": "Argan Oil 50ml",  "price": "€29", "image": "/images/product-item2.jpg", "link": "product-50ml.html" },
+    { "slug": "100ml", "name": "Argan Oil 100ml", "price": "€49", "image": "/images/product-item3.jpg", "link": "product-100ml.html" },
+    { "slug": "dropper", "name": "Argan Oil + Dropper", "price": "€32", "image": "/images/product-item4.jpg", "link": "product-dropper.html" },
+    { "slug": "gift", "name": "Gift Set", "price": "€79", "image": "/images/product-item5.jpg", "link": "product-gift.html" },
+    { "slug": "200ml", "name": "Argan Oil 200ml", "price": "€89", "image": "/images/product-item2.jpg", "link": "product-200ml.html" }
   ]
 }
