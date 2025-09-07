@@ -13,61 +13,81 @@
       CMS.registerPreviewStyle("/css/bootstrap.min.css");
       CMS.registerPreviewStyle("/style.css?v=footer-fix1");
 
-      // About preview
-      var AboutPreview = createClass({
+      function h(tag, props, children){ return window.h(tag, props, children); }
+
+      var HomePreview = createClass({
         render: function () {
-          var e = this.props.entry, t = e.getIn(["data","title"])||"Our story", b = e.getIn(["data","body"])||"", img = e.getIn(["data","image"]);
-          return h("section",{className:"padding-xlarge"},[
-            h("div",{className:"container"},[
-              h("span",{className:"title-accent fs-6 text-uppercase"},"About Kapunka"),
-              h("h3",{className:"py-3"},t),
-              h("p",{},b),
-              img ? h("img",{src:img, alt:t, style:{maxWidth:"100%",marginTop:"1rem"}}): null
-            ])
-          ]);
+          var entry = this.props.entry;
+          var sections = entry.getIn(["data","sections"]) || [];
+          function A(cls, kids){ return h("section-wrapper", { className: cls || "padding-xlarge" }, h("div",{className:"container"}, kids)); }
+          return h("div", {},
+            sections.map(function(s, i){
+              var t = s.get("type");
+              if (t==="hero") {
+                return A("padding-xlarge jarallax", [
+                  h("h1", {className: (s.get("align")==="center"?"text-center":s.get("align")==="right"?"text-end":"")}, s.get("title")),
+                  s.get("subtitle") ? h("p", {}, s.get("subtitle")) : null,
+                  s.get("cta_label") ? h("a",{href:s.get("cta_link")||"#",className:"btn mt-2"}, s.get("cta_label")) : null
+                ]);
+              }
+              if (t==="text") {
+                return A(null, [
+                  s.get("heading") ? h("h3",{className:"py-3"}, s.get("heading")) : null,
+                  s.get("body") ? h("p",{}, s.get("body")) : null
+                ]);
+              }
+              if (t==="productGrid") {
+                return A("product-store", [
+                  h("div",{className:"display-header d-flex justify-content-between pb-4"},
+                    [h("h3",{className:"mt-3"}, s.get("title")||"Products")]
+                  ),
+                  h("div",{className:"row"},
+                    [1,2,3].map(function(n){return h("div",{className:"col-md-4 mb-4",key:n},
+                      h("div",{className:"product-card text-center"},[
+                        h("div",{className:"image-holder zoom-effect"}, h("div",{style:{background:"#eee",height:"200px"}})),
+                        h("div",{className:"card-detail pt-3 pb-2"},[
+                          h("h5",{},"Product"),
+                          h("div",{className:"price"}, "€…")
+                        ])
+                      ])
+                    );})
+                  )
+                ]);
+              }
+              if (t==="faqs") {
+                return A(null, [
+                  h("h3",{className:"text-center mb-5"}, s.get("title")||"FAQs"),
+                  h("div",{className:"accordion accordion-flush"},[
+                    h("div",{className:"accordion-item"},
+                      [h("h4",{className:"accordion-header"},
+                        h("button",{className:"accordion-button collapsed",type:"button"},"Question")
+                      ),
+                      h("div",{className:"accordion-body"}, h("p",{},"Answer"))])
+                  ])
+                ]);
+              }
+              if (t==="banner") {
+                return h("section-wrapper",{className:"position-relative"},
+                  h("div",{className:"banner-content-text position-absolute"},
+                    [h("h2",{}, s.get("heading")||"Banner"),
+                     s.get("button_label") ? h("a",{href:s.get("button_link")||"#",className:"btn"}, s.get("button_label")):null]));
+              }
+              if (t==="video") {
+                return A(null, [
+                  h("div",{className:"ratio ratio-16x9", style:{background:"#000"}})
+                ]);
+              }
+              return h("div",{},"Unknown section");
+            }).toArray()
+          );
         }
       });
-      CMS.registerPreviewTemplate("about", AboutPreview);
 
-      // FAQs preview
-      var FaqsPreview = createClass({
-        render: function () {
-          var items = this.props.entry.getIn(["data","items"]) || [];
-          return h("div",{className:"accordion accordion-flush"}, items.map(function(it,i){
-            return h("div",{className:"accordion-item",key:i},[
-              h("h4",{className:"accordion-header"},h("button",{className:"accordion-button collapsed",type:"button"}, it.get("q")||"Question")),
-              h("div",{className:"accordion-body"}, h("p",{}, it.get("a")||"Answer"))
-            ]);
-          }));
-        }
-      });
-      CMS.registerPreviewTemplate("faqs", FaqsPreview);
+      CMS.registerPreviewTemplate("home", HomePreview);
 
-      // Products preview
-      var ProductsPreview = createClass({
-        render: function () {
-          var items = this.props.entry.getIn(["data","items"]) || [];
-          return h("div",{className:"row"}, items.map(function(p,i){
-            return h("div",{className:"col-md-4 mb-4",key:i},[
-              h("div",{className:"product-card text-center"},[
-                h("img",{src:p.get("image")||"", alt:p.get("name")||"", style:{maxWidth:"100%"} }),
-                h("h5",{}, p.get("name")||"Product"),
-                h("div",{className:"price"}, p.get("price")||"")
-              ])
-            ]);
-          }));
-        }
-      });
-      CMS.registerPreviewTemplate("products", ProductsPreview);
-
-      // Identity login redirect
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", function(user) {
-          if (!user) {
-            window.netlifyIdentity.on("login", function() {
-              document.location.href = "/admin/";
-            });
-          }
+          if (!user) window.netlifyIdentity.on("login", function(){ document.location.href="/admin/"; });
         });
       }
     </script>

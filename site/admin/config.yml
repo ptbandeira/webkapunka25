@@ -6,47 +6,64 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "about"
-    label: "About Page"
+  - name: "pages"
+    label: "Pages (builder)"
     files:
-      - label: "About"
-        name: "about"
-        file: "content/about.json"
+      - label: "Home"
+        name: "home"
+        file: "content/pages/home.json"
         format: "json"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Body",  name: "body",  widget: "text" }
-          - { label: "Image (optional path)", name: "image", widget: "string", required: false }
-
-  - name: "faqs"
-    label: "FAQs"
-    files:
-      - label: "FAQs"
-        name: "faqs"
-        file: "content/faqs.json"
-        format: "json"
-        fields:
-          - label: "Items"
-            name: "items"
+          - label: "Sections"
+            name: "sections"
             widget: "list"
-            fields:
-              - { label: "Question", name: "q", widget: "string" }
-              - { label: "Answer",   name: "a", widget: "text" }
+            types:
+              - label: "Hero"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Subtitle", name: "subtitle", widget: "text" }
+                  - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
+                  - { label: "Background image", name: "background_image", widget: "string", required: false }
+                  - { label: "CTA label", name: "cta_label", widget: "string", required: false }
+                  - { label: "CTA link", name: "cta_link", widget: "string", required: false }
 
-  - name: "products"
-    label: "Products"
-    files:
-      - label: "Products"
-        name: "products"
-        file: "content/products.json"
-        format: "json"
-        fields:
-          - label: "Items"
-            name: "items"
-            widget: "list"
-            fields:
-              - { label: "Slug",  name: "slug",  widget: "string" }
-              - { label: "Name",  name: "name",  widget: "string" }
-              - { label: "Price", name: "price", widget: "string" }
-              - { label: "Image", name: "image", widget: "string" }
-              - { label: "Link",  name: "link",  widget: "string" }
+              - label: "Text Block"
+                name: "text"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - { label: "Body", name: "body", widget: "text" }
+                  - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
+
+              - label: "Product Grid"
+                name: "productGrid"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Source file", name: "source", widget: "string", default: "products.json" }
+                  - { label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50 }
+
+              - label: "FAQs"
+                name: "faqs"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Source file", name: "source", widget: "string", default: "faqs.json" }
+
+              - label: "Banner"
+                name: "banner"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "heading", widget: "string" }
+                  - { label: "Button label", name: "button_label", widget: "string", required: false }
+                  - { label: "Button link", name: "button_link", widget: "string", required: false }
+                  - { label: "Background image", name: "background_image", widget: "string" }
+
+              - label: "Video"
+                name: "video"
+                widget: "object"
+                fields:
+                  - { label: "YouTube URL", name: "youtube_url", widget: "string" }
+                  - { label: "Caption text", name: "caption", widget: "string", required: false }
