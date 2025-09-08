@@ -18,6 +18,11 @@
         "title": "Acalmar, Reparar, Proteger",
         "subtitle": "Ajuda a restaurar a barreira cutânea e a reduzir a vermelhidão após procedimentos ou o stress do dia a dia.",
         "button": "Ver como funciona"
+      },
+      {
+        "title": "Grau Clínico. Suave para a Pele.",
+        "subtitle": "Usado por profissionais de saúde. Seguro para pele sensível e para toda a família.",
+        "button": "Para Clínicas"
       }
     ]
   },
@@ -43,6 +48,9 @@
     "contact_info": "Contactos",
     "social_info": "Redes sociais",
     "follow": "Siga a Kapunka para lançamentos, rotinas e dicas.",
+    "address": "Varsóvia, Polónia",
+    "phone": "+48 000 000 000",
+    "email": "info@kapunkargan.com",
     "copyright_prefix": "© Direitos de Autor 2025 Kapunka. Design por "
   }
 }

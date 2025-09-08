@@ -18,6 +18,11 @@
         "title": "Calmar, Reparar, Proteger",
         "subtitle": "Ayuda a restaurar la barrera cutánea y a reducir el enrojecimiento tras procedimientos o el estrés diario.",
         "button": "Ver cómo funciona"
+      },
+      {
+        "title": "Grado Clínico. Amable con la Piel.",
+        "subtitle": "Usado por profesionales sanitarios. Seguro para piel sensible y para toda la familia.",
+        "button": "Para Clínicas"
       }
     ]
   },
@@ -43,6 +48,9 @@
     "contact_info": "Información de contacto",
     "social_info": "Redes sociales",
     "follow": "Sigue a Kapunka para lanzamientos, rutinas y consejos.",
+    "address": "Varsovia, Polonia",
+    "phone": "+48 000 000 000",
+    "email": "info@kapunkargan.com",
     "copyright_prefix": "© Derechos de autor 2025 Kapunka. Diseño por "
   }
 }

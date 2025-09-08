@@ -260,6 +260,14 @@ customElements.define('site-header', SiteHeader);
             if (socialP && tr.footer.follow) socialP.textContent = tr.footer.follow;
             const socialH = socialP ? socialP.closest('.footer-menu')?.querySelector('.widget-title') : null;
             if (socialH && tr.footer.social_info) socialH.textContent = tr.footer.social_info;
+            // Contact list items: address, phone, email
+            const contactList = footer.querySelector('.footer-menu.contact-item ul.menu-list');
+            if (contactList){
+              const items = contactList.querySelectorAll('li.menu-item a');
+              if (items[0] && tr.footer.address) items[0].textContent = tr.footer.address;
+              if (items[1] && tr.footer.phone) items[1].textContent = tr.footer.phone;
+              if (items[2] && tr.footer.email) { items[2].textContent = tr.footer.email; items[2].setAttribute('href', 'mailto:' + tr.footer.email); }
+            }
           }
           const cr = document.querySelector('#footer-bottom .copyright p');
           if (cr && tr.footer.copyright_prefix){
