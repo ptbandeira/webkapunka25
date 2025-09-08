@@ -194,6 +194,25 @@ customElements.define('site-header', SiteHeader);
       }catch(e){}
     }
 
+    function toMobileLangLink(rightUL, current){
+      try{
+        const dd = rightUL.querySelector('#langDropdown');
+        if (!dd) return;
+        const li = dd.closest('li');
+        if (!li) return;
+        // Replace dropdown with a simple link for offcanvas/mobile
+        const a = document.createElement('a');
+        a.className = 'nav-link me-0';
+        a.href = '#';
+        a.id = 'langLinkMobile';
+        a.textContent = String(current || 'EN').toUpperCase();
+        a.addEventListener('click', (ev) => { ev.preventDefault(); setLang((current||'en')); });
+        li.innerHTML = '';
+        li.className = 'nav-item';
+        li.appendChild(a);
+      }catch(e){}
+    }
+
     function init(){
       const nav = document.querySelector('#header-nav #navbar');
       if (!nav) return;
@@ -206,8 +225,13 @@ customElements.define('site-header', SiteHeader);
         if (li && li.parentElement !== rightUL) li.remove();
         else return; // already in correct place
       }
-      rightUL.appendChild(buildSwitcher(detectLang()));
+      const currentLang = detectLang();
+      rightUL.appendChild(buildSwitcher(currentLang));
       normalizeRightGroup(rightUL);
+      // For mobile/offcanvas, convert language dropdown to a simple link (one item per line)
+      if (window.matchMedia && window.matchMedia('(max-width: 991.98px)').matches) {
+        toMobileLangLink(rightUL, currentLang);
+      }
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
     else init();
