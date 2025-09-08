@@ -77,6 +77,16 @@
       registerLangPreview('pages_en', 'en');
       registerLangPreview('pages_pt', 'pt');
       registerLangPreview('pages_es', 'es');
+
+      // i18n files preview: load homepage with ?lang to preview header/footer copy
+      CMS.registerPreviewTemplate('i18n_pt', ({ entry }) => {
+        const Frame = makeFrame('/?cms-preview=1&lang=pt', '__noop');
+        return h(Frame, { data: {} });
+      });
+      CMS.registerPreviewTemplate('i18n_es', ({ entry }) => {
+        const Frame = makeFrame('/?cms-preview=1&lang=es', '__noop');
+        return h(Frame, { data: {} });
+      });
     </script>
   </body>
   

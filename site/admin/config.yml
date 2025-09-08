@@ -106,3 +106,128 @@ collections:
     fields:
       - { label: "Título", name: "title", widget: "string" }
       - { label: "Cuerpo", name: "body", widget: "text", required: false }
+
+  # i18n dictionaries (safe strings for header/footer/home banners/pages)
+  - name: "i18n_pt"
+    label: "i18n (PT)"
+    files:
+      - label: "Português (PT)"
+        name: "pt"
+        file: "site/content/i18n/pt.json"
+        format: "json"
+        fields:
+          - label: "Header Navigation"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "About", name: "about", widget: "string" }
+              - { label: "Shop", name: "shop", widget: "string" }
+              - { label: "Contact", name: "contact", widget: "string" }
+              - { label: "Account", name: "account", widget: "string" }
+              - { label: "Cart", name: "cart", widget: "string" }
+              - { label: "Search", name: "search", widget: "string", required: false }
+          - label: "Home Banners"
+            name: "home.banners"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "text", required: false }
+              - { label: "Button", name: "button", widget: "string", required: false }
+          - label: "Pages"
+            name: "pages"
+            widget: "object"
+            fields:
+              - label: "About Page"
+                name: "/about.html"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h1", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text", required: false }
+                  - { label: "Paragraph 2", name: "p2", widget: "text", required: false }
+              - label: "Shop Page"
+                name: "/shop.html"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h1", widget: "string" }
+              - label: "Contact Page"
+                name: "/contact.html"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h1", widget: "string" }
+                  - { label: "Intro", name: "intro", widget: "text", required: false }
+                  - { label: "Email", name: "email", widget: "string", required: false }
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Privacy", name: "privacy", widget: "string" }
+              - { label: "Terms", name: "terms", widget: "string" }
+              - { label: "Contact Heading", name: "contact_info", widget: "string" }
+              - { label: "Address", name: "address", widget: "string", required: false }
+              - { label: "Phone", name: "phone", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
+              - { label: "Social Heading", name: "social_info", widget: "string", required: false }
+              - { label: "Follow Text", name: "follow", widget: "text", required: false }
+              - { label: "Copyright Prefix", name: "copyright_prefix", widget: "string" }
+
+  - name: "i18n_es"
+    label: "i18n (ES)"
+    files:
+      - label: "Español (ES)"
+        name: "es"
+        file: "site/content/i18n/es.json"
+        format: "json"
+        fields:
+          - label: "Header Navigation"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "About", name: "about", widget: "string" }
+              - { label: "Shop", name: "shop", widget: "string" }
+              - { label: "Contact", name: "contact", widget: "string" }
+              - { label: "Account", name: "account", widget: "string" }
+              - { label: "Cart", name: "cart", widget: "string" }
+              - { label: "Search", name: "search", widget: "string", required: false }
+          - label: "Home Banners"
+            name: "home.banners"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "text", required: false }
+              - { label: "Button", name: "button", widget: "string", required: false }
+          - label: "Pages"
+            name: "pages"
+            widget: "object"
+            fields:
+              - label: "About Page"
+                name: "/about.html"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h1", widget: "string" }
+                  - { label: "Paragraph 1", name: "p1", widget: "text", required: false }
+                  - { label: "Paragraph 2", name: "p2", widget: "text", required: false }
+              - label: "Shop Page"
+                name: "/shop.html"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h1", widget: "string" }
+              - label: "Contact Page"
+                name: "/contact.html"
+                widget: "object"
+                fields:
+                  - { label: "Heading", name: "h1", widget: "string" }
+                  - { label: "Intro", name: "intro", widget: "text", required: false }
+                  - { label: "Email", name: "email", widget: "string", required: false }
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Privacy", name: "privacy", widget: "string" }
+              - { label: "Terms", name: "terms", widget: "string" }
+              - { label: "Contact Heading", name: "contact_info", widget: "string" }
+              - { label: "Address", name: "address", widget: "string", required: false }
+              - { label: "Phone", name: "phone", widget: "string", required: false }
+              - { label: "Email", name: "email", widget: "string", required: false }
+              - { label: "Social Heading", name: "social_info", widget: "string", required: false }
+              - { label: "Follow Text", name: "follow", widget: "text", required: false }
+              - { label: "Copyright Prefix", name: "copyright_prefix", widget: "string" }

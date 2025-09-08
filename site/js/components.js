@@ -312,6 +312,63 @@ customElements.define('site-header', SiteHeader);
       }
       // Apply translations across the page
       applyI18n(currentLang);
+
+      // Safe page content JSON overlay (About/Shop/Contact)
+      (async function(){
+        try{
+          const path = window.location.pathname.replace(/\/+$/, '') || '/index.html';
+          const map = { '/about.html': 'about', '/shop.html': 'shop', '/contact.html': 'contact' };
+          const slug = map[path];
+          if (!slug) return;
+          const res = await fetch(`/content/pages/${slug}.json`, { cache: 'no-store' });
+          if (!res.ok) return;
+          const data = await res.json();
+          if (slug === 'about'){
+            if (data.title){ const h1 = document.querySelector('h1'); if (h1) h1.textContent = data.title; }
+            if (data.body){ const p = document.querySelector('section-wrapper p, .container p'); if (p) p.textContent = data.body; }
+          } else if (slug === 'shop'){
+            if (data.title){ const h1 = document.querySelector('h1'); if (h1) h1.textContent = data.title; }
+          } else if (slug === 'contact'){
+            if (data.title){ const h1 = document.querySelector('h1'); if (h1) h1.textContent = data.title; }
+            if (data.intro){ const p = document.querySelector('section-wrapper p, .container p'); if (p) p.textContent = data.intro; }
+            if (data.email){ const a = document.querySelector("a[href^='mailto:']"); if (a){ a.textContent = data.email; a.setAttribute('href', 'mailto:' + data.email); } }
+          }
+        }catch(e){}
+      })();
+
+      // Shop grid: hydrate from products.json (design-locked cards)
+      (async function(){
+        try{
+          if (!/\/shop\.html$/.test(window.location.pathname)) return;
+          const container = document.querySelector('section-wrapper .row.g-4, .row.g-4');
+          if (!container) return;
+          const res = await fetch('/content/products.json', { cache: 'no-store' });
+          if (!res.ok) return;
+          const data = await res.json();
+          const items = (data && Array.isArray(data.items)) ? data.items : [];
+          if (!items.length) return;
+          const card = (p) => `
+            <div class="col-md-4">
+              <div class="product-card position-relative">
+                <div class="image-holder zoom-effect">
+                  <img src="${p.image}" alt="${p.name}" class="img-fluid zoom-in" loading="lazy">
+                  <div class="cart-concern position-absolute">
+                    <div class="cart-button">
+                      <a href="${p.link || '#'}" class="btn">Add to Cart</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-detail text-center pt-3 pb-2">
+                  <h5 class="card-title fs-3 text-capitalize">
+                    <a href="${p.link || '#'}">${p.name}</a>
+                  </h5>
+                  <span class="item-price text-primary fs-3 fw-light">${new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',minimumFractionDigits:0,maximumFractionDigits:0}).format(p.price)}</span>
+                </div>
+              </div>
+            </div>`;
+          container.innerHTML = items.map(card).join('');
+        }catch(e){}
+      })();
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
     else init();
