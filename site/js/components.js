@@ -161,6 +161,39 @@ customElements.define('site-header', SiteHeader);
       });
       return li;
     }
+    function normalizeRightGroup(rightUL){
+      try{
+        // Collect key elements
+        const langLI = rightUL.querySelector('#langDropdown')?.closest('li');
+        // Search form: either a form or input with id="search"
+        let searchEl = rightUL.querySelector('form[role="search"], #search');
+        // Account link
+        let accountA = Array.from(rightUL.querySelectorAll('a.nav-link, a')).find(a => /login\.html$/i.test(a.getAttribute('href')||'')) || null;
+        // Cart toggle/link (looks for text starting with 'Cart')
+        let cartA = Array.from(rightUL.querySelectorAll('a')).find(a => /cart/i.test(a.textContent||'')) || null;
+
+        function ensureLI(el){
+          if (!el) return null;
+          const li = el.closest('li');
+          if (li && li.parentElement === rightUL) return li;
+          const wrap = document.createElement('li');
+          wrap.className = 'nav-item';
+          wrap.appendChild(el);
+          return wrap;
+        }
+
+        // Build in required order: Search -> Account -> Cart -> EN
+        const desired = [];
+        if (searchEl) desired.push(ensureLI(searchEl));
+        if (accountA) desired.push(ensureLI(accountA));
+        if (cartA) desired.push(ensureLI(cartA));
+        if (langLI) desired.push(langLI);
+
+        // Append in order (skipping nulls), remove duplicates left behind
+        desired.forEach(li => { if (li) rightUL.appendChild(li); });
+      }catch(e){}
+    }
+
     function init(){
       const nav = document.querySelector('#header-nav #navbar');
       if (!nav) return;
@@ -174,6 +207,7 @@ customElements.define('site-header', SiteHeader);
         else return; // already in correct place
       }
       rightUL.appendChild(buildSwitcher(detectLang()));
+      normalizeRightGroup(rightUL);
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
     else init();
