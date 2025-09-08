@@ -9,85 +9,102 @@
   <body>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script src="/js/cms-preview.js"></script>
     <script>
-      const h = window.h;
-      const createClass = window.createClass;
+      CMS.registerPreviewStyle("/css/bootstrap.min.css");
+      CMS.registerPreviewStyle("/style.css?v=footer-fix1");
 
-      // Load site in an iframe and apply preview data safely (no layout changes)
-      function makeFrame(src, applier){
-        return createClass({
-          componentDidMount(){
-            this._onload = () => {
-              try{ const w = this._iframe && this._iframe.contentWindow; if (w && typeof w[applier]==='function') w[applier](this.props.data); }catch(e){}
-            };
-            if (this._iframe) this._iframe.addEventListener('load', this._onload);
-          },
-          componentWillUnmount(){ if (this._iframe && this._onload) this._iframe.removeEventListener('load', this._onload); },
-          render(){ return h('iframe', { src, style:{ width:'100%', height:'90vh', border:0 }, ref: (el)=>{ this._iframe = el; } }); }
-        });
-      }
+      function h(tag, props, children){ return window.h(tag, props, children); }
 
-      CMS.registerPreviewTemplate('home', ({ entry }) => {
-        const data = entry.get('data').toJS();
-        const Frame = makeFrame('/?cms-preview=1', '__applyHome');
-        return h(Frame, { data });
-      });
+      var HomePreview = createClass({
+        render: function () {
+          var entry = this.props.entry;
+          var sections = entry.getIn(["data","sections"]) || [];
 
-      // About: preview-only safe mapping
-      CMS.registerPreviewTemplate('about', ({ entry }) => {
-        const data = entry.get('data').toJS();
-        const Frame = makeFrame('/about.html?cms-preview=1', '__applyAbout');
-        return h(Frame, { data });
-      });
+          function kids(list, mapFn){
+            if (!list || !list.map) return [];
+            var mapped = list.map(mapFn);
+            return mapped && mapped.toArray ? mapped.toArray() : mapped;
+          }
+          function A(cls, kidsArr){
+            return h("section-wrapper", { className: cls || "padding-xlarge" },
+              h("div",{className:"container"}, kidsArr)
+            );
+          }
 
-      // Shop: preview-only safe mapping
-      CMS.registerPreviewTemplate('shop', ({ entry }) => {
-        const data = entry.get('data').toJS();
-        const Frame = makeFrame('/shop.html?cms-preview=1', '__applyShop');
-        return h(Frame, { data });
-      });
+          return h("div", {}, kids(sections, function(s, i){
+            var t = s.get ? s.get("type") : s.type;
 
-      // Contact: preview-only safe mapping
-      CMS.registerPreviewTemplate('contact', ({ entry }) => {
-        const data = entry.get('data').toJS();
-        const Frame = makeFrame('/contact.html?cms-preview=1', '__applyContact');
-        return h(Frame, { data });
-      });
-
-      function pagePathForSlug(slug){
-        switch(String(slug||'').toLowerCase()){
-          case 'about': return '/about.html';
-          case 'shop': return '/shop.html';
-          case 'contact': return '/contact.html';
-          default: return '/index.html';
+            if (t==="hero") {
+              var align = s.get("align");
+              var cls = align==="center"?"text-center":align==="right"?"text-end":"";
+              return A("padding-xlarge jarallax", [
+                h("h1", {className: cls}, s.get("title")),
+                s.get("subtitle") ? h("p", {}, s.get("subtitle")) : null,
+                s.get("cta_label") ? h("a",{href:s.get("cta_link")||"#",className:"btn mt-2"}, s.get("cta_label")) : null
+              ]);
+            }
+            if (t==="text") {
+              return A(null, [
+                s.get("heading") ? h("h3",{className:"py-3"}, s.get("heading")) : null,
+                s.get("body") ? h("p",{}, s.get("body")) : null
+              ]);
+            }
+            if (t==="productGrid") {
+              return A("product-store", [
+                h("div",{className:"display-header d-flex justify-content-between pb-4"},
+                  [h("h3",{className:"mt-3"}, s.get("title")||"Products")]
+                ),
+                h("div",{className:"row"},
+                  [1,2,3].map(function(n){return h("div",{className:"col-md-4 mb-4",key:n},
+                    h("div",{className:"product-card text-center"},[
+                      h("div",{className:"image-holder zoom-effect"}, h("div",{style:{background:"#eee",height:"200px"}})),
+                      h("div",{className:"card-detail pt-3 pb-2"},[
+                        h("h5",{},"Product"),
+                        h("div",{className:"price"}, "€…")
+                      ])
+                    ])
+                  );})
+                )
+              ]);
+            }
+            if (t==="faqs") {
+              return A(null, [
+                h("h3",{className:"text-center mb-5"}, s.get("title")||"FAQs"),
+                h("div",{className:"accordion accordion-flush"},[
+                  h("div",{className:"accordion-item"},
+                    [h("h4",{className:"accordion-header"},
+                      h("button",{className:"accordion-button collapsed",type:"button"},"Question")
+                    ),
+                    h("div",{className:"accordion-body"}, h("p",{},"Answer"))])
+                ])
+              ]);
+            }
+            if (t==="banner") {
+              return h("section-wrapper",{className:"position-relative"},
+                h("div",{className:"banner-content-text position-absolute"},
+                  [h("h2",{}, s.get("heading")||"Banner"),
+                   s.get("button_label") ? h("a",{href:s.get("button_link")||"#",className:"btn"}, s.get("button_label")):null]));
+            }
+            if (t==="video") {
+              return A(null, [h("div",{className:"ratio ratio-16x9", style:{background:"#000"}})]);
+            }
+            return h("div",{},"Unknown section");
+          }));
         }
-      }
+      });
 
-      function registerLangPreview(collName, lang){
-        CMS.registerPreviewTemplate(collName, ({ entry }) => {
-          const data = entry.get('data').toJS();
-          const slug = entry.get('slug');
-          const src = pagePathForSlug(slug)+`?cms-preview=1&lang=${lang}`;
-          const Frame = makeFrame(src, '__applyPage');
-          return h(Frame, { data });
+      CMS.registerPreviewTemplate("home", HomePreview);
+
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", function(user) {
+          if (!user) window.netlifyIdentity.on("login", function(){ document.location.href="/admin/"; });
         });
       }
-
-      registerLangPreview('pages_en', 'en');
-      registerLangPreview('pages_pt', 'pt');
-      registerLangPreview('pages_es', 'es');
-
-      // i18n files preview: load homepage with ?lang to preview header/footer copy
-      CMS.registerPreviewTemplate('i18n_pt', ({ entry }) => {
-        const Frame = makeFrame('/?cms-preview=1&lang=pt', '__noop');
-        return h(Frame, { data: {} });
-      });
-      CMS.registerPreviewTemplate('i18n_es', ({ entry }) => {
-        const Frame = makeFrame('/?cms-preview=1&lang=es', '__noop');
-        return h(Frame, { data: {} });
-      });
     </script>
   </body>
-  
 </html>
+
+<script>
+  CMS.registerPreviewStyle("/css/bootstrap.min.css");
+  CMS.registerPreviewStyle("/style.css?v=footer-fix1");
+</script>

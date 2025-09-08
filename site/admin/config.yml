@@ -6,228 +6,207 @@ media_folder: "site/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
+  # ---- Default language (fallback) pages with the SECTION BUILDER ----
   - name: "pages"
     label: "Pages (builder)"
-    files:
-      - label: "Home"
-        name: "home"
-        file: "site/content/pages/home.json"
-        format: "json"
-        fields:
-          - { label: "Hero Title", name: "hero.title", widget: "string" }
-          - { label: "Hero Subtitle", name: "hero.subtitle", widget: "text", required: false }
-          - { label: "Hero Background", name: "hero.background_image", widget: "string", required: false }
-          - { label: "About Title", name: "about.title", widget: "string" }
-          - { label: "About Body", name: "about.body", widget: "text" }
-
-      - label: "About"
-        name: "about"
-        file: "site/content/pages/about.json"
-        format: "json"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Body", name: "body", widget: "text" }
-
-      - label: "Shop"
-        name: "shop"
-        file: "site/content/pages/shop.json"
-        format: "json"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-
-      - label: "Contact"
-        name: "contact"
-        file: "site/content/pages/contact.json"
-        format: "json"
-        fields:
-          - { label: "Title", name: "title", widget: "string" }
-          - { label: "Intro", name: "intro", widget: "text", required: false }
-          - { label: "Email", name: "email", widget: "string", required: false }
-
-  - name: "products"
-    label: "Products"
-    files:
-      - label: "Product List"
-        name: "product_list"
-        file: "site/content/products.json"
-        format: "json"
-        fields:
-          - label: "Items"
-            name: "items"
-            widget: "list"
+    folder: "site/content/pages"
+    create: true
+    format: "json"
+    extension: "json"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
+      - label: "Sections"
+        name: "sections"
+        widget: "list"
+        types:
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
             fields:
-              - { label: "Name", name: "name", widget: "string" }
-              - { label: "Price (EUR)", name: "price", widget: "number" }
-              - { label: "Image", name: "image", widget: "string" }
-              - { label: "Link", name: "link", widget: "string", required: false }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "text", required: false }
+              - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
+              - { label: "Background image (use /images/... or upload)", name: "background_image", widget: "string", required: false }
+              - { label: "CTA label", name: "cta_label", widget: "string", required: false }
+              - { label: "CTA link", name: "cta_link", widget: "string", required: false }
 
-  - name: "faqs"
-    label: "FAQs"
-    files:
-      - label: "FAQ Entries"
-        name: "faq_entries"
-        file: "site/content/faqs.json"
-        format: "json"
-        fields:
-          - label: "Items"
-            name: "items"
-            widget: "list"
+          - label: "Text Block"
+            name: "text"
+            widget: "object"
             fields:
-              - { label: "Question", name: "q", widget: "string" }
-              - { label: "Answer", name: "a", widget: "text" }
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Body", name: "body", widget: "text" }
+              - { label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left" }
 
-  # Per-language simple pages (title/body) — preview-only mapping
+          - label: "Product Grid"
+            name: "productGrid"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Source file (e.g. products.json)", name: "source", widget: "string", default: "products.json" }
+              - { label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50 }
+
+          - label: "FAQs"
+            name: "faqs"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Source file (e.g. faqs.json)", name: "source", widget: "string", default: "faqs.json" }
+
+          - label: "Banner"
+            name: "banner"
+            widget: "object"
+            fields:
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Button label", name: "button_label", widget: "string", required: false }
+              - { label: "Button link", name: "button_link", widget: "string", required: false }
+              - { label: "Background image (use /images/... or upload)", name: "background_image", widget: "string" }
+
+          - label: "Video"
+            name: "video"
+            widget: "object"
+            fields:
+              - { label: "YouTube URL", name: "youtube_url", widget: "string" }
+              - { label: "Caption text", name: "caption", widget: "string", required: false }
+
+  # ---- English pages (same builder) ----
   - name: "pages_en"
     label: "Pages (EN)"
     folder: "site/content/en/pages"
     create: true
+    format: "json"
     extension: "json"
     slug: "{{slug}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Body", name: "body", widget: "text", required: false }
+      - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
+      - label: "Sections"
+        name: "sections"
+        widget: "list"
+        types:
+          - { label: "Hero", name: "hero", widget: "object", fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Subtitle", name: "subtitle", widget: "text", required: false},
+                {label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left"},
+                {label: "Background image (use /images/... or upload)", name: "background_image", widget: "string", required: false},
+                {label: "CTA label", name: "cta_label", widget: "string", required: false},
+                {label: "CTA link", name: "cta_link", widget: "string", required: false}
+          ] }
+          - { label: "Text Block", name: "text", widget: "object", fields: [
+                {label: "Heading", name: "heading", widget: "string"},
+                {label: "Body", name: "body", widget: "text"},
+                {label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left"}
+          ] }
+          - { label: "Product Grid", name: "productGrid", widget: "object", fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Source file", name: "source", widget: "string", default: "products.json"},
+                {label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50}
+          ] }
+          - { label: "FAQs", name: "faqs", widget: "object", fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Source file", name: "source", widget: "string", default: "faqs.json"}
+          ] }
+          - { label: "Banner", name: "banner", widget: "object", fields: [
+                {label: "Heading", name: "heading", widget: "string"},
+                {label: "Button label", name: "button_label", widget: "string", required: false},
+                {label: "Button link", name: "button_link", widget: "string", required: false},
+                {label: "Background image (use /images/... or upload)", name: "background_image", widget: "string"}
+          ] }
+          - { label: "Video", name: "video", widget: "object", fields: [
+                {label: "YouTube URL", name: "youtube_url", widget: "string"},
+                {label: "Caption text", name: "caption", widget: "string", required: false}
+          ] }
 
+  # ---- Portuguese pages (same builder) ----
   - name: "pages_pt"
-    label: "Páginas (PT)"
+    label: "Pages (PT)"
     folder: "site/content/pt/pages"
     create: true
+    format: "json"
     extension: "json"
     slug: "{{slug}}"
     fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Corpo", name: "body", widget: "text", required: false }
+      - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
+      - label: "Sections"
+        name: "sections"
+        widget: "list"
+        types:
+          - { label: "Hero", name: "hero", widget: "object", fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Subtitle", name: "subtitle", widget: "text", required: false},
+                {label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left"},
+                {label: "Background image (use /images/... or upload)", name: "background_image", widget: "string", required: false},
+                {label: "CTA label", name: "cta_label", widget: "string", required: false},
+                {label: "CTA link", name: "cta_link", widget: "string", required: false}
+          ] }
+          - { label: "Text Block", name: "text", widget: "object", fields: [
+                {label: "Heading", name: "heading", widget: "string"},
+                {label: "Body", name: "body", widget: "text"},
+                {label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left"}
+          ] }
+          - { label: "Product Grid", name: "productGrid", widget: "object", fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Source file", name: "source", widget: "string", default: "products.json"},
+                {label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50}
+          ] }
+          - { label: "FAQs", name: "faqs", widget: "object", fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Source file", name: "source", widget: "string", default: "faqs.json"}
+          ] }
+          - { label: "Banner", name: "banner", widget: "object", fields: [
+                {label: "Heading", name: "heading", widget: "string"},
+                {label: "Button label", name: "button_label", widget: "string", required: false},
+                {label: "Button link", name: "button_link", widget: "string", required: false},
+                {label: "Background image (use /images/... or upload)", name: "background_image", widget: "string"}
+          ] }
+          - { label: "Video", name: "video", widget: "object", fields: [
+                {label: "YouTube URL", name: "youtube_url", widget: "string"},
+                {label: "Caption text", name: "caption", widget: "string", required: false}
+          ] }
 
+  # ---- Spanish pages (same builder) ----
   - name: "pages_es"
-    label: "Páginas (ES)"
+    label: "Pages (ES)"
     folder: "site/content/es/pages"
     create: true
+    format: "json"
     extension: "json"
     slug: "{{slug}}"
     fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Cuerpo", name: "body", widget: "text", required: false }
-
-  # i18n dictionaries (safe strings for header/footer/home banners/pages)
-  - name: "i18n_pt"
-    label: "i18n (PT)"
-    files:
-      - label: "Português (PT)"
-        name: "pt"
-        file: "site/content/i18n/pt.json"
-        format: "json"
-        fields:
-          - label: "Header Navigation"
-            name: "nav"
-            widget: "object"
-            fields:
-              - { label: "About", name: "about", widget: "string" }
-              - { label: "Shop", name: "shop", widget: "string" }
-              - { label: "Contact", name: "contact", widget: "string" }
-              - { label: "Account", name: "account", widget: "string" }
-              - { label: "Cart", name: "cart", widget: "string" }
-              - { label: "Search", name: "search", widget: "string", required: false }
-          - label: "Home Banners"
-            name: "home.banners"
-            widget: "list"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Subtitle", name: "subtitle", widget: "text", required: false }
-              - { label: "Button", name: "button", widget: "string", required: false }
-          - label: "Pages"
-            name: "pages"
-            widget: "object"
-            fields:
-              - label: "About Page"
-                name: "/about.html"
-                widget: "object"
-                fields:
-                  - { label: "Heading", name: "h1", widget: "string" }
-                  - { label: "Paragraph 1", name: "p1", widget: "text", required: false }
-                  - { label: "Paragraph 2", name: "p2", widget: "text", required: false }
-              - label: "Shop Page"
-                name: "/shop.html"
-                widget: "object"
-                fields:
-                  - { label: "Heading", name: "h1", widget: "string" }
-              - label: "Contact Page"
-                name: "/contact.html"
-                widget: "object"
-                fields:
-                  - { label: "Heading", name: "h1", widget: "string" }
-                  - { label: "Intro", name: "intro", widget: "text", required: false }
-                  - { label: "Email", name: "email", widget: "string", required: false }
-          - label: "Footer"
-            name: "footer"
-            widget: "object"
-            fields:
-              - { label: "Privacy", name: "privacy", widget: "string" }
-              - { label: "Terms", name: "terms", widget: "string" }
-              - { label: "Contact Heading", name: "contact_info", widget: "string" }
-              - { label: "Address", name: "address", widget: "string", required: false }
-              - { label: "Phone", name: "phone", widget: "string", required: false }
-              - { label: "Email", name: "email", widget: "string", required: false }
-              - { label: "Social Heading", name: "social_info", widget: "string", required: false }
-              - { label: "Follow Text", name: "follow", widget: "text", required: false }
-              - { label: "Copyright Prefix", name: "copyright_prefix", widget: "string" }
-
-  - name: "i18n_es"
-    label: "i18n (ES)"
-    files:
-      - label: "Español (ES)"
-        name: "es"
-        file: "site/content/i18n/es.json"
-        format: "json"
-        fields:
-          - label: "Header Navigation"
-            name: "nav"
-            widget: "object"
-            fields:
-              - { label: "About", name: "about", widget: "string" }
-              - { label: "Shop", name: "shop", widget: "string" }
-              - { label: "Contact", name: "contact", widget: "string" }
-              - { label: "Account", name: "account", widget: "string" }
-              - { label: "Cart", name: "cart", widget: "string" }
-              - { label: "Search", name: "search", widget: "string", required: false }
-          - label: "Home Banners"
-            name: "home.banners"
-            widget: "list"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Subtitle", name: "subtitle", widget: "text", required: false }
-              - { label: "Button", name: "button", widget: "string", required: false }
-          - label: "Pages"
-            name: "pages"
-            widget: "object"
-            fields:
-              - label: "About Page"
-                name: "/about.html"
-                widget: "object"
-                fields:
-                  - { label: "Heading", name: "h1", widget: "string" }
-                  - { label: "Paragraph 1", name: "p1", widget: "text", required: false }
-                  - { label: "Paragraph 2", name: "p2", widget: "text", required: false }
-              - label: "Shop Page"
-                name: "/shop.html"
-                widget: "object"
-                fields:
-                  - { label: "Heading", name: "h1", widget: "string" }
-              - label: "Contact Page"
-                name: "/contact.html"
-                widget: "object"
-                fields:
-                  - { label: "Heading", name: "h1", widget: "string" }
-                  - { label: "Intro", name: "intro", widget: "text", required: false }
-                  - { label: "Email", name: "email", widget: "string", required: false }
-          - label: "Footer"
-            name: "footer"
-            widget: "object"
-            fields:
-              - { label: "Privacy", name: "privacy", widget: "string" }
-              - { label: "Terms", name: "terms", widget: "string" }
-              - { label: "Contact Heading", name: "contact_info", widget: "string" }
-              - { label: "Address", name: "address", widget: "string", required: false }
-              - { label: "Phone", name: "phone", widget: "string", required: false }
-              - { label: "Email", name: "email", widget: "string", required: false }
-              - { label: "Social Heading", name: "social_info", widget: "string", required: false }
-              - { label: "Follow Text", name: "follow", widget: "text", required: false }
-              - { label: "Copyright Prefix", name: "copyright_prefix", widget: "string" }
+      - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
+      - label: "Sections"
+        name: "sections"
+        widget: "list"
+        types:
+          - { label: "Hero", name: "hero", widget: "object", fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Subtitle", name: "subtitle", widget: "text", required: false},
+                {label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left"},
+                {label: "Background image (use /images/... or upload)", name: "background_image", widget: "string", required: false},
+                {label: "CTA label", name: "cta_label", widget: "string", required: false},
+                {label: "CTA link", name: "cta_link", widget: "string", required: false}
+          ] }
+          - { label: "Text Block", name: "text", widget: "object", fields: [
+                {label: "Heading", name: "heading", widget: "string"},
+                {label: "Body", name: "body", widget: "text"},
+                {label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left"}
+          ] }
+          - { label: "Product Grid", name: "productGrid", widget: "object", fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Source file", name: "source", widget: "string", default: "products.json"},
+                {label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50}
+          ] }
+          - { label: "FAQs", name: "faqs", widget: "object", fields: [
+                {label: "Title", name: "title", widget: "string"},
+                {label: "Source file", name: "source", widget: "string", default: "faqs.json"}
+          ] }
+          - { label: "Banner", name: "banner", widget: "object", fields: [
+                {label: "Heading", name: "heading", widget: "string"},
+                {label: "Button label", name: "button_label", widget: "string", required: false},
+                {label: "Button link", name: "button_link", widget: "string", required: false},
+                {label: "Background image (use /images/... or upload)", name: "background_image", widget: "string"}
+          ] }
+          - { label: "Video", name: "video", widget: "object", fields: [
+                {label: "YouTube URL", name: "youtube_url", widget: "string"},
+                {label: "Caption text", name: "caption", widget: "string", required: false}
+          ] }
