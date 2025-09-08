@@ -1,0 +1,4 @@
+:root { --ink:#1b1b1b; --bg:#fff; --accent:#b8892d; }
+html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); }
+*, *::before, *::after { box-sizing: border-box; }
+
