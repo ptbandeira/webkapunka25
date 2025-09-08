@@ -15,81 +15,44 @@
       const createClass = window.createClass;
 
       // Load site in an iframe and apply preview data safely (no layout changes)
+      function makeFrame(src, applier){
+        return createClass({
+          componentDidMount(){
+            this._onload = () => {
+              try{ const w = this._iframe && this._iframe.contentWindow; if (w && typeof w[applier]==='function') w[applier](this.props.data); }catch(e){}
+            };
+            if (this._iframe) this._iframe.addEventListener('load', this._onload);
+          },
+          componentWillUnmount(){ if (this._iframe && this._onload) this._iframe.removeEventListener('load', this._onload); },
+          render(){ return h('iframe', { src, style:{ width:'100%', height:'90vh', border:0 }, ref: (el)=>{ this._iframe = el; } }); }
+        });
+      }
+
       CMS.registerPreviewTemplate('home', ({ entry }) => {
         const data = entry.get('data').toJS();
-        const Frame = createClass({
-          componentDidMount() {
-            const iframe = this.base.querySelector('iframe');
-            if (!iframe) return;
-            iframe.addEventListener('load', () => {
-              try {
-                const w = iframe.contentWindow;
-                if (w && typeof w.__applyHome === 'function') {
-                  w.__applyHome(data);
-                }
-              } catch (e) { /* preview should never crash */ }
-            });
-          },
-          render() { return h('iframe', { src: '/?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
-        });
-        return h(Frame);
+        const Frame = makeFrame('/?cms-preview=1', '__applyHome');
+        return h(Frame, { data });
       });
 
       // About: preview-only safe mapping
       CMS.registerPreviewTemplate('about', ({ entry }) => {
         const data = entry.get('data').toJS();
-        const Frame = createClass({
-          componentDidMount() {
-            const iframe = this.base.querySelector('iframe');
-            if (!iframe) return;
-            iframe.addEventListener('load', () => {
-              try {
-                const w = iframe.contentWindow;
-                if (w && typeof w.__applyAbout === 'function') w.__applyAbout(data);
-              } catch (e) {}
-            });
-          },
-          render() { return h('iframe', { src: '/about.html?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
-        });
-        return h(Frame);
+        const Frame = makeFrame('/about.html?cms-preview=1', '__applyAbout');
+        return h(Frame, { data });
       });
 
       // Shop: preview-only safe mapping
       CMS.registerPreviewTemplate('shop', ({ entry }) => {
         const data = entry.get('data').toJS();
-        const Frame = createClass({
-          componentDidMount() {
-            const iframe = this.base.querySelector('iframe');
-            if (!iframe) return;
-            iframe.addEventListener('load', () => {
-              try {
-                const w = iframe.contentWindow;
-                if (w && typeof w.__applyShop === 'function') w.__applyShop(data);
-              } catch (e) {}
-            });
-          },
-          render() { return h('iframe', { src: '/shop.html?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
-        });
-        return h(Frame);
+        const Frame = makeFrame('/shop.html?cms-preview=1', '__applyShop');
+        return h(Frame, { data });
       });
 
       // Contact: preview-only safe mapping
       CMS.registerPreviewTemplate('contact', ({ entry }) => {
         const data = entry.get('data').toJS();
-        const Frame = createClass({
-          componentDidMount() {
-            const iframe = this.base.querySelector('iframe');
-            if (!iframe) return;
-            iframe.addEventListener('load', () => {
-              try {
-                const w = iframe.contentWindow;
-                if (w && typeof w.__applyContact === 'function') w.__applyContact(data);
-              } catch (e) {}
-            });
-          },
-          render() { return h('iframe', { src: '/contact.html?cms-preview=1', style: { width:'100%', height:'90vh', border:0 } }); }
-        });
-        return h(Frame);
+        const Frame = makeFrame('/contact.html?cms-preview=1', '__applyContact');
+        return h(Frame, { data });
       });
 
       function pagePathForSlug(slug){
@@ -105,20 +68,9 @@
         CMS.registerPreviewTemplate(collName, ({ entry }) => {
           const data = entry.get('data').toJS();
           const slug = entry.get('slug');
-          const Frame = createClass({
-            componentDidMount(){
-              const iframe = this.base.querySelector('iframe');
-              if (!iframe) return;
-              iframe.addEventListener('load', () => {
-                try{
-                  const w = iframe.contentWindow;
-                  if (w && typeof w.__applyPage === 'function') w.__applyPage(data);
-                }catch(e){}
-              });
-            },
-            render(){ return h('iframe', { src: pagePathForSlug(slug)+`?cms-preview=1&lang=${lang}` , style:{width:'100%',height:'90vh',border:0} }); }
-          });
-          return h(Frame);
+          const src = pagePathForSlug(slug)+`?cms-preview=1&lang=${lang}`;
+          const Frame = makeFrame(src, '__applyPage');
+          return h(Frame, { data });
         });
       }
 
