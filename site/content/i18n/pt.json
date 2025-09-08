@@ -36,5 +36,13 @@
       "email": "hello@kapunka.com"
     }
   }
+  ,
+  "footer": {
+    "privacy": "Privacidade",
+    "terms": "Termos",
+    "contact_info": "Contactos",
+    "social_info": "Redes sociais",
+    "follow": "Siga a Kapunka para lançamentos, rotinas e dicas.",
+    "copyright_prefix": "© Direitos de Autor 2025 Kapunka. Design por "
+  }
 }
-

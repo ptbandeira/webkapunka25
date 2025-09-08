@@ -247,6 +247,28 @@ customElements.define('site-header', SiteHeader);
           });
         }
 
+        // Footer translations
+        if (tr.footer){
+          const footer = document.getElementById('footer');
+          if (footer){
+            const setF = (sel, txt) => { const el = footer.querySelector(sel); if (el && txt) el.textContent = txt; };
+            setF("a[href$='privacy.html']", tr.footer.privacy);
+            setF("a[href$='terms.html']", tr.footer.terms);
+            const contactH = footer.querySelector('.footer-menu.contact-item .widget-title');
+            if (contactH && tr.footer.contact_info) contactH.textContent = tr.footer.contact_info;
+            const socialP = footer.querySelector('.footer-menu p');
+            if (socialP && tr.footer.follow) socialP.textContent = tr.footer.follow;
+            const socialH = socialP ? socialP.closest('.footer-menu')?.querySelector('.widget-title') : null;
+            if (socialH && tr.footer.social_info) socialH.textContent = tr.footer.social_info;
+          }
+          const cr = document.querySelector('#footer-bottom .copyright p');
+          if (cr && tr.footer.copyright_prefix){
+            const a = cr.querySelector('a');
+            const linkHTML = a ? a.outerHTML : '';
+            cr.innerHTML = tr.footer.copyright_prefix + linkHTML;
+          }
+        }
+
         // Page-specific translations
         const path = window.location.pathname.replace(/\/+$/, '') || '/index.html';
         const map = tr.pages || {};
