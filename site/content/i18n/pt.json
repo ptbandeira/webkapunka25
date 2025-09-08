@@ -1,0 +1,40 @@
+{
+  "nav": {
+    "about": "Sobre",
+    "shop": "Loja",
+    "contact": "Contacto",
+    "account": "Conta",
+    "cart": "Carrinho",
+    "search": "Pesquisar"
+  },
+  "home": {
+    "banners": [
+      {
+        "title": "Óleo de Argão Puro para Recuperação da Pele",
+        "subtitle": "Cuidado de ingrediente único. 100% orgânico, prensado a frio e sem perfume.",
+        "button": "Comprar o Óleo"
+      },
+      {
+        "title": "Acalmar, Reparar, Proteger",
+        "subtitle": "Ajuda a restaurar a barreira cutânea e a reduzir a vermelhidão após procedimentos ou o stress do dia a dia.",
+        "button": "Ver como funciona"
+      }
+    ]
+  },
+  "pages": {
+    "/about.html": {
+      "h1": "A nossa história",
+      "p1": "Engarrafamos óleo de argão 100% puro, prensado a frio, proveniente de cooperativas marroquinas. Sem aditivos nem perfume — apenas o essencial.",
+      "p2": "Cada lote é de pequena produção e testado em laboratório. Pele, cabelo, unhas — um frasco para tudo."
+    },
+    "/shop.html": {
+      "h1": "Loja"
+    },
+    "/contact.html": {
+      "h1": "Contacto",
+      "intro": "Dúvidas ou atacado? Respondemos em 1 dia útil.",
+      "email": "hello@kapunka.com"
+    }
+  }
+}
+

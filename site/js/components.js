@@ -213,6 +213,54 @@ customElements.define('site-header', SiteHeader);
       }catch(e){}
     }
 
+    async function applyI18n(lang){
+      if (!lang || lang === 'en') return;
+      try{
+        const res = await fetch(`/content/i18n/${lang}.json`, { cache: 'no-store' });
+        if (!res.ok) return;
+        const tr = await res.json();
+
+        // Header nav links
+        const nav = document.querySelector('#header-nav');
+        if (nav && tr.nav){
+          const setText = (sel, txt) => { const el = nav.querySelector(sel); if (el && txt) el.textContent = txt; };
+          setText("a.nav-link[href$='about.html']", tr.nav.about);
+          setText("a.nav-link[href$='shop.html']", tr.nav.shop);
+          setText("a.nav-link[href$='contact.html']", tr.nav.contact);
+          setText("a.nav-link[href$='login.html']", tr.nav.account);
+          // Cart: find first anchor containing 'Cart'
+          const cartA = Array.from(nav.querySelectorAll('a')).find(a => /cart/i.test(a.textContent||''));
+          if (cartA && tr.nav.cart) cartA.textContent = cartA.textContent.replace(/cart\s*\(.*\)|cart/ig, tr.nav.cart + (cartA.textContent.match(/\(.*\)/)? ' ' + cartA.textContent.match(/\(.*\)/)[0] : ''));
+          // Search link label if present
+          const searchA = Array.from(nav.querySelectorAll('a')).find(a => /^\s*search\s*$/i.test(a.textContent||''));
+          if (searchA && tr.nav.search) searchA.textContent = tr.nav.search;
+        }
+
+        // Home banners (first two slides)
+        if ((tr.home && tr.home.banners) && document.body.contains(document.querySelector('.main-swiper'))){
+          const banners = document.querySelectorAll('.main-swiper .swiper-slide .banner-content');
+          tr.home.banners.forEach((b, i) => {
+            const box = banners[i]; if (!box) return;
+            const h2 = box.querySelector('h2'); if (h2 && b.title) h2.textContent = b.title;
+            const p = box.querySelector('p'); if (p && b.subtitle) p.textContent = b.subtitle;
+            const btn = box.querySelector('a.btn'); if (btn && b.button) btn.textContent = b.button;
+          });
+        }
+
+        // Page-specific translations
+        const path = window.location.pathname.replace(/\/+$/, '') || '/index.html';
+        const map = tr.pages || {};
+        const pg = map[path] || null;
+        if (pg){
+          if (pg.h1){ const h1 = document.querySelector('h1'); if (h1) h1.textContent = pg.h1; }
+          if (pg.p1){ const p = document.querySelector('section-wrapper p, .container p'); if (p) p.textContent = pg.p1; }
+          if (pg.p2){ const ps = document.querySelectorAll('section-wrapper p, .container p'); if (ps[1]) ps[1].textContent = pg.p2; }
+          if (pg.intro){ const intro = document.querySelector('section-wrapper p, .container p'); if (intro) intro.textContent = pg.intro; }
+          if (pg.email){ const a = document.querySelector("a[href^='mailto:']"); if (a) a.textContent = pg.email; }
+        }
+      }catch(e){}
+    }
+
     function init(){
       const nav = document.querySelector('#header-nav #navbar');
       if (!nav) return;
@@ -232,6 +280,8 @@ customElements.define('site-header', SiteHeader);
       if (window.matchMedia && window.matchMedia('(max-width: 991.98px)').matches) {
         toMobileLangLink(rightUL, currentLang);
       }
+      // Apply translations across the page
+      applyI18n(currentLang);
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
     else init();

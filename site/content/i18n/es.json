@@ -1,0 +1,40 @@
+{
+  "nav": {
+    "about": "Acerca de",
+    "shop": "Tienda",
+    "contact": "Contacto",
+    "account": "Cuenta",
+    "cart": "Carrito",
+    "search": "Buscar"
+  },
+  "home": {
+    "banners": [
+      {
+        "title": "Aceite de Argán Puro para la Recuperación de la Piel",
+        "subtitle": "Cuidado de un solo ingrediente. 100% orgánico, prensado en frío y sin perfume.",
+        "button": "Comprar el Aceite"
+      },
+      {
+        "title": "Calmar, Reparar, Proteger",
+        "subtitle": "Ayuda a restaurar la barrera cutánea y a reducir el enrojecimiento tras procedimientos o el estrés diario.",
+        "button": "Ver cómo funciona"
+      }
+    ]
+  },
+  "pages": {
+    "/about.html": {
+      "h1": "Nuestra historia",
+      "p1": "Embotellamos aceite de argán 100% puro, prensado en frío, de cooperativas marroquíes. Sin aditivos ni perfume: solo lo esencial.",
+      "p2": "Cada lote es de pequeña producción y testado en laboratorio. Piel, cabello, uñas: un solo frasco para todo."
+    },
+    "/shop.html": {
+      "h1": "Tienda"
+    },
+    "/contact.html": {
+      "h1": "Contacto",
+      "intro": "¿Dudas o mayoristas? Respondemos en 1 día laborable.",
+      "email": "hello@kapunka.com"
+    }
+  }
+}
+
