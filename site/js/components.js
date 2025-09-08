@@ -121,6 +121,26 @@ class SiteHeader extends HTMLElement {
           </div>
         </div>
       </nav>
+      <button id="navToggle" class="nav-fab d-lg-none" type="button" aria-expanded="false" aria-label="Menu">Menu</button>
+      <div class="nav-overlay" id="navOverlay" aria-hidden="true">
+        <div class="nav-overlay__bg"></div>
+        <div class="nav-overlay__wrap container">
+          <div class="nav-overlay__links">
+            <a href="index.html" data-preview="/images/banner-image.jpg">Home</a>
+            <a href="shop.html" data-preview="/images/product-item2.jpg">Shop</a>
+            <a href="about.html" data-preview="/images/banner-image1.jpg">About</a>
+            <a href="contact.html" data-preview="/images/banner-image2.jpg">Contact</a>
+          </div>
+          <div class="nav-overlay__side">
+            <img id="navPreviewImg" src="/images/banner-image.jpg" alt="" />
+            <ul class="nav-overlay__meta">
+              <li><a href="/login.html">Account</a></li>
+              <li><a href="/cart.html">Cart</a></li>
+              <li><a href="#" id="navLangLink">EN</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </header>`;
   }
 }
@@ -312,6 +332,25 @@ customElements.define('site-header', SiteHeader);
       }
       // Apply translations across the page
       applyI18n(currentLang);
+
+      // Overlay menu interactions
+      const toggleBtn = document.getElementById('navToggle');
+      const overlay = document.getElementById('navOverlay');
+      function setOpen(v){
+        document.body.classList.toggle('nav-open', !!v);
+        if (toggleBtn) toggleBtn.setAttribute('aria-expanded', v ? 'true' : 'false');
+        if (overlay) overlay.setAttribute('aria-hidden', v ? 'false' : 'true');
+      }
+      if (toggleBtn){
+        toggleBtn.addEventListener('click', () => setOpen(!document.body.classList.contains('nav-open')));
+      }
+      if (overlay){
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) setOpen(false); });
+        const img = document.getElementById('navPreviewImg');
+        overlay.querySelectorAll('.nav-overlay__links a').forEach(a => {
+          a.addEventListener('mouseenter', () => { if (img) img.src = a.dataset.preview || img.src; });
+        });
+      }
 
       // Safe page content JSON overlay (About/Shop/Contact)
       (async function(){
