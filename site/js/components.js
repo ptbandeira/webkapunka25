@@ -333,8 +333,22 @@ customElements.define('site-header', SiteHeader);
       // Apply translations across the page
       applyI18n(currentLang);
 
+      // Add a desktop "Menu" trigger in the right group (keeps existing items intact)
+      if (rightUL && !document.getElementById('navDesktopToggle')){
+        const li = document.createElement('li');
+        li.className = 'nav-item d-none d-lg-block';
+        const a = document.createElement('a');
+        a.href = '#';
+        a.id = 'navDesktopToggle';
+        a.className = 'nav-link me-0';
+        a.textContent = 'Menu';
+        li.appendChild(a);
+        rightUL.appendChild(li);
+      }
+
       // Overlay menu interactions
       const toggleBtn = document.getElementById('navToggle');
+      const desktopToggle = document.getElementById('navDesktopToggle');
       const overlay = document.getElementById('navOverlay');
       function setOpen(v){
         document.body.classList.toggle('nav-open', !!v);
@@ -344,13 +358,19 @@ customElements.define('site-header', SiteHeader);
       if (toggleBtn){
         toggleBtn.addEventListener('click', () => setOpen(!document.body.classList.contains('nav-open')));
       }
+      if (desktopToggle){
+        desktopToggle.addEventListener('click', (e) => { e.preventDefault(); setOpen(!document.body.classList.contains('nav-open')); });
+      }
       if (overlay){
         overlay.addEventListener('click', (e) => { if (e.target === overlay) setOpen(false); });
         const img = document.getElementById('navPreviewImg');
         overlay.querySelectorAll('.nav-overlay__links a').forEach(a => {
           a.addEventListener('mouseenter', () => { if (img) img.src = a.dataset.preview || img.src; });
+          a.addEventListener('click', () => setOpen(false));
         });
       }
+      // Close on ESC
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
 
       // Safe page content JSON overlay (About/Shop/Contact)
       (async function(){
