@@ -164,9 +164,16 @@ customElements.define('site-header', SiteHeader);
     function init(){
       const nav = document.querySelector('#header-nav #navbar');
       if (!nav) return;
-      // Avoid duplicates
-      if (document.getElementById('langDropdown')) return;
-      nav.appendChild(buildSwitcher(detectLang()));
+      const rightUL = nav.querySelector(':scope > ul:last-of-type');
+      if (!rightUL) return;
+      // Remove any stray existing dropdown outside right group
+      const existing = document.getElementById('langDropdown');
+      if (existing) {
+        const li = existing.closest('li');
+        if (li && li.parentElement !== rightUL) li.remove();
+        else return; // already in correct place
+      }
+      rightUL.appendChild(buildSwitcher(detectLang()));
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
     else init();
