@@ -116,11 +116,32 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-  font-family: var(--heading-font);
-  text-transform: capitalize;
-  color: var(--black-color);
-}
+  h6 {
+    font-family: var(--heading-font);
+    text-transform: capitalize;
+    color: var(--black-color);
+  }
+  
+  /* Header layout tweaks (desktop only) */
+  @media (min-width: 992px) {
+    /* Inner groups in navbar: flex rows with spacing; no extra margins/padding */
+    #navbar > ul {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+    }
+    /* Left and right groups grow equally */
+    #navbar > ul:first-of-type,
+    #navbar > ul:last-of-type {
+      flex: 1 1 0;
+    }
+    /* Center brand remains fixed size */
+    #navbar > a.navbar-brand {
+      flex: 0 0 auto;
+    }
+  }
 h1 {
   font-size: 5.5rem;
 }
