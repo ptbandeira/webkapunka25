@@ -126,6 +126,53 @@ class SiteHeader extends HTMLElement {
 }
 customElements.define('site-header', SiteHeader);
 
+// VISUAL: Add a responsive language selector to the navbar
+(function(){
+  try{
+    const SUP_LANGS = ['en','pt','es'];
+    function detectLang(){
+      try{
+        const url = new URL(window.location.href);
+        const qp = (url.searchParams.get('lang')||'').toLowerCase();
+        if (SUP_LANGS.includes(qp)) return qp;
+        const m = window.location.pathname.match(/^\/(en|pt|es)(\/|$)/i);
+        return m ? m[1].toLowerCase() : 'en';
+      }catch(e){ return 'en'; }
+    }
+    function setLang(lang){
+      try{
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', lang);
+        window.location.href = url.toString();
+      }catch(e){}
+    }
+    function buildSwitcher(current){
+      const li = document.createElement('li');
+      li.className = 'nav-item dropdown ms-3';
+      li.innerHTML = `
+        <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">${current.toUpperCase()}</a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+          <li><a class="dropdown-item" href="#" data-lang="en">English</a></li>
+          <li><a class="dropdown-item" href="#" data-lang="pt">Português</a></li>
+          <li><a class="dropdown-item" href="#" data-lang="es">Español</a></li>
+        </ul>`;
+      li.querySelectorAll('[data-lang]').forEach(a => {
+        a.addEventListener('click', (ev) => { ev.preventDefault(); setLang(a.getAttribute('data-lang')); });
+      });
+      return li;
+    }
+    function init(){
+      const nav = document.querySelector('#header-nav #navbar');
+      if (!nav) return;
+      // Avoid duplicates
+      if (document.getElementById('langDropdown')) return;
+      nav.appendChild(buildSwitcher(detectLang()));
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  }catch(e){}
+})();
+
 class HeroSection extends HTMLElement {
   connectedCallback() {
     this.outerHTML = `
