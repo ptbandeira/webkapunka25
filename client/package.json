@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "preexport": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n",
-    "prebuild": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n",
+    "preexport": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n && npm run sync-static",
+    "prebuild": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n && npm run sync-static",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -12,6 +12,7 @@
     "sync-content": "node scripts/sync-content.js",
     "sync-admin": "node scripts/sync-admin.js",
     "sync-i18n": "node scripts/sync-i18n.js",
+    "sync-static": "node scripts/sync-static.js",
     "export": "next build"
   },
   "dependencies": {
