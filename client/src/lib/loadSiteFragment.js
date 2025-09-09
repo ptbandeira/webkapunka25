@@ -9,6 +9,8 @@ function stripBetween(html) {
   // Remove custom header/footer placeholders from legacy site
   out = out.replace(/<\/?site-header[^>]*>/gi, '');
   out = out.replace(/<\/?site-footer[^>]*>/gi, '');
+  // Remove any inline script tags from fragment to avoid double-loading
+  out = out.replace(/<script\b[\s\S]*?<\/script>/gi, '');
   // Optional: remove preloader wrapper if present (keeps inner content)
   // out = out.replace(/<div id=["']preloader["'][^>]*>[\s\S]*?<\/div>/i, '');
   return out;
@@ -19,4 +21,3 @@ export async function loadSiteFragment(page) {
   const raw = await fs.readFile(file, 'utf8');
   return stripBetween(raw);
 }
-

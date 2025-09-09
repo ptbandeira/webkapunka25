@@ -27,6 +27,18 @@ export default function RootLayout({ children }) {
         <Header />
         {children}
         {/* Legacy site JS for interactive pieces present in the HTML */}
+        <Script id="preloader-fix" strategy="afterInteractive">{`
+          (function(){
+            try{
+              var el = document.getElementById('preloader');
+              if (!el) return;
+              function hide(){ try{ el.classList.add('hide-preloader'); }catch(e){} }
+              if (document.readyState !== 'loading') setTimeout(hide, 0);
+              else document.addEventListener('DOMContentLoaded', hide);
+              window.addEventListener('load', hide);
+            }catch(e){}
+          })();
+        `}</Script>
         <Script src="/js/jquery-1.11.0.min.js" strategy="afterInteractive" />
         <Script src="/js/bootstrap.bundle.min.js" strategy="afterInteractive" />
         <Script src="/js/plugins.js" strategy="afterInteractive" />
