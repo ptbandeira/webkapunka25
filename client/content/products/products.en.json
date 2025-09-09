@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "name": "Argan Oil 50ml",  "price": 32, "image": "/images/product-item4.jpg", "link": "/shop" },
+    { "name": "Argan Oil 100ml", "price": 49, "image": "/images/product-item3.jpg", "link": "/shop" },
+    { "name": "Argan Oil 200ml", "price": 79, "image": "/images/product-item2.jpg", "link": "/shop" }
+  ]
+}
+
