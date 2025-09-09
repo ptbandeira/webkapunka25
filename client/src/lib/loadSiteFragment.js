@@ -6,9 +6,8 @@ function stripBetween(html) {
   // Extract <body> contents if present
   const bodyMatch = out.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
   if (bodyMatch) out = bodyMatch[1];
-  // Remove custom header/footer placeholders from legacy site
+  // Remove legacy header placeholder (we provide a new header)
   out = out.replace(/<\/?site-header[^>]*>/gi, '');
-  out = out.replace(/<\/?site-footer[^>]*>/gi, '');
   // Remove any inline script tags from fragment to avoid double-loading
   out = out.replace(/<script\b[\s\S]*?<\/script>/gi, '');
   // Optional: remove preloader wrapper if present (keeps inner content)
