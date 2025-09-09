@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "preexport": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n",
+    "prebuild": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -11,7 +12,7 @@
     "sync-content": "node scripts/sync-content.js",
     "sync-admin": "node scripts/sync-admin.js",
     "sync-i18n": "node scripts/sync-i18n.js",
-    "export": "next build && next export"
+    "export": "next build"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",

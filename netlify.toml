@@ -1,6 +1,6 @@
 [build]
   publish = "client/out"
-  command = "npm --prefix client ci && npm --prefix client run export"
+  command = "npm --prefix client ci && npm --prefix client run build"
 
 [[redirects]]
   from = "/index.html"
