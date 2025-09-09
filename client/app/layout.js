@@ -4,6 +4,7 @@ import './globals.css';
 import { Manrope } from 'next/font/google';
 import Header from '../src/components/header';
 import Script from 'next/script';
+import PreloaderGuard from '../src/components/PreloaderGuard';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={manrope.className}>
         <Header />
+        <PreloaderGuard />
         {children}
         {/* Legacy site JS for interactive pieces present in the HTML */}
         <Script id="preloader-fix" strategy="afterInteractive">{`
