@@ -8,8 +8,7 @@ import { opacity } from '../../anim';
 export default function Index({ src, selectedLink }){
   return (
     <motion.div className={styles.imageContainer} variants={opacity} initial="initial" animate={selectedLink.isActive ? 'open' : 'closed'}>
-      <NextImage src={`/images/${src}`} alt="image" fill sizes="(max-width:900px) 100vw, 40vw" />
+      <NextImage src={`/images/${src}`} alt="image" fill sizes="(max-width:900px) 100vw, 40vw" style={{ objectFit: 'cover' }} />
     </motion.div>
   );
 }
-

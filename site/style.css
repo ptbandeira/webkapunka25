@@ -84,14 +84,36 @@ CSS STRUCTURE:
 /* NAV OVERLAY (animated menu) */
 .nav-fab { position: fixed; right: 16px; top: 14px; z-index: 1201; background: transparent; border: 0; color: var(--brand-ink); font-weight: 600; }
 .nav-overlay { position: fixed; inset: 0; z-index: 1200; pointer-events: none; }
-.nav-overlay__bg { position: absolute; inset: 0; background: #0f0f0f; opacity: 0; transform: translateY(-10%); transition: opacity .45s ease, transform .45s ease; }
+.nav-overlay__bg { position: absolute; inset: 0; background: #c5c6c6; opacity: 0; transform: translateY(-10%); transition: opacity .45s ease, transform .45s ease; }
 .nav-overlay__wrap { position: relative; display: grid; grid-template-columns: 1fr minmax(260px, 40%); gap: 24px; height: 100%; padding: 14vh 0; opacity: 0; transform: translateY(15px); transition: opacity .35s ease, transform .35s ease; }
+/* When nav is open, keep all overlay content just below the header divider with a small padding */
+body.nav-open .nav-overlay__wrap { padding-top: calc(var(--header-height, 80px) + 12px); }
 .nav-overlay__links { display: grid; gap: clamp(14px, 3.2vh, 26px); align-content: start; }
-.nav-overlay__links a { color: #fff; text-decoration: none; font-weight: 700; font-size: clamp(28px, 6.5vw, 80px); letter-spacing: .02em; }
+.nav-overlay__links { align-self: start; }
+.nav-overlay__side { align-self: start; }
+.nav-overlay__links a { color: #000; text-decoration: none; font-weight: 700; font-size: clamp(28px, 6.5vw, 80px); letter-spacing: .02em; }
 .nav-overlay__side { display: grid; gap: 16px; justify-items: end; align-content: start; }
-.nav-overlay__side img { width: min(40vw, 480px); height: auto; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,.35); opacity: .85; transition: opacity .3s ease; }
+.nav-overlay__side img {
+  width: min(36vw, 480px); /* slightly smaller */
+  aspect-ratio: 1 / 1; /* square crop */
+  height: auto;
+  max-height: none;
+  object-fit: cover; /* crop to fill */
+  background: #c5c6c6; /* flat against navbar background */
+  /* breathing room from page edges */
+  margin-right: clamp(16px, 4vw, 48px);
+  margin-left: clamp(16px, 4vw, 48px);
+  margin-top: 0; /* align top edge with first word */
+  margin-bottom: clamp(16px, 4vh, 40px);
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 1;
+  transition: none;
+  /* nudge to align top edge precisely with first word */
+  transform: translateY(18px);
+}
 .nav-overlay__meta { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.nav-overlay__meta a { color: #fff; text-decoration: none; opacity: .9; }
+.nav-overlay__meta a { color: #000; text-decoration: none; opacity: .9; }
 
 /* Open state */
 body.nav-open .nav-overlay { pointer-events: auto; }

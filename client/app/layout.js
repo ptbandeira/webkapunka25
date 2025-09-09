@@ -1,4 +1,4 @@
-'use client';
+// Server component layout (no 'use client') so metadata export is allowed
 
 import './globals.css';
 import { Manrope } from 'next/font/google';
@@ -21,4 +21,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import styles from './style.module.css';
-import { blur, translate } from '../../anim';
+import { blur, translate } from '../anim';
 
 export default function Body({ links, selectedLink, setSelectedLink }){
   const getChars = (word) => {
@@ -11,7 +11,8 @@ export default function Body({ links, selectedLink, setSelectedLink }){
     word.split('').forEach((char, i) => {
       chars.push(
         <motion.span
-          custom={[i * 0.02, (word.length - i) * 0.01]}
+          /* remove per-character stagger so all letters animate together */
+          custom={[0, 0]}
           variants={translate}
           initial="initial"
           animate="enter"
@@ -46,4 +47,3 @@ export default function Body({ links, selectedLink, setSelectedLink }){
     </div>
   );
 }
-

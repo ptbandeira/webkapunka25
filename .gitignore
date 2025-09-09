@@ -1,1 +1,19 @@
 *.bak
+*.bak*
+
+# OS/artifacts
+.DS_Store
+npm-debug.log*
+
+# Root node modules (if present)
+node_modules/
+
+# Next.js app artifacts
+client/node_modules/
+client/.next/
+client/out/
+
+# Generated public assets (synced before export)
+client/public/images/
+client/public/content/
+client/public/admin/

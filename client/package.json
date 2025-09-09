@@ -3,9 +3,15 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "preexport": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "sync-images": "node scripts/sync-images.js",
+    "sync-content": "node scripts/sync-content.js",
+    "sync-admin": "node scripts/sync-admin.js",
+    "sync-i18n": "node scripts/sync-i18n.js",
+    "export": "next build && next export -o out"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
@@ -14,4 +20,3 @@
     "react-dom": "^18.2.0"
   }
 }
-

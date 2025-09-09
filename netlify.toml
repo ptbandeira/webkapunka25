@@ -1,3 +1,36 @@
 [build]
-  publish = "site"
-  command = ""  # static site, no build step
+  publish = "client/out"
+  command = "npm --prefix client ci && npm --prefix client run export"
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/about.html"
+  to = "/about"
+  status = 301
+
+[[redirects]]
+  from = "/shop.html"
+  to = "/shop"
+  status = 301
+
+[[redirects]]
+  from = "/contact.html"
+  to = "/contact"
+  status = 301
+
+# Redirect legacy /site/*.html to clean routes
+[[redirects]]
+  from = "/site/:page.html"
+  to = "/:page"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/site/index.html"
+  to = "/"
+  status = 301
+  force = true
