@@ -2,7 +2,8 @@
 
 import styles from './style.module.css';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { opacity, background } from './anim';
 import Nav from './nav';
@@ -10,7 +11,11 @@ import useI18n from './useI18n';
 
 export default function Header(){
   const [isActive, setIsActive] = useState(false);
+  const pathname = usePathname();
   const { t } = useI18n();
+
+  // Close the nav overlay on route changes
+  useEffect(() => { setIsActive(false); }, [pathname]);
 
   return (
     <header className={styles.header}>
