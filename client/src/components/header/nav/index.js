@@ -17,7 +17,7 @@ const links = [
   { title: 'Contact', href: '/contact', src: 'contact.jpg' },     // from site/images/banner-image2.jpg
 ];
 
-export default function Index(){
+export default function Index({ onNavigate }){
   const [selectedLink, setSelectedLink] = useState({ isActive:false, index:0 });
   const { t } = useI18n();
 
@@ -41,6 +41,7 @@ export default function Index(){
             ]}
             selectedLink={selectedLink}
             setSelectedLink={setSelectedLink}
+            onNavigate={onNavigate}
           />
           <Footer />
         </div>

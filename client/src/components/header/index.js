@@ -17,6 +17,16 @@ export default function Header(){
   // Close the nav overlay on route changes
   useEffect(() => { setIsActive(false); }, [pathname]);
 
+  const handleNavLinkClick = () => {
+    // Close immediately
+    setIsActive(false);
+    // Ensure legacy preloader never blocks view if present
+    try{
+      const el = document.getElementById('preloader');
+      if (el) el.classList.add('hide-preloader');
+    }catch(e){}
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.bar}>
@@ -41,7 +51,7 @@ export default function Header(){
       <motion.div variants={background} initial="initial" animate={isActive ? 'open' : 'closed'} className={styles.background} />
 
       <AnimatePresence mode="wait">
-        {isActive && <Nav />}
+        {isActive && <Nav onNavigate={handleNavLinkClick} />}
       </AnimatePresence>
     </header>
   );

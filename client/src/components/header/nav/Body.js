@@ -5,7 +5,7 @@ import Link from 'next/link';
 import styles from './style.module.css';
 import { blur, translate } from '../anim';
 
-export default function Body({ links, selectedLink, setSelectedLink }){
+export default function Body({ links, selectedLink, setSelectedLink, onNavigate }){
   const getChars = (word) => {
     const chars = [];
     word.split('').forEach((char, i) => {
@@ -32,7 +32,7 @@ export default function Body({ links, selectedLink, setSelectedLink }){
         const { title, href } = link;
         const isBlur = selectedLink.isActive && selectedLink.index !== index;
         return (
-          <Link key={`l_${index}`} href={href} className={styles.link}>
+          <Link key={`l_${index}`} href={href} className={styles.link} onClick={onNavigate}>
             <motion.p
               onMouseOver={() => setSelectedLink({ isActive: true, index })}
               onMouseLeave={() => setSelectedLink({ isActive: false, index })}
