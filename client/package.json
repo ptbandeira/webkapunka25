@@ -11,7 +11,7 @@
     "sync-content": "node scripts/sync-content.js",
     "sync-admin": "node scripts/sync-admin.js",
     "sync-i18n": "node scripts/sync-i18n.js",
-    "export": "next build && next export -o out"
+    "export": "next build && next export"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
