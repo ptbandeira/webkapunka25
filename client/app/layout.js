@@ -24,8 +24,10 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/style.css" />
       </head>
-      <body className={manrope.className}>
-        <Header />
+      <body>
+        <div className={manrope.className}>
+          <Header />
+        </div>
         <PreloaderGuard />
         {children}
         {/* Legacy site JS for interactive pieces present in the HTML */}
