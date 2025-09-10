@@ -2,17 +2,21 @@
 
 import styles from './style.module.css';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { opacity, background } from './anim';
 import Nav from './nav';
 import useI18n from './useI18n';
+import { getCurrentLang, stripLang, withLang, LOCALES } from '../../lib/locale';
 
 export default function Header(){
   const [isActive, setIsActive] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const { t } = useI18n();
+  const currentLang = useMemo(() => getCurrentLang(pathname || '/'), [pathname]);
+  const basePath = useMemo(() => `/${currentLang === 'en' ? 'en' : currentLang}` , [currentLang]);
 
   // Close the nav overlay on route changes
   useEffect(() => { setIsActive(false); }, [pathname]);
@@ -27,10 +31,19 @@ export default function Header(){
     }catch(e){}
   };
 
+  const switchLang = (target) => {
+    try{
+      if (!LOCALES.includes(target)) return;
+      const rest = stripLang(pathname || '/');
+      router.push(withLang(target, rest));
+      setIsActive(false);
+    }catch(e){}
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.bar}>
-        <Link href="/" className={styles.brand}>Kapunka</Link>
+        <Link href={withLang(currentLang, '/')} className={styles.brand}>Kapunka</Link>
         <div onClick={() => setIsActive(!isActive)} className={styles.el} aria-label="Toggle menu">
           <div className={`${styles.burger} ${isActive ? styles.burgerActive : ''}`} />
           <div className={styles.label}>
@@ -46,12 +59,19 @@ export default function Header(){
             <p>{t?.nav?.cart || 'Cart'}(0)</p>
           </div>
         </motion.div>
+        <div className={styles.el} aria-label="Language selector">
+          {['en','pt','es'].map((l, i) => (
+            <button key={l} onClick={() => switchLang(l)} style={{ background:'none', border:'none', cursor:'pointer', opacity: l===currentLang?1:.6, padding:'0 6px' }} aria-current={l===currentLang ? 'true' : 'false'}>
+              {l.toUpperCase()}{i<2?'':''}
+            </button>
+          ))}
+        </div>
       </div>
 
       <motion.div variants={background} initial="initial" animate={isActive ? 'open' : 'closed'} className={styles.background} />
 
       <AnimatePresence mode="wait">
-        {isActive && <Nav onNavigate={handleNavLinkClick} />}
+        {isActive && <Nav onNavigate={handleNavLinkClick} basePath={basePath} />}
       </AnimatePresence>
     </header>
   );

@@ -7,9 +7,8 @@ export default function useI18n(){
 
   const lang = useMemo(() => {
     if (typeof window === 'undefined') return null;
-    const url = new URL(window.location.href);
-    const qp = (url.searchParams.get('lang') || '').toLowerCase();
-    return ['pt','es'].includes(qp) ? qp : null;
+    const m = window.location.pathname.match(/^\/(en|pt|es)(\/|$)/i);
+    return m ? m[1].toLowerCase() : null;
   }, []);
 
   useEffect(() => {
@@ -22,4 +21,3 @@ export default function useI18n(){
 
   return { lang, t: dict };
 }
-

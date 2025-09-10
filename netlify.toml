@@ -34,3 +34,24 @@
   to = "/"
   status = 301
   force = true
+
+# Default locale redirects (clean routes → /en/*)
+[[redirects]]
+  from = "/"
+  to = "/en"
+  status = 301
+
+[[redirects]]
+  from = "/about"
+  to = "/en/about"
+  status = 301
+
+[[redirects]]
+  from = "/shop"
+  to = "/en/shop"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/en/contact"
+  status = 301

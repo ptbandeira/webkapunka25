@@ -17,7 +17,7 @@ const links = [
   { title: 'Contact', href: '/contact', src: 'contact.jpg' },     // from site/images/banner-image2.jpg
 ];
 
-export default function Index({ onNavigate }){
+export default function Index({ onNavigate, basePath = '/en' }){
   const [selectedLink, setSelectedLink] = useState({ isActive:false, index:0 });
   const { t } = useI18n();
 
@@ -34,10 +34,10 @@ export default function Index({ onNavigate }){
         <div className={styles.container}>
           <Body
             links={[
-              { title: navTitles.home,   href: '/',        src: 'home.png' },
-              { title: navTitles.shop,   href: '/shop',    src: 'shop.png' },
-              { title: navTitles.about,  href: '/about',   src: 'about.png' },
-              { title: navTitles.contact,href: '/contact', src: 'contact.png' },
+              { title: navTitles.home,   href: basePath,                src: 'home.png' },
+              { title: navTitles.shop,   href: basePath + '/shop',      src: 'shop.png' },
+              { title: navTitles.about,  href: basePath + '/about',     src: 'about.png' },
+              { title: navTitles.contact,href: basePath + '/contact',   src: 'contact.png' },
             ]}
             selectedLink={selectedLink}
             setSelectedLink={setSelectedLink}
