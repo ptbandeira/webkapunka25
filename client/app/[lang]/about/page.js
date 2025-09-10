@@ -14,7 +14,7 @@ export default async function AboutLocalePage({ params }){
 
   return (
     <>
-      <section-wrapper className="padding-xlarge">
+      <section className="padding-xlarge">
         <div className="container">
           <div className="row">
             <div className="offset-md-2 col-md-8">
@@ -24,9 +24,8 @@ export default async function AboutLocalePage({ params }){
             </div>
           </div>
         </div>
-      </section-wrapper>
+      </section>
       <site-footer></site-footer>
     </>
   );
 }
-
