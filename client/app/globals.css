@@ -2,6 +2,10 @@
 html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); }
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Force-disable legacy preloader overlay globally */
+#preloader { display: none !important; }
+#preloader.hide-preloader { display: none !important; visibility: hidden !important; opacity: 0 !important; }
+
 /* Shop grid: normalize product image tiles to perfect squares and proper overlay positioning */
 .product-grid .image-holder { position: relative; aspect-ratio: 1 / 1; display:block; }
 .product-grid .image-holder img { width:100%; height:100%; object-fit: cover; }
