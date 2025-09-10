@@ -29,6 +29,8 @@ export default function RootLayout({ children }) {
         <div className={manrope.className}>
           <Header />
         </div>
+        {/* Dummy preloader element to satisfy legacy script hooks */}
+        <div id="preloader" className="hide-preloader" aria-hidden="true" style={{ display:'none' }} />
         <PreloaderGuard />
         <LegacyReinit />
         {children}

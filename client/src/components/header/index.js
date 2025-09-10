@@ -59,13 +59,6 @@ export default function Header(){
             <p>{t?.nav?.cart || 'Cart'}(0)</p>
           </div>
         </motion.div>
-        <div className={styles.el} aria-label="Language selector">
-          {['en','pt','es'].map((l, i) => (
-            <button key={l} onClick={() => switchLang(l)} style={{ background:'none', border:'none', cursor:'pointer', opacity: l===currentLang?1:.6, padding:'0 6px' }} aria-current={l===currentLang ? 'true' : 'false'}>
-              {l.toUpperCase()}{i<2?'':''}
-            </button>
-          ))}
-        </div>
       </div>
 
       <motion.div variants={background} initial="initial" animate={isActive ? 'open' : 'closed'} className={styles.background} />
