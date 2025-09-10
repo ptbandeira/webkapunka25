@@ -6,7 +6,7 @@ import Header from '../src/components/header';
 import Script from 'next/script';
 import PreloaderGuard from '../src/components/PreloaderGuard';
 import LegacyReinit from '../src/components/LegacyReinit';
-import LegacyFooter from '../src/components/LegacyFooter';
+import Footer from '../src/components/footer';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
         <PreloaderGuard />
         <LegacyReinit />
         {children}
-        <LegacyFooter />
+        <Footer />
         {/* Legacy site JS for interactive pieces present in the HTML */}
         <Script id="preloader-fix" strategy="afterInteractive">{`
           (function(){
