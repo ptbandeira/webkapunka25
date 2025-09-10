@@ -50,7 +50,6 @@ export default async function ShopLocalePage({ params }){
           </div>
         </div>
       </section>
-      <site-footer></site-footer>
     </>
   );
 }

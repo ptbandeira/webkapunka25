@@ -42,8 +42,6 @@ export default async function ContactLocalePage({ params }){
           </div>
         </div>
       </section>
-      <site-footer></site-footer>
     </>
   );
 }
-

@@ -25,7 +25,6 @@ export default async function AboutLocalePage({ params }){
           </div>
         </div>
       </section>
-      <site-footer></site-footer>
     </>
   );
 }
