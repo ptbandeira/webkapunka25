@@ -4,7 +4,7 @@ import styles from '../style.module.css';
 import { translate } from '../../anim';
 import { motion } from 'framer-motion';
 import { usePathname, useRouter } from 'next/navigation';
-import { stripLang, withLang, getCurrentLang } from '../../../lib/locale';
+import { stripLang, withLang, getCurrentLang } from '../../../../lib/locale';
 
 export default function Footer(){
   const pathname = usePathname();
