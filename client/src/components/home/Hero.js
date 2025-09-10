@@ -52,11 +52,33 @@ export default function Hero({ title, subtitle }){
                 </div>
               </div>
             </div>
+        </div>
+        <div
+          className="swiper-slide"
+          style={{
+            backgroundImage: 'url(/images/banner-image2.jpg)',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            height: '100vh',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="container">
+            <div className="row">
+              <div className="offset-md-1 col-md-6">
+                <div className="banner-content">
+                  <h2>Calm, Repair, Protect</h2>
+                  <p className="fs-3">Fragrance‑free and lab‑tested argan oil.</p>
+                  <a href="/shop" className="btn">Shop the Oil</a>
+                </div>
+              </div>
+              <div className="col-md-5"></div>
+            </div>
           </div>
         </div>
-        <div className="main-slider-pagination"></div>
       </div>
-    </section>
+      <div className="main-slider-pagination"></div>
+    </div>
+  </section>
   );
 }
-
