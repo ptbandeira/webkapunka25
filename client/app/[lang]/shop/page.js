@@ -19,7 +19,7 @@ export default async function ShopLocalePage({ params }){
 
   return (
     <>
-      <section className="padding-xlarge">
+      <section className="padding-xlarge product-store product-grid">
         <div className="container">
           <div className="row">
             <div className="col-12">
