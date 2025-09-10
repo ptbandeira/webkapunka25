@@ -5,3 +5,10 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); }
 /* Shop grid: normalize product image tiles to perfect squares and proper overlay positioning */
 .product-grid .image-holder { position: relative; aspect-ratio: 1 / 1; display:block; }
 .product-grid .image-holder img { width:100%; height:100%; object-fit: cover; }
+
+/* Home hero: ensure pagination points are centered and positioned as in legacy */
+#billboard .main-slider-pagination { position:absolute; left:0; right:0; text-align:center; bottom:62px; z-index: 999; }
+
+/* Home best sellers: unify image sizes into perfect squares */
+.product-swiper .image-holder { position: relative; aspect-ratio: 1 / 1; }
+.product-swiper .image-holder img { width: 100%; height: 100%; object-fit: cover; }
