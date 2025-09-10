@@ -8,7 +8,7 @@ export default function LegacyReinit(){
 
   useEffect(() => {
     let observer;
-    let t0, t1, t2, t3;
+    let t0, t1, t2, t3, interval;
     let offLoad;
 
     function tryInit(){
@@ -65,6 +65,18 @@ export default function LegacyReinit(){
       offLoad = () => window.removeEventListener('load', onLoad);
     }catch(e){}
 
+    function isHealthy(){
+      try{
+        const el = document.querySelector('.main-swiper');
+        if (!el) return false;
+        const inited = el.classList.contains('swiper-initialized');
+        const wrapper = el.querySelector('.swiper-wrapper');
+        const hasSlides = wrapper && wrapper.children && wrapper.children.length > 0;
+        const h = el.clientHeight || (wrapper ? wrapper.clientHeight : 0);
+        return inited && hasSlides && h > 0;
+      }catch(e){ return false; }
+    }
+
     // Observe DOM for sliders appearing then init once
     try{
       observer = new MutationObserver(() => {
@@ -73,10 +85,23 @@ export default function LegacyReinit(){
       observer.observe(document.documentElement || document.body, { childList: true, subtree: true });
     }catch(e){}
 
+    // As a last safety, poll for a short time and initialize if unhealthy
+    let attempts = 0;
+    interval = setInterval(() => {
+      attempts++;
+      if (isHealthy() || attempts > 16){ // ~4s max
+        clearInterval(interval);
+        interval = null;
+      } else {
+        tryInit();
+      }
+    }, 250);
+
     return () => {
       try{ if (observer) observer.disconnect(); }catch(e){}
       if (offLoad) offLoad();
       clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+      if (interval) clearInterval(interval);
     };
   }, [pathname]);
 
