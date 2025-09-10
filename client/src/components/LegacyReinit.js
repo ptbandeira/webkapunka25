@@ -7,12 +7,15 @@ export default function LegacyReinit(){
   const pathname = usePathname();
 
   useEffect(() => {
-    try{
-      // Re-init Swiper sliders used by the legacy homepage after SPA nav
-      if (typeof window !== 'undefined' && window.Swiper){
+    let observer;
+    let t0, t1;
+
+    function tryInit(){
+      try{
+        if (typeof window === 'undefined' || !window.Swiper) return false;
+        let did = false;
         const main = document.querySelector('.main-swiper');
         if (main && !main.classList.contains('swiper-initialized')){
-          // Matches legacy options closely
           // eslint-disable-next-line no-new
           new window.Swiper('.main-swiper', {
             loop: true,
@@ -25,8 +28,8 @@ export default function LegacyReinit(){
             },
             pagination: { el: '.main-slider-pagination', clickable: true },
           });
+          did = true;
         }
-
         const prod = document.querySelector('.product-swiper');
         if (prod && !prod.classList.contains('swiper-initialized')){
           // eslint-disable-next-line no-new
@@ -41,11 +44,30 @@ export default function LegacyReinit(){
               1200:{ slidesPerView: 5, spaceBetween: 20 },
             },
           });
+          did = true;
         }
-      }
+        return did;
+      }catch(e){ return false; }
+    }
+
+    // Immediate attempts and short retries
+    tryInit();
+    t0 = setTimeout(tryInit, 0);
+    t1 = setTimeout(tryInit, 150);
+
+    // Observe DOM for sliders appearing then init once
+    try{
+      observer = new MutationObserver(() => {
+        if (tryInit() && observer){ observer.disconnect(); }
+      });
+      observer.observe(document.documentElement || document.body, { childList: true, subtree: true });
     }catch(e){}
+
+    return () => {
+      try{ if (observer) observer.disconnect(); }catch(e){}
+      clearTimeout(t0); clearTimeout(t1);
+    };
   }, [pathname]);
 
   return null;
 }
-
