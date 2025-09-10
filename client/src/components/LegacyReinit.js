@@ -25,6 +25,20 @@ export default function LegacyReinit(){
       }catch(e){ return false; }
     }
 
+    function reinitJarallax(){
+      try{
+        if (typeof window === 'undefined' || !window.jarallax) return false;
+        const els = document.querySelectorAll('.jarallax, .jarallax-img');
+        if (!els || els.length === 0) return false;
+        try { window.jarallax(document.querySelectorAll('.jarallax'), 'destroy'); } catch(e){}
+        try {
+          window.jarallax(document.querySelectorAll('.jarallax'));
+          window.jarallax(document.querySelectorAll('.jarallax-img'), { keepImg: true });
+        } catch(e){}
+        return true;
+      }catch(e){ return false; }
+    }
+
     function tryInit(){
       try{
         if (typeof window === 'undefined' || !window.Swiper) return false;
@@ -70,6 +84,8 @@ export default function LegacyReinit(){
             },
           }) || did;
         }
+        // Re-initialize parallax backgrounds (jarallax)
+        did = reinitJarallax() || did;
         return did;
       }catch(e){ return false; }
     }
