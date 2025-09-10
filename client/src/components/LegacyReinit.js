@@ -8,7 +8,8 @@ export default function LegacyReinit(){
 
   useEffect(() => {
     let observer;
-    let t0, t1;
+    let t0, t1, t2, t3;
+    let offLoad;
 
     function tryInit(){
       try{
@@ -54,6 +55,15 @@ export default function LegacyReinit(){
     tryInit();
     t0 = setTimeout(tryInit, 0);
     t1 = setTimeout(tryInit, 150);
+    t2 = setTimeout(tryInit, 500);
+    t3 = setTimeout(tryInit, 1000);
+
+    // Also attempt after full window load (late assets)
+    try{
+      const onLoad = () => { tryInit(); };
+      window.addEventListener('load', onLoad, { once: true });
+      offLoad = () => window.removeEventListener('load', onLoad);
+    }catch(e){}
 
     // Observe DOM for sliders appearing then init once
     try{
@@ -65,7 +75,8 @@ export default function LegacyReinit(){
 
     return () => {
       try{ if (observer) observer.disconnect(); }catch(e){}
-      clearTimeout(t0); clearTimeout(t1);
+      if (offLoad) offLoad();
+      clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
     };
   }, [pathname]);
 
