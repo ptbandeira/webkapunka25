@@ -14,10 +14,18 @@ function copyDir(src, dest){
     const d = path.join(dest, entry);
     const st = fs.statSync(s);
     if (st.isDirectory()) copyDir(s, d);
-    else fs.copyFileSync(s, d);
+    else {
+      // Do not overwrite a custom config.yml placed in public/admin
+      if (entry === 'config.yml' && fs.existsSync(d)) continue;
+      fs.copyFileSync(s, d);
+    }
   }
 }
 
 copyDir(srcDir, destDir);
-console.log('Synced admin ->', path.relative(repoRoot, destDir));
-
+// If a custom CMS config is provided in client/admin, copy it over (override)
+const customCfg = path.join(__dirname, '..', 'admin', 'config.yml');
+if (fs.existsSync(customCfg)) {
+  fs.copyFileSync(customCfg, path.join(destDir, 'config.yml'));
+}
+console.log('Synced admin ->', path.relative(repoRoot, destDir), fs.existsSync(customCfg) ? '(with custom config.yml)' : '');

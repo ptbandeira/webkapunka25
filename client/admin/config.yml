@@ -1,0 +1,204 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "client/public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  # Pages (EN)
+  - name: pages_en
+    label: Pages (EN)
+    files:
+      - label: Home (EN)
+        name: home_en
+        file: "client/content/pages/home.en.md"
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Subtitle, name: subtitle, widget: text, required: false }
+      - label: About (EN)
+        name: about_en
+        file: "client/content/pages/about.en.md"
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Body, name: body, widget: markdown, required: false }
+      - label: Contact (EN)
+        name: contact_en
+        file: "client/content/pages/contact.en.md"
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Intro, name: intro, widget: text, required: false }
+          - { label: Email, name: email, widget: string }
+
+  # Pages (PT)
+  - name: pages_pt
+    label: Pages (PT)
+    files:
+      - label: Home (PT)
+        name: home_pt
+        file: "client/content/pages/home.pt.md"
+        fields:
+          - { label: Título, name: title, widget: string }
+          - { label: Subtítulo, name: subtitle, widget: text, required: false }
+      - label: Sobre (PT)
+        name: about_pt
+        file: "client/content/pages/about.pt.md"
+        fields:
+          - { label: Título, name: title, widget: string }
+          - { label: Descrição, name: description, widget: text, required: false }
+          - { label: Corpo, name: body, widget: markdown, required: false }
+      - label: Contacto (PT)
+        name: contact_pt
+        file: "client/content/pages/contact.pt.md"
+        fields:
+          - { label: Título, name: title, widget: string }
+          - { label: Intro, name: intro, widget: text, required: false }
+          - { label: Email, name: email, widget: string }
+
+  # Pages (ES)
+  - name: pages_es
+    label: Pages (ES)
+    files:
+      - label: Inicio (ES)
+        name: home_es
+        file: "client/content/pages/home.es.md"
+        fields:
+          - { label: Título, name: title, widget: string }
+          - { label: Subtítulo, name: subtitle, widget: text, required: false }
+      - label: Acerca de (ES)
+        name: about_es
+        file: "client/content/pages/about.es.md"
+        fields:
+          - { label: Título, name: title, widget: string }
+          - { label: Descripción, name: description, widget: text, required: false }
+          - { label: Cuerpo, name: body, widget: markdown, required: false }
+      - label: Contacto (ES)
+        name: contact_es
+        file: "client/content/pages/contact.es.md"
+        fields:
+          - { label: Título, name: title, widget: string }
+          - { label: Intro, name: intro, widget: text, required: false }
+          - { label: Email, name: email, widget: string }
+
+  # Products (per language)
+  - name: products_en
+    label: Products (EN)
+    files:
+      - label: Products JSON (EN)
+        name: products_en_json
+        file: "client/content/products/products.en.json"
+        fields:
+          - label: Items
+            name: items
+            widget: list
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Price (EUR), name: price, widget: number, value_type: int, min: 0 }
+              - { label: Image (path under /images), name: image, widget: string }
+              - { label: Link, name: link, widget: string, required: false }
+
+  - name: products_pt
+    label: Products (PT)
+    files:
+      - label: Products JSON (PT)
+        name: products_pt_json
+        file: "client/content/products/products.pt.json"
+        fields:
+          - label: Items
+            name: items
+            widget: list
+            fields:
+              - { label: Nome, name: name, widget: string }
+              - { label: Preço (EUR), name: price, widget: number, value_type: int, min: 0 }
+              - { label: Imagem (em /images), name: image, widget: string }
+              - { label: Link, name: link, widget: string, required: false }
+
+  - name: products_es
+    label: Products (ES)
+    files:
+      - label: Products JSON (ES)
+        name: products_es_json
+        file: "client/content/products/products.es.json"
+        fields:
+          - label: Items
+            name: items
+            widget: list
+            fields:
+              - { label: Nombre, name: name, widget: string }
+              - { label: Precio (EUR), name: price, widget: number, value_type: int, min: 0 }
+              - { label: Imagen (en /images), name: image, widget: string }
+              - { label: Enlace, name: link, widget: string, required: false }
+
+  # i18n dictionaries (per language)
+  - name: i18n
+    label: i18n Dictionaries
+    files:
+      - label: English (EN)
+        name: i18n_en
+        file: "client/content/i18n/en.json"
+        fields:
+          - label: Nav
+            name: nav
+            widget: object
+            fields:
+              - { label: Home, name: home, widget: string }
+              - { label: Shop, name: shop, widget: string }
+              - { label: About, name: about, widget: string }
+              - { label: Contact, name: contact, widget: string }
+              - { label: Cart, name: cart, widget: string }
+              - { label: Menu, name: menu, widget: string }
+              - { label: Close, name: close, widget: string }
+          - label: Footer
+            name: footer
+            widget: object
+            fields:
+              - { label: Privacy, name: privacy, widget: string }
+              - { label: Terms, name: terms, widget: string }
+              - { label: Contact Info, name: contact_info, widget: string }
+              - { label: Follow, name: follow, widget: string }
+              - { label: Social Info, name: social_info, widget: string }
+              - { label: Copyright Prefix, name: copyright_prefix, widget: string }
+      - label: Português (PT)
+        name: i18n_pt
+        file: "client/content/i18n/pt.json"
+        fields:
+          - { label: Nav, name: nav, widget: object, fields: [
+              {label: Início, name: home, widget: string},
+              {label: Loja, name: shop, widget: string},
+              {label: Sobre, name: about, widget: string},
+              {label: Contacto, name: contact, widget: string},
+              {label: Carrinho, name: cart, widget: string},
+              {label: Menu, name: menu, widget: string},
+              {label: Fechar, name: close, widget: string}
+            ] }
+          - { label: Footer, name: footer, widget: object, fields: [
+              {label: Privacidade, name: privacy, widget: string},
+              {label: Termos, name: terms, widget: string},
+              {label: Contacto, name: contact_info, widget: string},
+              {label: Siga-nos, name: follow, widget: string},
+              {label: Social, name: social_info, widget: string},
+              {label: Copyright Prefixo, name: copyright_prefix, widget: string}
+            ] }
+      - label: Español (ES)
+        name: i18n_es
+        file: "client/content/i18n/es.json"
+        fields:
+          - { label: Nav, name: nav, widget: object, fields: [
+              {label: Inicio, name: home, widget: string},
+              {label: Tienda, name: shop, widget: string},
+              {label: Acerca de, name: about, widget: string},
+              {label: Contacto, name: contact, widget: string},
+              {label: Carrito, name: cart, widget: string},
+              {label: Menú, name: menu, widget: string},
+              {label: Cerrar, name: close, widget: string}
+            ] }
+          - { label: Footer, name: footer, widget: object, fields: [
+              {label: Privacidad, name: privacy, widget: string},
+              {label: Términos, name: terms, widget: string},
+              {label: Contacto, name: contact_info, widget: string},
+              {label: Síguenos, name: follow, widget: string},
+              {label: Social, name: social_info, widget: string},
+              {label: Prefijo Copyright, name: copyright_prefix, widget: string}
+            ] }
+
