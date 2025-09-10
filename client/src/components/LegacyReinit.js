@@ -11,14 +11,27 @@ export default function LegacyReinit(){
     let t0, t1, t2, t3, interval;
     let offLoad;
 
+    function initSwiper(selector, options){
+      try{
+        const el = document.querySelector(selector);
+        if (!el) return false;
+        // If a stale instance exists, destroy it to avoid broken state
+        if (el.swiper && typeof el.swiper.destroy === 'function'){
+          try { el.swiper.destroy(true, true); } catch(e){}
+        }
+        // eslint-disable-next-line no-new
+        new window.Swiper(selector, options);
+        return true;
+      }catch(e){ return false; }
+    }
+
     function tryInit(){
       try{
         if (typeof window === 'undefined' || !window.Swiper) return false;
         let did = false;
         const main = document.querySelector('.main-swiper');
         if (main && !main.classList.contains('swiper-initialized')){
-          // eslint-disable-next-line no-new
-          new window.Swiper('.main-swiper', {
+          did = initSwiper('.main-swiper', {
             loop: true,
             speed: 800,
             autoplay: { delay: 6000 },
@@ -28,13 +41,24 @@ export default function LegacyReinit(){
               next: { translate: ['100%', 0, 0] },
             },
             pagination: { el: '.main-slider-pagination', clickable: true },
-          });
-          did = true;
+          }) || did;
+        } else if (main && !isHealthy()){
+          // Re-init if initialized but unhealthy (no height/slides)
+          did = initSwiper('.main-swiper', {
+            loop: true,
+            speed: 800,
+            autoplay: { delay: 6000 },
+            effect: 'creative',
+            creativeEffect: {
+              prev: { shadow: true, translate: ['-20%', 0, -1] },
+              next: { translate: ['100%', 0, 0] },
+            },
+            pagination: { el: '.main-slider-pagination', clickable: true },
+          }) || did;
         }
         const prod = document.querySelector('.product-swiper');
         if (prod && !prod.classList.contains('swiper-initialized')){
-          // eslint-disable-next-line no-new
-          new window.Swiper('.product-swiper', {
+          did = initSwiper('.product-swiper', {
             speed: 1000,
             spaceBetween: 20,
             navigation: { nextEl: '.product-carousel-next', prevEl: '.product-carousel-prev' },
@@ -44,8 +68,7 @@ export default function LegacyReinit(){
               900: { slidesPerView: 3, spaceBetween: 20 },
               1200:{ slidesPerView: 5, spaceBetween: 20 },
             },
-          });
-          did = true;
+          }) || did;
         }
         return did;
       }catch(e){ return false; }
@@ -89,7 +112,7 @@ export default function LegacyReinit(){
     let attempts = 0;
     interval = setInterval(() => {
       attempts++;
-      if (isHealthy() || attempts > 16){ // ~4s max
+      if (isHealthy() || attempts > 24){ // ~6s max
         clearInterval(interval);
         interval = null;
       } else {
