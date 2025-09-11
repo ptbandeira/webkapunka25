@@ -25,7 +25,7 @@ export default function BestSellers({ items = [] }){
     }catch(e){}
   }, []);
   return (
-    <section className="padding-large">
+    <section className="padding-large product-store">
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex justify-content-between align-items-center mb-3">
