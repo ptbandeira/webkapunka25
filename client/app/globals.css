@@ -19,8 +19,4 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); }
 .product-swiper .image-holder img,
 .react-product-swiper .image-holder img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Hide legacy home product-swiper to avoid duplicate carousel rendering */
-.product-swiper { display: none !important; }
-
-/* Hide entire legacy Best‑Sellers section wrapper; React version replaces it */
-#products { display: none !important; }
+/* No CSS hiding for legacy Best‑Sellers; server-side removal in page.js prevents duplicates */

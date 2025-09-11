@@ -16,7 +16,10 @@ export default async function LocaleHome({ params }){
     // Remove the legacy best-sellers swiper; React component will render it
     .replace(/<div class=\"swiper product-swiper\"[\s\S]*?<\/div>\s*<\/div>/i, '')
     // Remove the legacy video-section (we'll render a React equivalent)
-    .replace(/<div class=\"video-section[\s\S]*?<\/div>\s*<\/div>/i, '');
+    .replace(/<div class=\"video-section[\s\S]*?<\/div>\s*<\/div>/i, '')
+    // Remove the entire legacy products section wrapper if present
+    .replace(/<section-wrapper[^>]*id=["']products["'][\s\S]*?<\/section-wrapper>/i, '')
+    .replace(/<section[^>]*id=["']products["'][\s\S]*?<\/section>/i, '');
 
   return (
     <>
