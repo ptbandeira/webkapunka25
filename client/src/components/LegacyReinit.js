@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 
 export default function LegacyReinit(){
   const pathname = usePathname();
+  const isHome = /^\/(en|pt|es)\/?$/i.test(pathname || '/');
+  if (isHome) return null; // React-only on Home; skip legacy reinit entirely
 
   useEffect(() => {
     let observer;
@@ -43,33 +45,7 @@ export default function LegacyReinit(){
       try{
         if (typeof window === 'undefined' || !window.Swiper) return false;
         let did = false;
-        const main = document.querySelector('.main-swiper');
-        if (main && !main.classList.contains('swiper-initialized')){
-          did = initSwiper('.main-swiper', {
-            loop: true,
-            speed: 800,
-            autoplay: { delay: 6000 },
-            effect: 'creative',
-            creativeEffect: {
-              prev: { shadow: true, translate: ['-20%', 0, -1] },
-              next: { translate: ['100%', 0, 0] },
-            },
-            pagination: { el: '.main-slider-pagination', clickable: true },
-          }) || did;
-        } else if (main && !isHealthy()){
-          // Re-init if initialized but unhealthy (no height/slides)
-          did = initSwiper('.main-swiper', {
-            loop: true,
-            speed: 800,
-            autoplay: { delay: 6000 },
-            effect: 'creative',
-            creativeEffect: {
-              prev: { shadow: true, translate: ['-20%', 0, -1] },
-              next: { translate: ['100%', 0, 0] },
-            },
-            pagination: { el: '.main-slider-pagination', clickable: true },
-          }) || did;
-        }
+        // Skip hero/product on non-home pages too unless needed; other legacy widgets may run
         // Do not initialize legacy product-swiper; React carousel handles Best‑Sellers
         // Re-initialize parallax backgrounds (jarallax)
         did = reinitJarallax() || did;

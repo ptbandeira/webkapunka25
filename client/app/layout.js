@@ -4,6 +4,7 @@ import './globals.css';
 import { Manrope } from 'next/font/google';
 import Header from '../src/components/header';
 import Script from 'next/script';
+import LegacyScripts from '../src/components/LegacyScripts';
 import PreloaderGuard from '../src/components/PreloaderGuard';
 import LegacyReinit from '../src/components/LegacyReinit';
 import Footer from '../src/components/footer';
@@ -36,24 +37,8 @@ export default function RootLayout({ children }) {
         <LegacyReinit />
         {children}
         <Footer />
-        {/* Legacy site JS for interactive pieces present in the HTML */}
-        <Script id="preloader-fix" strategy="afterInteractive">{`
-          (function(){
-            try{
-              var el = document.getElementById('preloader');
-              if (!el) return;
-              function hide(){ try{ el.classList.add('hide-preloader'); }catch(e){} }
-              if (document.readyState !== 'loading') setTimeout(hide, 0);
-              else document.addEventListener('DOMContentLoaded', hide);
-              window.addEventListener('load', hide);
-            }catch(e){}
-          })();
-        `}</Script>
-        <Script src="/js/jquery-1.11.0.min.js" strategy="afterInteractive" />
-        <Script src="/js/bootstrap.bundle.min.js" strategy="afterInteractive" />
-        <Script src="/js/plugins.js" strategy="afterInteractive" />
-        <Script src="/js/components.js" strategy="afterInteractive" />
-        <Script src="/js/script.js" strategy="afterInteractive" />
+        {/* Legacy JS only on non-Home routes */}
+        <LegacyScripts />
       </body>
     </html>
   );

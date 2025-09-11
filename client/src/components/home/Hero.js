@@ -1,22 +1,25 @@
 'use client';
 
-// Renders legacy-compatible Swiper markup for the homepage hero.
-// Initialization is handled by the legacy Swiper global via LegacyReinit.
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay, EffectCreative } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 export default function Hero({ title, subtitle }){
   return (
     <section id="billboard" className="position-relative overflow-hidden">
-      <div className="swiper main-swiper">
-        <div className="swiper-wrapper">
+      <Swiper
+        modules={[Pagination, Autoplay, EffectCreative]}
+        effect="creative"
+        creativeEffect={{ prev: { shadow: true, translate: ['-20%', 0, -1] }, next: { translate: ['100%', 0, 0] } }}
+        autoplay={{ delay: 6000, disableOnInteraction: false }}
+        pagination={{ el: '.main-slider-pagination', clickable: true }}
+        className="main-swiper"
+      >
+        <SwiperSlide>
           <div
             className="swiper-slide"
-            style={{
-              backgroundImage: 'url(/images/banner-image.jpg)',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              height: '100vh',
-              backgroundPosition: 'center',
-            }}
+            style={{ backgroundImage: 'url(/images/banner-image.jpg)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '100vh', backgroundPosition: 'center' }}
           >
             <div className="container ">
               <div className="row">
@@ -31,16 +34,9 @@ export default function Hero({ title, subtitle }){
               </div>
             </div>
           </div>
-          <div
-            className="swiper-slide"
-            style={{
-              backgroundImage: 'url(/images/banner-image1.jpg)',
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              height: '100vh',
-              backgroundPosition: 'center',
-            }}
-          >
+        </SwiperSlide>
+        <SwiperSlide>
+          <div className="swiper-slide" style={{ backgroundImage: 'url(/images/banner-image1.jpg)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '100vh', backgroundPosition: 'center' }}>
             <div className="container">
               <div className="row">
                 <div className="offset-md-6 col-md-6">
@@ -52,33 +48,26 @@ export default function Hero({ title, subtitle }){
                 </div>
               </div>
             </div>
-        </div>
-        <div
-          className="swiper-slide"
-          style={{
-            backgroundImage: 'url(/images/banner-image2.jpg)',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            height: '100vh',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="container">
-            <div className="row">
-              <div className="offset-md-1 col-md-6">
-                <div className="banner-content">
-                  <h2>Calm, Repair, Protect</h2>
-                  <p className="fs-3">Fragrance‑free and lab‑tested argan oil.</p>
-                  <a href="/shop" className="btn">Shop the Oil</a>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <div className="swiper-slide" style={{ backgroundImage: 'url(/images/banner-image2.jpg)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '100vh', backgroundPosition: 'center' }}>
+            <div className="container">
+              <div className="row">
+                <div className="offset-md-1 col-md-6">
+                  <div className="banner-content">
+                    <h2>Calm, Repair, Protect</h2>
+                    <p className="fs-3">Fragrance‑free and lab‑tested argan oil.</p>
+                    <a href="/shop" className="btn">Shop the Oil</a>
+                  </div>
                 </div>
+                <div className="col-md-5"></div>
               </div>
-              <div className="col-md-5"></div>
             </div>
           </div>
-        </div>
-      </div>
+        </SwiperSlide>
+      </Swiper>
       <div className="main-slider-pagination"></div>
-    </div>
-  </section>
+    </section>
   );
 }
