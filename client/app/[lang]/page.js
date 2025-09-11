@@ -24,6 +24,21 @@ export default async function LocaleHome({ params }){
   return (
     <>
       <Hero title={data?.title || 'Kapunka'} subtitle={data?.subtitle || ''} />
+      {/* SSR skeleton: minimal heading + placeholder removed on hydrate */}
+      <section className="padding-large" id="bestSellersSSR">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 d-flex justify-content-between align-items-center mb-3">
+              <h3 className="mb-0">Best-Sellers</h3>
+              <div className="d-flex align-items-center gap-2" aria-hidden="true">
+                <button className="swiper-prev" aria-label="Previous" disabled>‹</button>
+                <button className="swiper-next" aria-label="Next" disabled>›</button>
+              </div>
+            </div>
+          </div>
+          <div style={{ minHeight: '280px' }} />
+        </div>
+      </section>
       <BestSellers items={Array.isArray(products?.items) ? products.items : []} />
       <main dangerouslySetInnerHTML={{ __html: html }} />
       <VideoStrip />

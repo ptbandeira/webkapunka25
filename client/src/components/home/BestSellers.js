@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { useEffect } from 'react';
 
 function Price({ value }){
   const num = typeof value === 'number' ? value : Number(String(value || '').replace(/[^\d.,-]/g, '').replace(',', '.'));
@@ -16,6 +17,13 @@ function Price({ value }){
 }
 
 export default function BestSellers({ items = [] }){
+  // Remove SSR skeleton (if present) once the client carousel mounts
+  useEffect(() => {
+    try{
+      const sk = document.getElementById('bestSellersSSR');
+      if (sk && sk.parentElement) sk.parentElement.removeChild(sk);
+    }catch(e){}
+  }, []);
   return (
     <section className="padding-large">
       <div className="container">
