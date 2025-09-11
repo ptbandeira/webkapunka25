@@ -70,20 +70,7 @@ export default function LegacyReinit(){
             pagination: { el: '.main-slider-pagination', clickable: true },
           }) || did;
         }
-        const prod = document.querySelector('.product-swiper');
-        if (prod && !prod.classList.contains('swiper-initialized')){
-          did = initSwiper('.product-swiper', {
-            speed: 1000,
-            spaceBetween: 20,
-            navigation: { nextEl: '.product-carousel-next', prevEl: '.product-carousel-prev' },
-            breakpoints: {
-              0:   { slidesPerView: 1 },
-              480: { slidesPerView: 2 },
-              900: { slidesPerView: 3, spaceBetween: 20 },
-              1200:{ slidesPerView: 5, spaceBetween: 20 },
-            },
-          }) || did;
-        }
+        // Do not initialize legacy product-swiper; React carousel handles Best‑Sellers
         // Re-initialize parallax backgrounds (jarallax)
         did = reinitJarallax() || did;
         return did;
