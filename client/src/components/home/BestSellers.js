@@ -9,6 +9,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 function Price({ value }){
   const num = typeof value === 'number' ? value : Number(String(value || '').replace(/[^\d.,-]/g, '').replace(',', '.'));
@@ -17,6 +18,7 @@ function Price({ value }){
 }
 
 export default function BestSellers({ items = [] }){
+  const pathname = usePathname();
   // Remove SSR skeleton only after we confirm slides are rendered
   useEffect(() => {
     let tries = 0;
@@ -53,6 +55,14 @@ export default function BestSellers({ items = [] }){
           navigation={{ nextEl: '.react-product-carousel-next', prevEl: '.react-product-carousel-prev' }}
           speed={1000}
           spaceBetween={20}
+          observer={true}
+          observeParents={true}
+          resizeObserver={true}
+          watchOverflow={true}
+          onSwiper={(swiper) => { try { setTimeout(() => swiper.update(), 0); } catch(e){} }}
+          onResize={(swiper) => { try { swiper.update(); } catch(e){} }}
+          rebuildOnUpdate={true}
+          key={`bs-${pathname || ''}`}
           breakpoints={{
             0: { slidesPerView: 1 },
             480: { slidesPerView: 2 },
