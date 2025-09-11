@@ -21,3 +21,6 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); }
 
 /* Hide legacy home product-swiper to avoid duplicate carousel rendering */
 .product-swiper { display: none !important; }
+
+/* Hide entire legacy Best‑Sellers section wrapper; React version replaces it */
+#products { display: none !important; }
