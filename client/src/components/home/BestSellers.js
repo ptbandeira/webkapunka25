@@ -17,15 +17,27 @@ function Price({ value }){
 }
 
 export default function BestSellers({ items = [] }){
-  // Remove SSR skeleton (if present) once the client carousel mounts
+  // Remove SSR skeleton only after we confirm slides are rendered
   useEffect(() => {
-    try{
-      const sk = document.getElementById('bestSellersSSR');
-      if (sk && sk.parentElement) sk.parentElement.removeChild(sk);
-    }catch(e){}
+    let tries = 0;
+    const clearSSR = () => {
+      try{
+        const root = document.querySelector('#bestSellersReact .react-product-swiper .swiper-wrapper');
+        const slideCount = root ? root.children.length : 0;
+        if (slideCount > 0){
+          const sk = document.getElementById('bestSellersSSR');
+          if (sk && sk.parentElement) sk.parentElement.removeChild(sk);
+          return true;
+        }
+      }catch(e){}
+      return false;
+    };
+    if (clearSSR()) return;
+    const t = setInterval(() => { if (++tries > 10 || clearSSR()) clearInterval(t); }, 100);
+    return () => clearInterval(t);
   }, []);
   return (
-    <section className="padding-large product-store">
+    <section className="padding-large product-store" id="bestSellersReact">
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex justify-content-between align-items-center mb-3">
