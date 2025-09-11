@@ -23,14 +23,14 @@ export default function BestSellers({ items = [] }){
           <div className="col-12 d-flex justify-content-between align-items-center mb-3">
             <h3 className="mb-0">Best-Sellers</h3>
             <div className="d-flex align-items-center gap-2">
-              <button className="swiper-prev product-carousel-prev" aria-label="Previous">‹</button>
-              <button className="swiper-next product-carousel-next" aria-label="Next">›</button>
+              <button className="swiper-prev react-product-carousel-prev" aria-label="Previous">‹</button>
+              <button className="swiper-next react-product-carousel-next" aria-label="Next">›</button>
             </div>
           </div>
         </div>
         <Swiper
           modules={[Navigation]}
-          navigation={{ nextEl: '.product-carousel-next', prevEl: '.product-carousel-prev' }}
+          navigation={{ nextEl: '.react-product-carousel-next', prevEl: '.react-product-carousel-prev' }}
           speed={1000}
           spaceBetween={20}
           breakpoints={{
@@ -39,7 +39,7 @@ export default function BestSellers({ items = [] }){
             900: { slidesPerView: 3, spaceBetween: 20 },
             1200: { slidesPerView: 5, spaceBetween: 20 },
           }}
-          className="product-swiper"
+          className="react-product-swiper"
         >
           {items.map((p, i) => (
             <SwiperSlide key={i}>
@@ -66,4 +66,3 @@ export default function BestSellers({ items = [] }){
     </section>
   );
 }
-
