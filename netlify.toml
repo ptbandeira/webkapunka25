@@ -1,6 +1,7 @@
 [build]
   publish = "client/out"
-  command = "npm --prefix client ci && npm --prefix client run build"
+  # Temporary: use install instead of ci until package-lock.json includes swiper
+  command = "npm --prefix client install && npm --prefix client run build"
 
 [[redirects]]
   from = "/index.html"
