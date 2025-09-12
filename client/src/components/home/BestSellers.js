@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 function Price({ value }){
@@ -19,23 +19,20 @@ function Price({ value }){
 
 export default function BestSellers({ items = [] }){
   const pathname = usePathname();
-  // Remove SSR skeleton only after we confirm slides are rendered
+  const [ready, setReady] = useState(false);
+  // Mark ready only after slides are rendered to avoid layout flashes
   useEffect(() => {
     let tries = 0;
-    const clearSSR = () => {
+    const check = () => {
       try{
         const root = document.querySelector('#bestSellersReact .react-product-swiper .swiper-wrapper');
         const slideCount = root ? root.children.length : 0;
-        if (slideCount > 0){
-          const sk = document.getElementById('bestSellersSSR');
-          if (sk && sk.parentElement) sk.parentElement.removeChild(sk);
-          return true;
-        }
+        if (slideCount > 0){ setReady(true); return true; }
       }catch(e){}
       return false;
     };
-    if (clearSSR()) return;
-    const t = setInterval(() => { if (++tries > 10 || clearSSR()) clearInterval(t); }, 100);
+    if (check()) return;
+    const t = setInterval(() => { if (++tries > 10 || check()) clearInterval(t); }, 100);
     return () => clearInterval(t);
   }, []);
   return (
@@ -50,6 +47,7 @@ export default function BestSellers({ items = [] }){
             </div>
           </div>
         </div>
+        {ready ? (
         <Swiper
           modules={[Navigation]}
           navigation={{ nextEl: '.react-product-carousel-next', prevEl: '.react-product-carousel-prev' }}
@@ -92,6 +90,9 @@ export default function BestSellers({ items = [] }){
             </SwiperSlide>
           ))}
         </Swiper>
+        ) : (
+          <div aria-hidden="true" style={{ minHeight: '280px' }} />
+        )}
       </div>
     </section>
   );
