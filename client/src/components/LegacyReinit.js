@@ -2,11 +2,13 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { USE_REACT_HOME } from '../lib/config';
 
 export default function LegacyReinit(){
   const pathname = usePathname();
   const isHome = /^\/(en|pt|es)\/?$/i.test(pathname || '/');
-  if (isHome) return null; // React-only on Home; skip legacy reinit entirely
+  // In React Home mode, skip legacy reinit; in Legacy Home mode, allow it
+  if (isHome && USE_REACT_HOME) return null;
 
   useEffect(() => {
     let observer;
@@ -43,10 +45,16 @@ export default function LegacyReinit(){
 
     function tryInit(){
       try{
-        if (typeof window === 'undefined' || !window.Swiper) return false;
+        if (typeof window === 'undefined') return false;
         let did = false;
-        // Skip hero/product on non-home pages too unless needed; other legacy widgets may run
-        // Do not initialize legacy product-swiper; React carousel handles Best‑Sellers
+        // On legacy home, allow hero/product/testimonial sliders to (re)initialize
+        if (window.Swiper) {
+          if (isHome && !USE_REACT_HOME) {
+            try { new window.Swiper('.main-swiper', { loop:true, speed:800, autoplay:{ delay:6000 }, effect:'creative', creativeEffect:{ prev:{ shadow:true, translate:['-20%',0,-1] }, next:{ translate:['100%',0,0] } }, pagination:{ el:'.main-slider-pagination', clickable:true } }); did = true; } catch(e){}
+            try { new window.Swiper('.product-swiper', { speed:1000, spaceBetween:20, navigation:{ nextEl:'.product-carousel-next', prevEl:'.product-carousel-prev' }, breakpoints:{ 0:{ slidesPerView:1 }, 480:{ slidesPerView:2 }, 900:{ slidesPerView:3, spaceBetween:20 }, 1200:{ slidesPerView:5, spaceBetween:20 } } }); did = true; } catch(e){}
+            try { new window.Swiper('.testimonial-swiper', { speed:1000, navigation:{ nextEl:'.testimonial-arrow-next', prevEl:'.testimonial-arrow-prev' } }); did = true; } catch(e){}
+          }
+        }
         // Re-initialize parallax backgrounds (jarallax)
         did = reinitJarallax() || did;
         return did;

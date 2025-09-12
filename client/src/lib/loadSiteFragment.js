@@ -1,14 +1,17 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-function stripBetween(html) {
+function stripBetween(html, opts = {}) {
+  const { stripHeaderFooter = true } = opts;
   let out = html;
   // Extract <body> contents if present
   const bodyMatch = out.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
   if (bodyMatch) out = bodyMatch[1];
   // Remove legacy header/footer placeholders (we provide React equivalents)
-  out = out.replace(/<\/?site-header[^>]*>/gi, '');
-  out = out.replace(/<\/?site-footer[^>]*>/gi, '');
+  if (stripHeaderFooter) {
+    out = out.replace(/<\/?site-header[^>]*>/gi, '');
+    out = out.replace(/<\/?site-footer[^>]*>/gi, '');
+  }
   // Remove any inline script tags from fragment to avoid double-loading
   out = out.replace(/<script\b[\s\S]*?<\/script>/gi, '');
   // Optional: remove preloader wrapper if present (keeps inner content)
@@ -16,8 +19,8 @@ function stripBetween(html) {
   return out;
 }
 
-export async function loadSiteFragment(page) {
+export async function loadSiteFragment(page, opts = {}) {
   const file = path.join(process.cwd(), 'public', 'site', `${page}.html`);
   const raw = await fs.readFile(file, 'utf8');
-  return stripBetween(raw);
+  return stripBetween(raw, opts);
 }
