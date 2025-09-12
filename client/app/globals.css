@@ -15,8 +15,10 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); }
 
 /* Home best sellers: unify image sizes into perfect squares (legacy and React) */
 .product-swiper .image-holder,
-.react-product-swiper .image-holder { position: relative; aspect-ratio: 1 / 1; }
+.react-product-swiper .image-holder,
+.product-store .image-holder { position: relative; aspect-ratio: 1 / 1; }
 .product-swiper .image-holder img,
-.react-product-swiper .image-holder img { width: 100%; height: 100%; object-fit: cover; }
+.react-product-swiper .image-holder img,
+.product-store .image-holder img { width: 100%; height: 100%; object-fit: cover; }
 
 /* No CSS hiding for legacy Best‑Sellers; server-side removal in page.js prevents duplicates */
