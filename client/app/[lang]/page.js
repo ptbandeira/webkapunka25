@@ -29,8 +29,8 @@ export default async function LocaleHome({ params }){
       .replace(/<section-wrapper[^>]*id=["']products["'][\s\S]*?<\/section-wrapper>/i, '')
       .replace(/<section[^>]*id=["']products["'][\s\S]*?<\/section>/i, '');
   } else {
-    // Full legacy home: preserve header/footer placeholders; scripts loaded separately
-    html = await loadSiteFragment('index', { stripHeaderFooter: false });
+    // Full legacy home: keep entire legacy body except header/footer placeholders
+    html = await loadSiteFragment('index', { stripHeaderFooter: true });
   }
 
   if (USE_REACT_HOME) {
@@ -47,6 +47,6 @@ export default async function LocaleHome({ params }){
       </>
     );
   }
-  // Legacy Home mode: render legacy markup only
+  // Legacy Home mode: render legacy sections only (React header/footer visible)
   return <main dangerouslySetInnerHTML={{ __html: html }} />;
 }

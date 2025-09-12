@@ -9,7 +9,6 @@ import PreloaderGuard from '../src/components/PreloaderGuard';
 import LegacyReinit from '../src/components/LegacyReinit';
 import Footer from '../src/components/footer';
 import BootstrapOnHome from '../src/components/BootstrapOnHome';
-import HideChromeOnLegacyHome from '../src/components/hide/HideChromeOnLegacyHome';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -30,8 +29,7 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="/style.css" />
       </head>
       <body>
-        <HideChromeOnLegacyHome />
-        <div id="react-chrome-header" className={manrope.className}>
+        <div className={manrope.className}>
           <Header />
         </div>
         {/* Dummy preloader element to satisfy legacy script hooks */}
@@ -41,9 +39,7 @@ export default function RootLayout({ children }) {
         {/* Load only Bootstrap JS on Home (React Home mode) so accordions/toggles work */}
         <BootstrapOnHome />
         {children}
-        <div id="react-chrome-footer">
-          <Footer />
-        </div>
+        <Footer />
         {/* Legacy JS only on non-Home routes */}
         <LegacyScripts />
       </body>
