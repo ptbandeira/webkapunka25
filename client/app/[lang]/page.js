@@ -2,6 +2,7 @@ import { loadSiteFragment } from '../../src/lib/loadSiteFragment';
 import { getPage, getProducts } from '../../src/lib/content';
 import dynamic from 'next/dynamic';
 import VideoStrip from '../../src/components/home/VideoStrip';
+import AOSFallback from '../../src/components/AOSFallback';
 
 // Render carousels client‑side only to avoid SSR/CSR timing issues
 const Hero = dynamic(() => import('../../src/components/home/Hero'), { ssr: false });
@@ -28,6 +29,7 @@ export default async function LocaleHome({ params }){
       <Hero title={data?.title || 'Kapunka'} subtitle={data?.subtitle || ''} />
       {/* Best‑Sellers temporarily removed for stability */}
       <main dangerouslySetInnerHTML={{ __html: html }} />
+      <AOSFallback />
       <VideoStrip />
     </>
   );
