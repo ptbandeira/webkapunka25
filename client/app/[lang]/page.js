@@ -1,8 +1,11 @@
 import { loadSiteFragment } from '../../src/lib/loadSiteFragment';
 import { getPage, getProducts } from '../../src/lib/content';
-import Hero from '../../src/components/home/Hero';
-import BestSellers from '../../src/components/home/BestSellers';
+import dynamic from 'next/dynamic';
 import VideoStrip from '../../src/components/home/VideoStrip';
+
+// Render carousels client‑side only to avoid SSR/CSR timing issues
+const Hero = dynamic(() => import('../../src/components/home/Hero'), { ssr: false });
+const BestSellers = dynamic(() => import('../../src/components/home/BestSellers'), { ssr: false });
 
 export default async function LocaleHome({ params }){
   const lang = params?.lang || 'en';
