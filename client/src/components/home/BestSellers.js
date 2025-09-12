@@ -8,8 +8,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { dlog } from '../../lib/debug';
 
 function Price({ value }){
   const num = typeof value === 'number' ? value : Number(String(value || '').replace(/[^\d.,-]/g, '').replace(',', '.'));
@@ -20,6 +21,7 @@ function Price({ value }){
 export default function BestSellers({ items = [] }){
   const pathname = usePathname();
   const [ready, setReady] = useState(false);
+  const containerRef = useRef(null);
   // Mark ready only after slides are rendered to avoid layout flashes
   useEffect(() => {
     let tries = 0;
@@ -31,13 +33,28 @@ export default function BestSellers({ items = [] }){
       }catch(e){}
       return false;
     };
-    if (check()) return;
+    if (check()) { dlog('BestSellers ready immediately'); return; }
     const t = setInterval(() => { if (++tries > 10 || check()) clearInterval(t); }, 100);
     return () => clearInterval(t);
   }, []);
+
+  useEffect(() => {
+    // Log container sizes for diagnostics
+    try{
+      const el = containerRef.current;
+      if (el){
+        const ro = new ResizeObserver(() => {
+          const r = el.getBoundingClientRect();
+          dlog('BestSellers size', { w: Math.round(r.width), h: Math.round(r.height), path: pathname });
+        });
+        ro.observe(el);
+        return () => ro.disconnect();
+      }
+    }catch(e){}
+  }, [pathname]);
   return (
     <section className="padding-large product-store" id="bestSellersReact">
-      <div className="container">
+      <div className="container" ref={containerRef}>
         <div className="row">
           <div className="col-12 d-flex justify-content-between align-items-center mb-3">
             <h3 className="mb-0">Best-Sellers</h3>

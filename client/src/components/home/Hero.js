@@ -5,6 +5,7 @@ import { Pagination, Autoplay, EffectCreative } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { usePathname } from 'next/navigation';
+import { dlog } from '../../lib/debug';
 
 export default function Hero({ title, subtitle }){
   const pathname = usePathname();
@@ -21,8 +22,8 @@ export default function Hero({ title, subtitle }){
         observer
         observeParents
         resizeObserver
-        onSwiper={(s) => { try { setTimeout(() => s.update(), 0); } catch(e){} }}
-        onResize={(s) => { try { s.update(); } catch(e){} }}
+        onSwiper={(s) => { try { setTimeout(() => { s.update(); dlog('Hero swiper updated'); }, 0); } catch(e){} }}
+        onResize={(s) => { try { s.update(); dlog('Hero resize update'); } catch(e){} }}
       >
         <SwiperSlide style={{ backgroundImage: 'url(/images/banner-image.jpg)', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '100vh', backgroundPosition: 'center' }}>
           <div className="container ">
