@@ -21,6 +21,7 @@ function Price({ value }){
 export default function BestSellers({ items = [] }){
   const pathname = usePathname();
   const [ready, setReady] = useState(false);
+  const [fallback, setFallback] = useState(false);
   const containerRef = useRef(null);
   // Mark ready only after slides are rendered to avoid layout flashes
   useEffect(() => {
@@ -34,8 +35,9 @@ export default function BestSellers({ items = [] }){
       return false;
     };
     if (check()) { dlog('BestSellers ready immediately'); return; }
-    const t = setInterval(() => { if (++tries > 10 || check()) clearInterval(t); }, 100);
-    return () => clearInterval(t);
+    const t = setInterval(() => { if (++tries > 15 || check()) clearInterval(t); }, 100);
+    const f = setTimeout(() => { if (!ready) { setFallback(true); dlog('BestSellers fallback grid'); } }, 1200);
+    return () => { clearInterval(t); clearTimeout(f); };
   }, []);
 
   useEffect(() => {
@@ -64,7 +66,7 @@ export default function BestSellers({ items = [] }){
             </div>
           </div>
         </div>
-        {ready ? (
+        {ready && !fallback ? (
         <Swiper
           modules={[Navigation]}
           navigation={{ nextEl: '.react-product-carousel-next', prevEl: '.react-product-carousel-prev' }}
@@ -108,7 +110,24 @@ export default function BestSellers({ items = [] }){
           ))}
         </Swiper>
         ) : (
-          <div aria-hidden="true" style={{ minHeight: '280px' }} />
+          // Fallback: static grid (no JS) so content never disappears
+          <div className="row g-4" role="list">
+            {items.map((p, i) => (
+              <div className="col-md-4" role="listitem" key={`g-${i}`}>
+                <div className="product-card position-relative">
+                  <div className="image-holder zoom-effect">
+                    <img src={p.image} alt={p.name} className="img-fluid zoom-in" loading="lazy" />
+                  </div>
+                  <div className="card-detail text-center pt-3 pb-2">
+                    <h5 className="card-title fs-3 text-capitalize">
+                      <a href={p.link || '#'}>{p.name}</a>
+                    </h5>
+                    <span className="item-price text-primary fs-3 fw-light">{p.price}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </section>
