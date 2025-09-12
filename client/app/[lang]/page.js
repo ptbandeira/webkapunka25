@@ -5,7 +5,6 @@ import VideoStrip from '../../src/components/home/VideoStrip';
 
 // Render carousels client‑side only to avoid SSR/CSR timing issues
 const Hero = dynamic(() => import('../../src/components/home/Hero'), { ssr: false });
-const BestSellers = dynamic(() => import('../../src/components/home/BestSellers'), { ssr: false });
 
 export default async function LocaleHome({ params }){
   const lang = params?.lang || 'en';
@@ -27,7 +26,7 @@ export default async function LocaleHome({ params }){
   return (
     <>
       <Hero title={data?.title || 'Kapunka'} subtitle={data?.subtitle || ''} />
-      <BestSellers items={Array.isArray(products?.items) ? products.items : []} />
+      {/* Best‑Sellers temporarily removed for stability */}
       <main dangerouslySetInnerHTML={{ __html: html }} />
       <VideoStrip />
     </>
