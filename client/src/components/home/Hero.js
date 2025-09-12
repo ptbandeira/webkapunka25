@@ -6,9 +6,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { usePathname } from 'next/navigation';
 import { dlog } from '../../lib/debug';
+import { getCurrentLang } from '../../lib/locale';
 
 export default function Hero({ title, subtitle }){
   const pathname = usePathname();
+  const lang = getCurrentLang(pathname || '/');
   return (
     <section id="billboard" className="position-relative overflow-hidden">
       <Swiper
@@ -32,7 +34,7 @@ export default function Hero({ title, subtitle }){
                 <div className="banner-content">
                   <h2>{title}</h2>
                   {subtitle ? <p className="fs-3">{subtitle}</p> : null}
-                  <a href="/shop" className="btn">Shop the Oil</a>
+                  <a href={`/${lang}/shop`} className="btn">Shop the Oil</a>
                 </div>
               </div>
               <div className="col-md-5"></div>
@@ -46,7 +48,7 @@ export default function Hero({ title, subtitle }){
                 <div className="banner-content">
                   <h2>Pure, Cold‑Pressed Argan Oil</h2>
                   <p className="fs-3">Single-ingredient care for skin & hair.</p>
-                  <a href="/shop" className="btn">Shop the Oil</a>
+                  <a href={`/${lang}/shop`} className="btn">Shop the Oil</a>
                 </div>
               </div>
             </div>
@@ -59,7 +61,7 @@ export default function Hero({ title, subtitle }){
                 <div className="banner-content">
                   <h2>Calm, Repair, Protect</h2>
                   <p className="fs-3">Fragrance‑free and lab‑tested argan oil.</p>
-                  <a href="/shop" className="btn">Shop the Oil</a>
+                  <a href={`/${lang}/shop`} className="btn">Shop the Oil</a>
                 </div>
               </div>
               <div className="col-md-5"></div>

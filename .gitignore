@@ -17,3 +17,6 @@ client/out/
 client/public/images/
 client/public/content/
 client/public/admin/
+client/public/css/
+client/public/js/
+client/public/style.css

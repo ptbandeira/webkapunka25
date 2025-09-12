@@ -1,0 +1,12 @@
+{
+  "nav": { "home": "Início", "shop": "Loja", "about": "Sobre", "contact": "Contacto", "cart": "Carrinho", "menu": "Menu", "close": "Fechar" },
+  "footer": {
+    "privacy": "Política de Privacidade",
+    "terms": "Termos e Condições",
+    "contact_info": "Informações de Contacto",
+    "follow": "Siga-nos",
+    "social_info": "Social",
+    "copyright_prefix": "© Kapunka "
+  }
+}
+

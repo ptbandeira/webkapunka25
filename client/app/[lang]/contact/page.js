@@ -22,7 +22,7 @@ export default async function ContactLocalePage({ params }){
               <h1>{title}</h1>
               {intro ? <p className="mb-3">{intro}</p> : null}
               <p className="mb-4">Email us at <a href={`mailto:${email}`} className="link">{email}</a></p>
-              <form name="contact" method="POST" netlify>
+              <form name="contact" method="POST" data-netlify="true">
                 <input type="hidden" name="form-name" value="contact" />
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">Name</label>

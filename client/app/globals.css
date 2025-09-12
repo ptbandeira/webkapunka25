@@ -12,6 +12,9 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); }
 
 /* Home hero: ensure pagination points are centered and positioned as in legacy */
 #billboard .main-slider-pagination { position:absolute; left:0; right:0; text-align:center; bottom:62px; z-index: 999; }
+/* Pagination dots sizing and spacing to match legacy */
+#billboard .swiper-pagination-bullet { width:18px; height:18px; margin:0 13px !important; background:#9a9a9a; opacity:1; }
+#billboard .swiper-pagination-bullet-active { background:#000; }
 
 /* Home best sellers: unify image sizes into perfect squares (legacy and React) */
 .product-swiper .image-holder,
@@ -22,3 +25,11 @@ html, body { margin:0; padding:0; background:var(--bg); color:var(--ink); }
 .product-store .image-holder img { width: 100%; height: 100%; object-fit: cover; }
 
 /* No CSS hiding for legacy Best‑Sellers; server-side removal in page.js prevents duplicates */
+
+/* Hover overlay CTA behavior for product cards (Best‑Sellers + Shop) */
+.product-store .product-card .cart-concern { bottom: 120px; left: 0; right: 0; opacity: 0; transition: opacity .5s ease, transform .5s ease; transform: translateY(12px); }
+.product-store .product-card:hover .cart-concern { opacity: 1; transform: translateY(0); }
+
+/* Video strip: circular text rotation as in legacy */
+.video-section .text-pattern { animation: rotatePattern 50s linear infinite; transform-origin: 50% 50%; color: #000; }
+@keyframes rotatePattern { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

@@ -3,6 +3,8 @@ import { getPage, getProducts } from '../../src/lib/content';
 import dynamic from 'next/dynamic';
 import VideoStrip from '../../src/components/home/VideoStrip';
 import AOSFallback from '../../src/components/AOSFallback';
+import BestSellers from '../../src/components/home/BestSellers';
+import TestimonialsInit from '../../src/components/home/TestimonialsInit';
 
 // Render carousels client‑side only to avoid SSR/CSR timing issues
 const Hero = dynamic(() => import('../../src/components/home/Hero'), { ssr: false });
@@ -27,8 +29,13 @@ export default async function LocaleHome({ params }){
   return (
     <>
       <Hero title={data?.title || 'Kapunka'} subtitle={data?.subtitle || ''} />
-      {/* Best‑Sellers temporarily removed for stability */}
+      {/* React Best‑Sellers (replaces legacy block) */}
+      {Array.isArray(products?.items) && products.items.length > 0 ? (
+        <BestSellers items={products.items} />
+      ) : null}
       <main dangerouslySetInnerHTML={{ __html: html }} />
+      {/* Initialize legacy testimonial swiper without loading full legacy bundle */}
+      <TestimonialsInit />
       <AOSFallback />
       <VideoStrip />
     </>

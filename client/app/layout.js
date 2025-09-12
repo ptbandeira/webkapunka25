@@ -8,6 +8,7 @@ import LegacyScripts from '../src/components/LegacyScripts';
 import PreloaderGuard from '../src/components/PreloaderGuard';
 import LegacyReinit from '../src/components/LegacyReinit';
 import Footer from '../src/components/footer';
+import BootstrapOnHome from '../src/components/BootstrapOnHome';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -35,6 +36,8 @@ export default function RootLayout({ children }) {
         <div id="preloader" className="hide-preloader" aria-hidden="true" style={{ display:'none' }} />
         <PreloaderGuard />
         <LegacyReinit />
+        {/* Load only Bootstrap JS on Home so accordions/toggles work without legacy conflicts */}
+        <BootstrapOnHome />
         {children}
         <Footer />
         {/* Legacy JS only on non-Home routes */}
