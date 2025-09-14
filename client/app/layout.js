@@ -33,8 +33,8 @@ export default function RootLayout({ children }) {
         <div className={manrope.className}>
           <Header />
         </div>
-        {/* Dummy preloader element to satisfy legacy script hooks */}
-        <div id="preloader" className="hide-preloader" aria-hidden="true" style={{ display:'none' }} />
+        {/* Dummy preloader stub (avoid duplicate id with legacy) */}
+        <div id="preloader-stub" className="hide-preloader" aria-hidden="true" style={{ display:'none' }} />
         <PreloaderGuard />
         <LegacyReinit />
         {/* Load only Bootstrap JS on Home (React Home mode) so accordions/toggles work */}
