@@ -33,6 +33,31 @@ if (fs.existsSync(legacyStyle)) {
   fs.copyFileSync(legacyStyle, path.join(publicRoot, 'style.css'));
 }
 
+// Copy common favicons to public root so /favicon.ico resolves
+const favSrcs = [
+  path.join(legacyRoot, 'images', 'favicon.ico'),
+  path.join(legacyRoot, 'images', 'apple-touch-icon.png'),
+  path.join(legacyRoot, 'images', 'favicon-16.png'),
+  path.join(legacyRoot, 'images', 'favicon-32.png'),
+];
+const favDests = [
+  ['favicon.ico', 'favicon.ico'],
+  ['apple-touch-icon.png', 'apple-touch-icon.png'],
+  ['favicon-16.png', 'favicon-16x16.png'],
+  ['favicon-32.png', 'favicon-32x32.png'],
+];
+favSrcs.forEach((src, i) => {
+  try{
+    if (fs.existsSync(src)) {
+      const name = favDests[i][0];
+      const alt = favDests[i][1];
+      fs.copyFileSync(src, path.join(publicRoot, name));
+      // Also write a common alias if provided
+      if (alt && alt !== name) fs.copyFileSync(src, path.join(publicRoot, alt));
+    }
+  }catch(e){}
+});
+
 // Copy top-level html pages into /public/site for server-side loading
 const siteOut = path.join(publicRoot, 'site');
 fs.mkdirSync(siteOut, { recursive: true });
@@ -43,4 +68,3 @@ for (const entry of fs.readdirSync(legacyRoot)) {
 }
 
 console.log('Synced legacy static assets ->', path.relative(repoRoot, publicRoot));
-
