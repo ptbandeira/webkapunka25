@@ -1,7 +1,7 @@
 import { products as MODEL_PRODUCTS } from '../../../../src/data/products';
-import { add } from '../../../../src/store/cart';
 import ProductGallery from '../../../../src/components/shop/ProductGallery';
 import { withLang } from '../../../../src/lib/locale';
+import AddToCart from '../../../../src/components/shop/AddToCart';
 
 export const dynamicParams = false;
 
@@ -24,8 +24,6 @@ export default function PDP({ params }){
   if (!product) return null;
   const related = MODEL_PRODUCTS.filter(p => p.slug !== product.slug).slice(0, 3);
 
-  const handleAdd = () => add({ id: product.id, name: product.name, price: product.price, qty: 1, image: product.image });
-
   return (
     <section className="padding-xlarge">
       <div className="container">
@@ -36,10 +34,7 @@ export default function PDP({ params }){
           <div className="col-md-6">
             <h1 className="mb-2">{product.name}</h1>
             <p className="text-muted mb-4">{product.size}</p>
-            <div className="d-flex align-items-center gap-3 mb-4">
-              <span className="item-price text-primary fs-3 fw-light"><Price value={product.price} /></span>
-              <button className="btn btn-primary" onClick={handleAdd}>Add to Cart</button>
-            </div>
+            <AddToCart product={product} />
 
             <div className="mt-4">
               <ul className="nav nav-tabs" role="tablist">
@@ -90,4 +85,3 @@ export default function PDP({ params }){
     </section>
   );
 }
-
