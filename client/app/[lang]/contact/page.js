@@ -1,4 +1,5 @@
 import { getPage } from '../../../src/lib/content';
+import { contact as CONTACT } from '../../../src/lib/config';
 
 export const dynamicParams = false;
 
@@ -11,7 +12,7 @@ export default async function ContactLocalePage({ params }){
   const { data } = await getPage(lang, 'contact');
   const title = data?.title || 'Contact';
   const intro = data?.intro || '';
-  const email = data?.email || 'hello@kapunka.com';
+  const email = CONTACT.email || data?.email || 'hello@kapunka.com';
 
   return (
     <>
