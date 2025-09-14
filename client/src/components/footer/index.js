@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { getCurrentLang, withLang, stripLang } from '../../lib/locale';
+import { isFeatureEnabled } from '../../lib/config';
 
 export default function Footer(){
   const pathname = usePathname();
@@ -30,9 +31,13 @@ export default function Footer(){
                       <li className="menu-item pb-2"><a href={withLang(lang, '/shop')}>Shop</a></li>
                       <li className="menu-item pb-2"><a href={withLang(lang, '/contact')}>Contact</a></li>
                       <li className="menu-item pb-2"><a href="#">FAQs</a></li>
-                      <li className="menu-item pb-2"><a href="#">Shipping &amp; Returns</a></li>
-                      <li className="menu-item pb-2"><a href="#">Privacy</a></li>
-                      <li className="menu-item pb-2"><a href="#">Terms</a></li>
+                      {isFeatureEnabled('policies') && (
+                        <>
+                          <li className="menu-item pb-2"><a href={withLang(lang, '/policies/shipping')}>Shipping &amp; Returns</a></li>
+                          <li className="menu-item pb-2"><a href={withLang(lang, '/policies/privacy')}>Privacy</a></li>
+                          <li className="menu-item pb-2"><a href={withLang(lang, '/policies/terms')}>Terms</a></li>
+                        </>
+                      )}
                     </ul>
                   </div>
                 </div>
@@ -81,4 +86,3 @@ export default function Footer(){
     </>
   );
 }
-
