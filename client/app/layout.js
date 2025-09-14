@@ -11,6 +11,7 @@ import Footer from '../src/components/footer';
 import BootstrapOnHome from '../src/components/BootstrapOnHome';
 import WIPBadge from '../src/components/WIPBadge';
 import MiniCart from '../src/components/cart/MiniCart';
+import PromoBar from '../src/components/PromoBar';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="/style.css" />
       </head>
       <body>
+        <PromoBar />
         <div className={manrope.className}>
           <Header />
         </div>
