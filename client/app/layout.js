@@ -9,6 +9,7 @@ import PreloaderGuard from '../src/components/PreloaderGuard';
 import LegacyReinit from '../src/components/LegacyReinit';
 import Footer from '../src/components/footer';
 import BootstrapOnHome from '../src/components/BootstrapOnHome';
+import WIPBadge from '../src/components/WIPBadge';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -42,6 +43,8 @@ export default function RootLayout({ children }) {
         <Footer />
         {/* Legacy JS only on non-Home routes */}
         <LegacyScripts />
+        {/* Dev-only */}
+        <WIPBadge />
       </body>
     </html>
   );
