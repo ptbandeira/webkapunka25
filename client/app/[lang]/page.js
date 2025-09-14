@@ -7,6 +7,12 @@ import BestSellers from '../../src/components/home/BestSellers';
 import TestimonialsInit from '../../src/components/home/TestimonialsInit';
 import { USE_REACT_HOME } from '../../src/lib/config';
 
+export const dynamicParams = false;
+
+export async function generateStaticParams(){
+  return [ { lang: 'en' }, { lang: 'pt' }, { lang: 'es' } ];
+}
+
 // Render carousels client‑side only to avoid SSR/CSR timing issues
 const Hero = dynamic(() => import('../../src/components/home/Hero'), { ssr: false });
 

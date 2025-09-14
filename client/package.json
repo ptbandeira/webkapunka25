@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "clean": "rm -rf .next",
     "predev": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n && npm run sync-static",
     "preexport": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n && npm run sync-static",
     "prebuild": "npm run sync-images && npm run sync-content && npm run sync-admin && npm run sync-i18n && npm run sync-static",
