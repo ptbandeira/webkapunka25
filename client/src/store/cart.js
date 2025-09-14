@@ -32,6 +32,13 @@ export function remove(id){
   notify();
 }
 
+export function removeAll(id){
+  const idx = state.items.findIndex(it => it.id === id);
+  if (idx === -1) return;
+  state.items.splice(idx, 1);
+  notify();
+}
+
 export function clear(){ state.items.splice(0, state.items.length); notify(); }
 
 export function count(){ return state.items.reduce((a, b) => a + (b.qty || 0), 0); }
@@ -49,4 +56,3 @@ export function useCartCount(){
   useEffect(() => subscribe(() => setC(count())), []);
   return c;
 }
-
