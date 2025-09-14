@@ -1,5 +1,6 @@
 import { getPage } from '../../../src/lib/content';
 import { contact as CONTACT } from '../../../src/lib/config';
+import ContactForm from '../../../src/components/contact/ContactForm';
 
 export const dynamicParams = false;
 
@@ -23,22 +24,7 @@ export default async function ContactLocalePage({ params }){
               <h1>{title}</h1>
               {intro ? <p className="mb-3">{intro}</p> : null}
               <p className="mb-4">Email us at <a href={`mailto:${email}`} className="link">{email}</a></p>
-              <form name="contact" method="POST" data-netlify="true">
-                <input type="hidden" name="form-name" value="contact" />
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">Name</label>
-                  <input type="text" id="name" name="name" className="form-control" required />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">Email</label>
-                  <input type="email" id="email" name="email" className="form-control" required />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="message" className="form-label">Message</label>
-                  <textarea id="message" name="message" rows="5" className="form-control" required></textarea>
-                </div>
-                <button type="submit" className="btn btn-primary">Send</button>
-              </form>
+              <ContactForm privacyHref={`/${lang}/policies/privacy`} />
             </div>
           </div>
         </div>
