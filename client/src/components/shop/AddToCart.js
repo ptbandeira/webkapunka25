@@ -1,6 +1,7 @@
 'use client';
 
 import { add, open as openCart } from '../../store/cart';
+import { track } from '../../lib/analytics';
 
 function Price({ value }){
   const num = typeof value === 'number' ? value : Number(String(value||'').replace(/[^\d.,-]/g,'').replace(',','.'));
@@ -13,6 +14,7 @@ export default function AddToCart({ product }){
   const handleAdd = () => {
     add({ id: product.id, name: product.name, price: product.price, qty: 1, image: product.image });
     openCart();
+    track('add_to_cart', { id: product.id, name: product.name, price: product.price });
   };
   return (
     <div className="d-flex align-items-center gap-3 mb-4">
@@ -21,4 +23,3 @@ export default function AddToCart({ product }){
     </div>
   );
 }
-

@@ -12,6 +12,8 @@ import BootstrapOnHome from '../src/components/BootstrapOnHome';
 import WIPBadge from '../src/components/WIPBadge';
 import MiniCart from '../src/components/cart/MiniCart';
 import PromoBar from '../src/components/PromoBar';
+import NewsletterTracker from '../src/components/NewsletterTracker';
+import AnalyticsLoader from '../src/components/AnalyticsLoader';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -50,6 +52,8 @@ export default function RootLayout({ children }) {
         <WIPBadge />
         {/* Cart drawer */}
         <MiniCart />
+        <NewsletterTracker />
+        <AnalyticsLoader />
       </body>
     </html>
   );

@@ -25,3 +25,8 @@ export const contact = {
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || '+48 000 000 000',
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL || '', // e.g. https://wa.me/48XXXXXXXXX
 };
+
+// Site info
+export const site = {
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://kapunkargan.com',
+};

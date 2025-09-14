@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCart, close, clear, remove, removeAll, add, total } from '../../store/cart';
 
 function Price({ value }){
@@ -12,6 +12,7 @@ function Price({ value }){
 export default function MiniCart(){
   const cart = useCart();
   const isOpen = cart.open;
+  const closeBtnRef = useRef(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -38,12 +39,12 @@ export default function MiniCart(){
   const accent = { height: 3, background: 'var(--primary-color, #b8892d)' };
 
   return (
-    <div style={overlayStyle} role="dialog" aria-modal="true" onClick={(e) => { if (e.currentTarget === e.target) close(); }}>
+    <div style={overlayStyle} role="dialog" aria-modal="true" aria-labelledby="minicart-title" onClick={(e) => { if (e.currentTarget === e.target) close(); }}>
       <div style={panelStyle} onClick={(e) => e.stopPropagation()}>
         <div style={accent} />
         <div style={headerStyle} className="d-flex align-items-center justify-content-between">
-          <h3 className="mb-0" style={{ fontFamily: 'Italiana, serif', letterSpacing: '.02em' }}>Your Cart</h3>
-          <button className="btn btn-sm btn-outline-secondary" onClick={() => close()} aria-label="Close">Close</button>
+          <h3 id="minicart-title" className="mb-0" style={{ fontFamily: 'Italiana, serif', letterSpacing: '.02em' }}>Your Cart</h3>
+          <button ref={closeBtnRef} className="btn btn-sm btn-outline-secondary" onClick={() => close()} aria-label="Close">Close</button>
         </div>
         <div style={bodyStyle}>
           {cart.items.length === 0 && (
@@ -93,7 +94,7 @@ export default function MiniCart(){
             <button className="btn btn-link link-dark p-0" onClick={() => close()}>Continue shopping</button>
             <div className="d-flex gap-2">
               <button className="btn btn-outline-secondary" onClick={() => clear()}>Clear</button>
-              <button className="btn btn-primary" disabled>Checkout</button>
+              <button className="btn btn-primary" disabled={cart.items.length === 0} onClick={() => { try { require('../../lib/analytics').track('begin_checkout', { items: cart.items.length, total: total() }); } catch(e){} }}>Checkout</button>
             </div>
           </div>
         </div>

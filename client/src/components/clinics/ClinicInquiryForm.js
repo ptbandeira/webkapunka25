@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { track } from '../../lib/analytics';
 
 function Field({ id, label, type='text', required=false, ...props }){
   return (
@@ -36,6 +37,7 @@ export default function ClinicInquiryForm(){
       // Stub: log to console; replace with fetch to endpoint if needed
       // await fetch('/api/clinics-inquiry', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
       console.log('Clinic inquiry submitted:', data);
+      try{ track('clinics_inquiry_submitted', { name: data.name, clinic: data.clinic }); }catch(e){}
       setSent(true);
       setData({ name:'', clinic:'', email:'', phone:'', message:'', consent:false });
     } catch (e2) {
@@ -74,4 +76,3 @@ export default function ClinicInquiryForm(){
     </form>
   );
 }
-
