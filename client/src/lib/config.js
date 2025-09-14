@@ -10,8 +10,8 @@ export const features = {
   learn: !isProd,
   clinics: !isProd,
   training: !isProd,
-  policies: !isProd, // policies now live; footer no longer gated, kept for future use
-  cart: !isProd,
+  policies: true, // turned on in prod
+  cart: true,     // turned on in prod
 };
 
 export function isFeatureEnabled(key){
