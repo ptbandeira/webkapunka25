@@ -10,6 +10,7 @@ import LegacyReinit from '../src/components/LegacyReinit';
 import Footer from '../src/components/footer';
 import BootstrapOnHome from '../src/components/BootstrapOnHome';
 import WIPBadge from '../src/components/WIPBadge';
+import MiniCart from '../src/components/cart/MiniCart';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -45,6 +46,8 @@ export default function RootLayout({ children }) {
         <LegacyScripts />
         {/* Dev-only */}
         <WIPBadge />
+        {/* Cart drawer */}
+        <MiniCart />
       </body>
     </html>
   );
