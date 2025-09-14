@@ -29,19 +29,23 @@ export default function Index({ onNavigate, basePath = '/en' }){
       <div className={styles.wrapper}>
         <div className={styles.container}>
           {(() => {
-            const dynamicLinks = [
-              { title: navTitles.home,    href: basePath,               src: 'home.jpg' },
-              { title: navTitles.shop,    href: basePath + '/shop',     src: 'shop.jpg' },
-              { title: navTitles.about,   href: basePath + '/about',    src: 'about.jpg' },
-              { title: navTitles.contact, href: basePath + '/contact',  src: 'contact.jpg' },
+            // Desired L→R order:
+            // Row 1: Home, About, Shop
+            // Row 2: Learn, Training, Contact
+            // Row 3: Clinics
+            const ordered = [
+              { key:'home',     title: navTitles.home,    href: basePath,                src: 'home.jpg',    show: true },
+              { key:'about',    title: navTitles.about,   href: basePath + '/about',     src: 'about.jpg',   show: true },
+              { key:'shop',     title: navTitles.shop,    href: basePath + '/shop',      src: 'shop.jpg',    show: true },
+              { key:'learn',    title: 'Learn',           href: basePath + '/learn',     src: 'about.jpg',   show: isFeatureEnabled('learn') },
+              { key:'training', title: 'Training',        href: basePath + '/training',  src: 'shop.jpg',    show: isFeatureEnabled('training') },
+              { key:'contact',  title: navTitles.contact, href: basePath + '/contact',   src: 'contact.jpg', show: true },
+              { key:'clinics',  title: 'Clinics',         href: basePath + '/clinics',   src: 'contact.jpg', show: isFeatureEnabled('clinics') },
             ];
-            if (isFeatureEnabled('learn'))    dynamicLinks.push({ title: 'Learn',        href: basePath + '/learn',    src: 'about.jpg' });
-            if (isFeatureEnabled('clinics'))  dynamicLinks.push({ title: 'For Clinics',  href: basePath + '/clinics',  src: 'contact.jpg' });
-            if (isFeatureEnabled('training')) dynamicLinks.push({ title: 'Training',     href: basePath + '/training', src: 'shop.jpg' });
-            // Render body with dynamic links (title + href)
+            const visible = ordered.filter(l => l.show);
             return (
               <Body
-                links={dynamicLinks.map(l => ({ title: l.title, href: l.href }))}
+                links={visible.map(l => ({ title: l.title, href: l.href }))}
                 selectedLink={selectedLink}
                 setSelectedLink={setSelectedLink}
                 onNavigate={onNavigate}
@@ -51,15 +55,16 @@ export default function Index({ onNavigate, basePath = '/en' }){
           <Footer />
         </div>
         {(() => {
-          const previews = [
-            { title: navTitles.home,    src: 'home.jpg' },
-            { title: navTitles.shop,    src: 'shop.jpg' },
-            { title: navTitles.about,   src: 'about.jpg' },
-            { title: navTitles.contact, src: 'contact.jpg' },
+          const ordered = [
+            { key:'home',     src: 'home.jpg',    show: true },
+            { key:'about',    src: 'about.jpg',   show: true },
+            { key:'shop',     src: 'shop.jpg',    show: true },
+            { key:'learn',    src: 'about.jpg',   show: isFeatureEnabled('learn') },
+            { key:'training', src: 'shop.jpg',    show: isFeatureEnabled('training') },
+            { key:'contact',  src: 'contact.jpg', show: true },
+            { key:'clinics',  src: 'contact.jpg', show: isFeatureEnabled('clinics') },
           ];
-          if (isFeatureEnabled('learn'))    previews.push({ title: 'Learn',       src: 'about.jpg' });
-          if (isFeatureEnabled('clinics'))  previews.push({ title: 'For Clinics', src: 'contact.jpg' });
-          if (isFeatureEnabled('training')) previews.push({ title: 'Training',    src: 'shop.jpg' });
+          const previews = ordered.filter(l => l.show);
           const idx = Math.min(selectedLink.index, previews.length - 1);
           return <Image src={previews[idx].src} selectedLink={selectedLink} />;
         })()}

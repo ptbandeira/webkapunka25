@@ -1,7 +1,7 @@
 .nav { position:fixed; inset:0; z-index:1100; background:#c5c6c6; color:#000; overflow:hidden; }
-.wrapper { display:grid; grid-template-columns: 1fr minmax(240px, 34%); height:100%; }
-@media (min-width: 1400px){ .wrapper{ grid-template-columns: 1fr minmax(260px, 32%); } }
-@media (max-width: 1200px){ .wrapper{ grid-template-columns: 1fr minmax(220px, 38%); } }
+.wrapper { display:grid; grid-template-columns: 1fr minmax(220px, 32%); height:100%; }
+@media (min-width: 1400px){ .wrapper{ grid-template-columns: 1fr minmax(240px, 30%); } }
+@media (max-width: 1200px){ .wrapper{ grid-template-columns: 1fr minmax(200px, 36%); } }
 .container { display:flex; flex-direction:column; justify-content:space-between; padding:6vh 8vw; }
 /* Keep content below the header bottom border with a small padding */
 .container { padding-top: calc(80px + 12px); }
@@ -15,7 +15,7 @@
   margin-block: auto; /* center block vertically within left column */
 }
 .link { text-decoration:none; color:inherit; overflow:visible; }
-.body p { margin:0; font-weight:600; letter-spacing:.01em; font-size:clamp(20px,5vw,58px); line-height:1; display:inline-block; overflow:hidden; color:#000; white-space: nowrap; word-break: keep-all; hyphens: manual; }
+.body p { margin:0; font-weight:600; letter-spacing:.01em; font-size:clamp(18px,4.4vw,54px); line-height:1.08; display:inline-block; overflow:visible; color:#000; white-space: nowrap; word-break: keep-all; hyphens: manual; max-width: 100%; }
 .body p > span { display:inline-block; }
 .footer { display:grid; grid-template-columns:repeat(2,minmax(200px,1fr)); gap:18px 28px; padding-top:32px; }
 .footer ul{ list-style:none; margin:0; padding:0; }
@@ -26,18 +26,18 @@
 @media (max-width:900px){ .footer{ grid-template-columns:1fr; } .body { grid-template-columns: 1fr; } }
 .imageContainer{
   position:relative;
-  width: min(32vw, 420px); /* leave more room for words */
+  width: min(30vw, 380px); /* leave more room for words */
   aspect-ratio: 1 / 1; /* consistent square */
   height: auto;
   overflow:hidden; /* crop overflow */
   background:#c5c6c6; /* same as nav */
   /* breathing room from edges */
-  padding: clamp(8px, 2vh, 16px);
-  margin-right: clamp(16px, 4vw, 48px);
-  margin-left: clamp(16px, 4vw, 48px);
-  /* keep below sticky header divider with padding */
-  margin-top: calc(var(--header-height, 80px) + 20px);
-  margin-bottom: clamp(16px, 4vh, 40px);
+  padding: clamp(12px, 2.6vh, 20px);
+  margin-right: clamp(18px, 4vw, 56px);
+  margin-left: clamp(18px, 4vw, 56px);
+  /* keep below sticky header divider with comfortable padding */
+  margin-top: calc(var(--header-height, 80px) + 32px);
+  margin-bottom: clamp(20px, 4.5vh, 48px);
   border-radius: 0;
   box-shadow: none;
   align-self: start; /* ensure same grid row start as links */
