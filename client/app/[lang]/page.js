@@ -10,4 +10,3 @@ export default async function LocaleHomePage(){
   const html = await loadSiteFragment('index');
   return <main dangerouslySetInnerHTML={{ __html: html }} />;
 }
-

@@ -20,3 +20,6 @@ client/public/admin/
 client/public/css/
 client/public/js/
 client/public/style.css
+
+client/public/sitemap.xml
+client/public/robots.txt

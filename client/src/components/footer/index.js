@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { getCurrentLang, withLang, stripLang } from '../../lib/locale';
+import { contact as CONTACT } from '../../lib/config';
 
 export default function Footer(){
   const pathname = usePathname();
@@ -30,9 +31,9 @@ export default function Footer(){
                       <li className="menu-item pb-2"><a href={withLang(lang, '/shop')}>Shop</a></li>
                       <li className="menu-item pb-2"><a href={withLang(lang, '/contact')}>Contact</a></li>
                       <li className="menu-item pb-2"><a href="#">FAQs</a></li>
-                      <li className="menu-item pb-2"><a href="#">Shipping &amp; Returns</a></li>
-                      <li className="menu-item pb-2"><a href="#">Privacy</a></li>
-                      <li className="menu-item pb-2"><a href="#">Terms</a></li>
+                      <li className="menu-item pb-2"><a href={withLang(lang, '/policies/shipping')}>Shipping &amp; Returns</a></li>
+                      <li className="menu-item pb-2"><a href={withLang(lang, '/policies/privacy')}>Privacy</a></li>
+                      <li className="menu-item pb-2"><a href={withLang(lang, '/policies/terms')}>Terms</a></li>
                     </ul>
                   </div>
                 </div>
@@ -41,8 +42,15 @@ export default function Footer(){
                     <h4 className="widget-title pb-2">Contact info</h4>
                     <ul className="menu-list list-unstyled">
                       <li className="menu-item pb-2"><a href="#">Warsaw, Poland</a></li>
-                      <li className="menu-item pb-2"><a href="#">+48 000 000 000</a></li>
-                      <li className="menu-item pb-2"><a href="mailto:info@kapunkargan.com">info@kapunkargan.com</a></li>
+                      {CONTACT.phone ? (
+                        <li className="menu-item pb-2"><a href={`tel:${CONTACT.phone.replace(/\s+/g,'')}`}>{CONTACT.phone}</a></li>
+                      ) : null}
+                      {CONTACT.email ? (
+                        <li className="menu-item pb-2"><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+                      ) : null}
+                      {CONTACT.whatsapp ? (
+                        <li className="menu-item pb-2"><a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a></li>
+                      ) : null}
                     </ul>
                   </div>
                 </div>
@@ -81,4 +89,3 @@ export default function Footer(){
     </>
   );
 }
-

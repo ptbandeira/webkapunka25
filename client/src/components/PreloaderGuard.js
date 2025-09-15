@@ -9,8 +9,11 @@ export default function PreloaderGuard(){
   useEffect(() => {
     function hide(){
       try{
-        const el = document.getElementById('preloader');
-        if (el) el.classList.add('hide-preloader');
+        const ids = ['preloader', 'preloader-stub'];
+        ids.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('hide-preloader');
+        });
       }catch(e){}
     }
     // Hide immediately on mount/route change and after next tick
@@ -23,4 +26,3 @@ export default function PreloaderGuard(){
 
   return null;
 }
-

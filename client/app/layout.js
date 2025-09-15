@@ -9,6 +9,11 @@ import PreloaderGuard from '../src/components/PreloaderGuard';
 import LegacyReinit from '../src/components/LegacyReinit';
 import Footer from '../src/components/footer';
 import BootstrapOnHome from '../src/components/BootstrapOnHome';
+import WIPBadge from '../src/components/WIPBadge';
+import MiniCart from '../src/components/cart/MiniCart';
+import PromoBar from '../src/components/PromoBar';
+import NewsletterTracker from '../src/components/NewsletterTracker';
+import AnalyticsLoader from '../src/components/AnalyticsLoader';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -29,11 +34,12 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="/style.css" />
       </head>
       <body>
+        <PromoBar />
         <div className={manrope.className}>
           <Header />
         </div>
-        {/* Dummy preloader element to satisfy legacy script hooks */}
-        <div id="preloader" className="hide-preloader" aria-hidden="true" style={{ display:'none' }} />
+        {/* Dummy preloader stub (avoid duplicate id with legacy) */}
+        <div id="preloader-stub" className="hide-preloader" aria-hidden="true" style={{ display:'none' }} />
         <PreloaderGuard />
         <LegacyReinit />
         {/* Load only Bootstrap JS on Home (React Home mode) so accordions/toggles work */}
@@ -42,6 +48,12 @@ export default function RootLayout({ children }) {
         <Footer />
         {/* Legacy JS only on non-Home routes */}
         <LegacyScripts />
+        {/* Dev-only */}
+        <WIPBadge />
+        {/* Cart drawer */}
+        <MiniCart />
+        <NewsletterTracker />
+        <AnalyticsLoader />
       </body>
     </html>
   );
