@@ -86,3 +86,14 @@ export function readPageSections(locale: string, slug: string): Section[] {
   return valid;
 }
 
+/**
+ * Convenience helper to return sections for a page or null when unavailable.
+ */
+export function getDecapPage(slug: string, locale: string): Section[] | null {
+  try {
+    const sections = readPageSections(locale, slug);
+    return Array.isArray(sections) && sections.length > 0 ? sections : null;
+  } catch {
+    return null;
+  }
+}
