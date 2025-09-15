@@ -31,6 +31,9 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible { outline: 
 
 /* No CSS hiding for legacy Best‑Sellers; server-side removal in page.js prevents duplicates */
 
+/* Footer visibility guard (ensure never hidden by preceding overflow sections) */
+#footer { display:block; position:relative; z-index:1; }
+
 /* Hover overlay CTA behavior for product cards (Best‑Sellers + Shop) */
 .product-store .product-card .cart-concern { bottom: 120px; left: 0; right: 0; opacity: 0; transition: opacity .5s ease, transform .5s ease; transform: translateY(12px); }
 .product-store .product-card:hover .cart-concern { opacity: 1; transform: translateY(0); }
@@ -38,3 +41,12 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible { outline: 
 /* Video strip: circular text rotation as in legacy */
 .video-section .text-pattern { animation: rotatePattern 50s linear infinite; transform-origin: 50% 50%; color: #000; }
 @keyframes rotatePattern { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Brand color overrides (ensure no Bootstrap blue leaks through) */
+:root { --brand-primary: #b8892d; --primary-color: var(--brand-primary); }
+.btn-primary { background-color: var(--primary-color) !important; color: #fff !important; border-color: var(--primary-color) !important; }
+.btn-primary:hover, .btn-primary:focus { background-color: #000 !important; color:#fff !important; border-color: #000 !important; }
+.btn-outline-primary { color: var(--primary-color) !important; border-color: var(--primary-color) !important; }
+.btn-outline-primary:hover, .btn-outline-primary:focus { background-color: var(--primary-color) !important; color:#fff !important; border-color: var(--primary-color) !important; }
+.btn-link { color: inherit; }
+.btn-link:hover, .btn-link:focus { color: var(--primary-color); }

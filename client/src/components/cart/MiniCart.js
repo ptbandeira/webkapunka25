@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useCart, close, clear, remove, removeAll, add, total } from '../../store/cart';
+import { track } from '../../lib/analytics';
 
 function Price({ value }){
   const num = typeof value === 'number' ? value : Number(String(value||'').replace(/[^\d.,-]/g,'').replace(',','.'));
@@ -94,7 +95,27 @@ export default function MiniCart(){
             <button className="btn btn-link link-dark p-0" onClick={() => close()}>Continue shopping</button>
             <div className="d-flex gap-2">
               <button className="btn btn-outline-secondary" onClick={() => clear()}>Clear</button>
-              <button className="btn btn-primary" disabled={cart.items.length === 0} onClick={() => { try { require('../../lib/analytics').track('begin_checkout', { items: cart.items.length, total: total() }); } catch(e){} }}>Checkout</button>
+              <button
+                className="btn btn-primary"
+                disabled={cart.items.length === 0}
+                onClick={() => {
+                  try { track('begin_checkout', { items: cart.items.length, total: total() }); } catch(e){}
+                  try {
+                    const ext = process.env.NEXT_PUBLIC_CHECKOUT_URL;
+                    if (ext) {
+                      const payload = { items: cart.items.map(({ id, name, price, qty }) => ({ id, name, price, qty })), total: total() };
+                      const q = typeof window !== 'undefined' ? encodeURIComponent(window.btoa(JSON.stringify(payload))) : '';
+                      window.location.href = `${ext}${ext.includes('?') ? '&' : '?'}cart=${q}`;
+                    } else if (typeof window !== 'undefined') {
+                      const m = window.location.pathname.match(/^\/(en|pt|es)(?:\/|$)/i);
+                      const lang = (m && m[1]) ? m[1].toLowerCase() : 'en';
+                      window.location.href = `/${lang}/checkout`;
+                    }
+                  } catch(e){}
+                }}
+              >
+                Checkout
+              </button>
             </div>
           </div>
         </div>

@@ -26,15 +26,16 @@
 @media (max-width:900px){ .footer{ grid-template-columns:1fr; } .body { grid-template-columns: 1fr; } }
 .imageContainer{
   position:relative;
-  width: min(30vw, 380px); /* leave more room for words */
+  width: min(28vw, 360px); /* leave more room for words */
   aspect-ratio: 1 / 1; /* consistent square */
   height: auto;
   overflow:hidden; /* crop overflow */
   background:#c5c6c6; /* same as nav */
   /* breathing room from edges */
   padding: clamp(12px, 2.6vh, 20px);
-  margin-right: clamp(18px, 4vw, 56px);
-  margin-left: clamp(18px, 4vw, 56px);
+  margin-right: clamp(32px, 8vw, 96px); /* ensure generous right gap */
+  padding-right: max(16px, env(safe-area-inset-right));
+  margin-left: clamp(16px, 3vw, 48px);
   /* keep below sticky header divider with comfortable padding */
   margin-top: calc(var(--header-height, 150px) + 32px);
   margin-bottom: clamp(20px, 4.5vh, 48px);

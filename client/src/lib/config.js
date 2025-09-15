@@ -30,3 +30,9 @@ export const contact = {
 export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://kapunkargan.com',
 };
+
+// External checkout endpoint (optional). If set, the cart "Checkout" button
+// redirects to this URL with a base64-encoded cart payload in `cart` param.
+export const checkout = {
+  url: process.env.NEXT_PUBLIC_CHECKOUT_URL || '',
+};
