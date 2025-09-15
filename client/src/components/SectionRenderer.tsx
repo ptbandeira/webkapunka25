@@ -71,7 +71,7 @@ export default function SectionRenderer({ sections, lang }: Props) {
                     {heading ? (
                       <h3 className={align === 'center' ? 'text-center' : align === 'right' ? 'text-end' : ''}>{heading}</h3>
                     ) : null}
-                    {body ? <p className="fs-5" style={{ whiteSpace: 'pre-wrap' }}>{body}</p> : null}
+                    {body ? <p className="fs-5">{body}</p> : null}
                   </div>
                 </div>
               </div>
@@ -113,19 +113,10 @@ export default function SectionRenderer({ sections, lang }: Props) {
           break;
         }
         case 'banner': {
-          const { heading, button_label, button_link, background_image } = s;
+          const { heading, button_label, button_link } = s;
           out.push(
-            <section
-              key={`bn-${idx}`}
-              className="d-flex align-items-center justify-content-center"
-              style={{
-                background: background_image ? `url(${background_image}) no-repeat` : undefined,
-                backgroundSize: background_image ? 'cover' : undefined,
-                backgroundPosition: background_image ? 'center' : undefined,
-                minHeight: background_image ? '520px' : undefined,
-              }}
-            >
-              <div className="container text-center py-5">
+            <section key={`bn-${idx}`} className="padding-large">
+              <div className="container text-center">
                 {heading ? <h3 className="mb-3">{heading}</h3> : null}
                 {button_label && button_link ? (
                   <a href={button_link} className="btn">{button_label}</a>
@@ -151,4 +142,3 @@ export default function SectionRenderer({ sections, lang }: Props) {
 
   return <>{out}</>;
 }
-
