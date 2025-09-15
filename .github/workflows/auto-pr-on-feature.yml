@@ -1,0 +1,37 @@
+name: Auto PR on feature branches
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or update PR to main
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const head = context.ref.replace('refs/heads/','');
+            const base = 'main';
+            const { owner, repo } = context.repo;
+            // Check for existing open PR from this head to base
+            const existing = await github.rest.pulls.list({ owner, repo, state: 'open', head: `${owner}:${head}`, base });
+            if (existing.data.length) {
+              core.info(`PR already exists: ${existing.data[0].html_url}`);
+              return;
+            }
+            const title = `feat: ${head}`;
+            const body = [
+              `Auto-created PR for branch \`${head}\` -> \`${base}\`.`,
+              '',
+              'This PR was created by the auto-pr-on-feature workflow.'
+            ].join('\n');
+            const pr = await github.rest.pulls.create({ owner, repo, base, head, title, body });
+            core.info(`Created PR: ${pr.data.html_url}`);
