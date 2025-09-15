@@ -3,7 +3,7 @@ import type { Section } from '../types/sections';
 import Hero from './home/Hero';
 import BestSellers from './home/BestSellers';
 import VideoStrip from './home/VideoStrip';
-import { readLocaleJSON } from '../lib/cms/decap';
+import { readLocaleJSON, readFaqs, type FaqEntry } from '../lib/cms/decap';
 
 type Props = {
   sections: Section[];
@@ -39,10 +39,15 @@ function loadProducts(lang?: string) {
 }
 
 // Server-side helper: load FAQs (optionally localized)
-function loadFaqs(lang?: string) {
-  const data = readLocaleJSON<any>(lang || 'en', 'faqs.json');
-  if (!data || !Array.isArray(data.items)) return [] as any[];
-  return data.items as any[];
+function loadFaqs(lang?: string): FaqEntry[] {
+  const locale = lang || 'en';
+  try {
+    const faqs = readFaqs(locale);
+    return Array.isArray(faqs) ? faqs : [];
+  } catch (err: any) {
+    warnDev(`Failed loading FAQs for ${locale}: ${err?.message || err}`);
+    return [];
+  }
 }
 
 export default function SectionRenderer({ sections, lang }: Props) {
@@ -50,7 +55,7 @@ export default function SectionRenderer({ sections, lang }: Props) {
 
   // Preload shared content once per render for simple mapping
   let cachedProducts: any[] | null = null;
-  let cachedFaqs: any[] | null = null;
+  let cachedFaqs: FaqEntry[] | null = null;
 
   const getProducts = () => {
     if (!cachedProducts) cachedProducts = loadProducts(lang);
@@ -101,20 +106,40 @@ export default function SectionRenderer({ sections, lang }: Props) {
         }
         case 'faqs': {
           const faqs = getFaqs();
+          const hasCategories = faqs.some(f => Boolean(f.category));
+          const renderFaq = (faq: FaqEntry, i: number) => (
+            <details key={`q-${i}-${faq.question}`} className="mb-3">
+              <summary className="fw-semibold">{faq.question}</summary>
+              <div className="mt-2">{faq.answer}</div>
+            </details>
+          );
+          let faqNodes: React.ReactNode = null;
+          if (hasCategories) {
+            const nodes: React.ReactNode[] = [];
+            let lastCategory = '';
+            faqs.forEach((faq, i) => {
+              const category = (faq.category || '').trim();
+              if (category && category !== lastCategory) {
+                nodes.push(
+                  <h4 key={`cat-${i}-${category}`} className="mt-4">{category}</h4>
+                );
+                lastCategory = category;
+              } else if (!category) {
+                lastCategory = '';
+              }
+              nodes.push(renderFaq(faq, i));
+            });
+            faqNodes = <>{nodes}</>;
+          } else {
+            faqNodes = <>{faqs.map(renderFaq)}</>;
+          }
           out.push(
             <section key={`faq-${idx}`} className="padding-large">
               <div className="container">
                 <div className="row">
                   <div className="col-12">
                     {s.title ? <h3 className="mb-4">{s.title}</h3> : null}
-                    <div>
-                      {faqs.map((f: any, i: number) => (
-                        <details key={`q-${i}`} className="mb-3">
-                          <summary className="fw-semibold">{f.q || f.question}</summary>
-                          <div className="mt-2">{f.a || f.answer}</div>
-                        </details>
-                      ))}
-                    </div>
+                    <div>{faqNodes}</div>
                   </div>
                 </div>
               </div>

@@ -5,6 +5,10 @@ backend:
 media_folder: "client/public/images/uploads"
 public_folder: "/images/uploads"
 
+i18n:
+  locales: [en, pt, es]
+  default_locale: en
+
 collections:
   # Pages (EN)
   - name: pages_en
@@ -130,6 +134,22 @@ collections:
               - { label: Imagen (en /images), name: image, widget: string }
               - { label: Enlace, name: link, widget: string, required: false }
 
+  - name: faqs
+    label: FAQs
+    folder: "site/content/faqs"
+    create: true
+    format: "json"
+    extension: "json"
+    slug: "{{slug}}"
+    i18n:
+      structure: multiple_folders
+    fields:
+      - { label: Question, name: question, widget: string, i18n: translate }
+      - { label: Answer, name: answer, widget: text, i18n: translate }
+      - { label: Category, name: category, widget: string, required: false, i18n: translate }
+      - { label: Order, name: order, widget: number, required: false, default: 0, i18n: duplicate }
+      - { label: Active, name: active, widget: boolean, default: true, i18n: duplicate }
+
   # i18n dictionaries (per language)
   - name: i18n
     label: i18n Dictionaries
@@ -201,4 +221,3 @@ collections:
               {label: Social, name: social_info, widget: string},
               {label: Prefijo Copyright, name: copyright_prefix, widget: string}
             ] }
-

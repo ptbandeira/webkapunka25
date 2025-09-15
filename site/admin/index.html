@@ -13,91 +13,249 @@
       CMS.registerPreviewStyle("/css/bootstrap.min.css");
       CMS.registerPreviewStyle("/style.css?v=footer-fix1");
 
-      function h(tag, props, children){ return window.h(tag, props, children); }
+      var h = window.h;
 
-      var HomePreview = createClass({
-        render: function () {
-          var entry = this.props.entry;
-          var sections = entry.getIn(["data","sections"]) || [];
+      function toJS(value){
+        if (!value) return value;
+        if (typeof value.toJS === 'function') return value.toJS();
+        if (typeof value.toArray === 'function') return value.toArray();
+        return value;
+      }
 
-          function kids(list, mapFn){
-            if (!list || !list.map) return [];
-            var mapped = list.map(mapFn);
-            return mapped && mapped.toArray ? mapped.toArray() : mapped;
-          }
-          function A(cls, kidsArr){
-            return h("section-wrapper", { className: cls || "padding-xlarge" },
-              h("div",{className:"container"}, kidsArr)
-            );
-          }
+      function asArray(value){
+        var data = toJS(value);
+        if (!data) return [];
+        return Array.isArray(data) ? data : [data];
+      }
 
-          return h("div", {}, kids(sections, function(s, i){
-            var t = s.get ? s.get("type") : s.type;
+      function textAlignClass(align){
+        if (align === 'center') return 'text-center';
+        if (align === 'right') return 'text-end';
+        return '';
+      }
 
-            if (t==="hero") {
-              var align = s.get("align");
-              var cls = align==="center"?"text-center":align==="right"?"text-end":"";
-              return A("padding-xlarge jarallax", [
-                h("h1", {className: cls}, s.get("title")),
-                s.get("subtitle") ? h("p", {}, s.get("subtitle")) : null,
-                s.get("cta_label") ? h("a",{href:s.get("cta_link")||"#",className:"btn mt-2"}, s.get("cta_label")) : null
-              ]);
-            }
-            if (t==="text") {
-              return A(null, [
-                s.get("heading") ? h("h3",{className:"py-3"}, s.get("heading")) : null,
-                s.get("body") ? h("p",{}, s.get("body")) : null
-              ]);
-            }
-            if (t==="productGrid") {
-              return A("product-store", [
-                h("div",{className:"display-header d-flex justify-content-between pb-4"},
-                  [h("h3",{className:"mt-3"}, s.get("title")||"Products")]
-                ),
-                h("div",{className:"row"},
-                  [1,2,3].map(function(n){return h("div",{className:"col-md-4 mb-4",key:n},
-                    h("div",{className:"product-card text-center"},[
-                      h("div",{className:"image-holder zoom-effect"}, h("div",{style:{background:"#eee",height:"200px"}})),
-                      h("div",{className:"card-detail pt-3 pb-2"},[
-                        h("h5",{},"Product"),
-                        h("div",{className:"price"}, "€…")
-                      ])
-                    ])
-                  );})
-                )
-              ]);
-            }
-            if (t==="faqs") {
-              return A(null, [
-                h("h3",{className:"text-center mb-5"}, s.get("title")||"FAQs"),
-                h("div",{className:"accordion accordion-flush"},[
-                  h("div",{className:"accordion-item"},
-                    [h("h4",{className:"accordion-header"},
-                      h("button",{className:"accordion-button collapsed",type:"button"},"Question")
-                    ),
-                    h("div",{className:"accordion-body"}, h("p",{},"Answer"))])
+      function renderHero(section, idx){
+        var align = textAlignClass(section.align);
+        var bg = section.background_image ? { backgroundImage: 'url(' + section.background_image + ')', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' } : null;
+        return h('section', { key: 'hero-' + idx, className: 'padding-large position-relative overflow-hidden', style: bg || undefined }, [
+          h('div', { className: 'container' }, [
+            h('div', { className: 'row align-items-center' }, [
+              h('div', { className: 'col-md-6 col-12' }, [
+                h('h2', { className: align }, section.title || 'Hero title'),
+                section.subtitle ? h('p', { className: 'fs-4 ' + align }, section.subtitle) : null,
+                section.cta_label ? h('a', { href: section.cta_link || '#', className: 'btn mt-3' }, section.cta_label) : null,
+              ])
+            ])
+          ])
+        ]);
+      }
+
+      function renderText(section, idx){
+        var align = textAlignClass(section.align);
+        return h('section', { key: 'text-' + idx, className: 'padding-large' }, [
+          h('div', { className: 'container' }, [
+            h('div', { className: 'row' }, [
+              h('div', { className: 'col-12' }, [
+                section.heading ? h('h3', { className: (align ? align + ' ' : '') + 'mb-3' }, section.heading) : null,
+                section.body ? h('p', { className: 'fs-5 ' + align }, section.body) : null,
+              ])
+            ])
+          ])
+        ]);
+      }
+
+      function renderProductGrid(section, idx){
+        var title = section.title || 'Product Grid';
+        var note = section.source ? 'Source: ' + section.source : 'Source: products.json';
+        var cards = [1, 2, 3].map(function(n){
+          return h('div', { key: 'prod-' + idx + '-' + n, className: 'col-md-4 col-12 mb-4' }, [
+            h('div', { className: 'product-card text-center p-3 border rounded-3 shadow-sm' }, [
+              h('div', { className: 'image-holder zoom-effect mb-3', style: { background: '#f3f3f3', height: '180px', borderRadius: '12px' } }),
+              h('div', { className: 'card-detail' }, [
+                h('h5', { className: 'mb-2' }, 'Product name'),
+                h('div', { className: 'price text-primary fw-semibold' }, '€ …'),
+              ])
+            ])
+          ]);
+        });
+        return h('section', { key: 'grid-' + idx, className: 'padding-large product-store' }, [
+          h('div', { className: 'container' }, [
+            h('div', { className: 'd-flex justify-content-between align-items-center mb-4 flex-wrap' }, [
+              h('h3', { className: 'mb-0' }, title),
+              h('span', { className: 'text-muted small' }, note)
+            ]),
+            h('div', { className: 'row' }, cards)
+          ])
+        ]);
+      }
+
+      function renderFaqSection(section, idx){
+        var source = section.source || 'faqs.json';
+        var items = [
+          { question: 'How will FAQs appear?', answer: 'Published FAQ entries are rendered here.' },
+          { question: 'Where do they come from?', answer: 'Content syncs from ' + source + '.' }
+        ];
+        return h('section', { key: 'faq-' + idx, className: 'padding-large' }, [
+          h('div', { className: 'container' }, [
+            h('div', { className: 'row' }, [
+              h('div', { className: 'col-12' }, [
+                section.title ? h('h3', { className: 'mb-4' }, section.title) : null,
+                h('div', {}, items.map(function(item, i){
+                  return h('details', { key: 'faq-item-' + idx + '-' + i, open: i === 0, className: 'mb-3 border rounded p-3' }, [
+                    h('summary', { className: 'fw-semibold' }, item.question),
+                    h('div', { className: 'mt-2' }, item.answer)
+                  ]);
+                }))
+              ])
+            ])
+          ])
+        ]);
+      }
+
+      function renderBanner(section, idx){
+        return h('section', { key: 'banner-' + idx, className: 'padding-large text-center position-relative bg-light' }, [
+          h('div', { className: 'container' }, [
+            section.heading ? h('h3', { className: 'mb-3' }, section.heading) : null,
+            section.button_label ? h('a', { href: section.button_link || '#', className: 'btn' }, section.button_label) : null,
+          ])
+        ]);
+      }
+
+      function renderVideo(section, idx){
+        var url = section.youtube_url || '';
+        var caption = section.caption;
+        return h('section', { key: 'video-' + idx, className: 'padding-large' }, [
+          h('div', { className: 'container' }, [
+            h('div', { className: 'ratio ratio-16x9 bg-dark rounded-4 overflow-hidden' }, [
+              url ? h('iframe', { src: url, title: 'Video preview', allowFullScreen: true }) : h('div', { className: 'd-flex justify-content-center align-items-center h-100 text-white-50' }, 'Video placeholder')
+            ]),
+            caption ? h('p', { className: 'text-muted small mt-3' }, caption) : null
+          ])
+        ]);
+      }
+
+      function renderSections(sections){
+        if (!Array.isArray(sections)) return [];
+        return sections.map(function(section, idx){
+          if (!section) return null;
+          switch (section.type) {
+            case 'hero':
+              return renderHero(section, idx);
+            case 'text':
+              return renderText(section, idx);
+            case 'productGrid':
+              return renderProductGrid(section, idx);
+            case 'faqs':
+              return renderFaqSection(section, idx);
+            case 'banner':
+              return renderBanner(section, idx);
+            case 'video':
+              return renderVideo(section, idx);
+            default:
+              return h('section', { key: 'unknown-' + idx, className: 'padding-large' }, [
+                h('div', { className: 'container' }, [
+                  h('p', { className: 'text-muted' }, 'Unknown section: ' + (section.type || 'n/a'))
                 ])
               ]);
-            }
-            if (t==="banner") {
-              return h("section-wrapper",{className:"position-relative"},
-                h("div",{className:"banner-content-text position-absolute"},
-                  [h("h2",{}, s.get("heading")||"Banner"),
-                   s.get("button_label") ? h("a",{href:s.get("button_link")||"#",className:"btn"}, s.get("button_label")):null]));
-            }
-            if (t==="video") {
-              return A(null, [h("div",{className:"ratio ratio-16x9", style:{background:"#000"}})]);
-            }
-            return h("div",{},"Unknown section");
-          }));
+          }
+        }).filter(Boolean);
+      }
+
+      function createPagePreview(){
+        return createClass({
+          render: function(){
+            var sections = asArray(this.props.entry && this.props.entry.getIn(['data','sections']));
+            return h('div', { className: 'page-preview' }, renderSections(sections));
+          }
+        });
+      }
+
+      var PagePreview = createPagePreview();
+
+      ['home', 'about', 'shop', 'contact', 'pages', 'page', 'pages_en', 'pages_pt', 'pages_es'].forEach(function(name){
+        CMS.registerPreviewTemplate(name, PagePreview);
+      });
+
+      var ProductPreview = createClass({
+        render: function(){
+          var data = toJS(this.props.entry && this.props.entry.get('data')) || {};
+          var prices = asArray(data.prices).map(function(item){
+            if (item && typeof item === 'object' && 'price' in item) return item.price;
+            return item;
+          }).filter(Boolean);
+          var sizes = asArray(data.sizes).map(function(item){
+            if (item && typeof item === 'object' && 'size' in item) return item.size;
+            return item;
+          }).filter(Boolean);
+          var badges = asArray(data.badges).map(function(item){
+            if (item && typeof item === 'object' && 'badge' in item) return item.badge;
+            return item;
+          }).filter(Boolean);
+          var firstImage = asArray(data.images).map(function(item){
+            if (item && typeof item === 'object' && 'image' in item) return item.image;
+            return item;
+          }).find(Boolean);
+
+          return h('section', { className: 'padding-large' }, [
+            h('div', { className: 'container' }, [
+              h('div', { className: 'row justify-content-center' }, [
+                h('div', { className: 'col-lg-6 col-12' }, [
+                  h('div', { className: 'product-card border rounded-4 shadow-sm overflow-hidden' }, [
+                    h('div', { className: 'image-holder ratio ratio-1x1 bg-light position-relative' }, [
+                      firstImage ? h('img', { src: firstImage, alt: data.title || data.slug || 'Product image', style: { objectFit: 'cover', width: '100%', height: '100%' } }) :
+                        h('div', { className: 'd-flex align-items-center justify-content-center text-muted' }, 'Image preview')
+                    ]),
+                    h('div', { className: 'card-detail p-4' }, [
+                      h('h3', { className: 'mb-2' }, data.title || 'Product title'),
+                      data.category ? h('span', { className: 'badge text-bg-secondary me-2' }, data.category) : null,
+                      badges.length ? h('div', { className: 'mb-2' }, badges.map(function(b, i){
+                        return h('span', { key: 'badge-' + i, className: 'badge text-bg-primary me-2 mb-2' }, b);
+                      })) : null,
+                      sizes.length ? h('p', { className: 'mb-2 text-muted' }, 'Sizes: ' + sizes.join(', ')) : null,
+                      prices.length ? h('p', { className: 'fs-4 fw-semibold text-primary mb-3' }, '€ ' + prices[0]) : null,
+                      h('div', { className: 'small text-muted' }, [
+                        data.slug ? h('div', {}, ['Slug: ', h('code', {}, data.slug)]) : null,
+                        data.id ? h('div', {}, ['ID: ', h('code', {}, data.id)]) : null,
+                        h('div', {}, 'Active: ' + (data.active === false ? 'No' : 'Yes')),
+                        typeof data.order !== 'undefined' ? h('div', {}, 'Order: ' + data.order) : null
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]);
         }
       });
 
-      CMS.registerPreviewTemplate("home", HomePreview);
+      CMS.registerPreviewTemplate('products', ProductPreview);
+
+      var FaqEntryPreview = createClass({
+        render: function(){
+          var data = toJS(this.props.entry && this.props.entry.get('data')) || {};
+          return h('section', { className: 'padding-large' }, [
+            h('div', { className: 'container' }, [
+              h('div', { className: 'row justify-content-center' }, [
+                h('div', { className: 'col-lg-8 col-12' }, [
+                  data.category ? h('span', { className: 'badge text-bg-secondary mb-3' }, data.category) : null,
+                  h('h3', { className: 'mb-3' }, data.question || 'Question'),
+                  h('div', { className: 'p-4 border rounded-3 bg-light' }, data.answer || 'Answer preview goes here.'),
+                  h('div', { className: 'small text-muted mt-3' }, [
+                    h('div', {}, 'Order: ' + (typeof data.order !== 'undefined' ? data.order : '0')),
+                    h('div', {}, 'Active: ' + (data.active === false ? 'No' : 'Yes'))
+                  ])
+                ])
+              ])
+            ])
+          ]);
+        }
+      });
+
+      CMS.registerPreviewTemplate('faqs', FaqEntryPreview);
 
       if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", function(user) {
-          if (!user) window.netlifyIdentity.on("login", function(){ document.location.href="/admin/"; });
+        window.netlifyIdentity.on('init', function(user) {
+          if (!user) window.netlifyIdentity.on('login', function(){ document.location.href = '/admin/'; });
         });
       }
     </script>

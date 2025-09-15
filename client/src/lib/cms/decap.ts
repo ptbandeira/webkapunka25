@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { z } from 'zod';
 import { PageSchema, Section, SectionSchema } from '../../types/sections';
 
 // Utility: resolve a path inside Next public folder
@@ -31,6 +32,53 @@ function warnDev(msg: string) {
   }
 }
 
+const FaqItemSchema = z.object({
+  question: z.string().optional(),
+  q: z.string().optional(),
+  answer: z.string().optional(),
+  a: z.string().optional(),
+  category: z.string().optional(),
+  order: z.union([z.number(), z.string()]).optional(),
+});
+const FaqListSchema = z.object({
+  items: z.array(FaqItemSchema).default([]),
+});
+type RawFaqItem = z.infer<typeof FaqItemSchema>;
+
+export type FaqEntry = {
+  question: string;
+  answer: string;
+  category?: string;
+  order: number;
+};
+
+function normalizeFaqItem(item: RawFaqItem, idx: number): FaqEntry | null {
+  const question = (item.question ?? item.q ?? '').trim();
+  const answer = (item.answer ?? item.a ?? '').trim();
+  if (!question || !answer) return null;
+  const orderRaw = item.order;
+  let order = idx + 1;
+  if (typeof orderRaw === 'number' && Number.isFinite(orderRaw)) order = orderRaw;
+  else if (typeof orderRaw === 'string') {
+    const parsed = Number(orderRaw.trim());
+    if (Number.isFinite(parsed)) order = parsed;
+  }
+  const category = item.category?.trim();
+  return {
+    question,
+    answer,
+    order,
+    ...(category ? { category } : {}),
+  };
+}
+
+function sortFaqEntries(entries: FaqEntry[]): FaqEntry[] {
+  return entries.sort((a, b) => {
+    if (a.order !== b.order) return a.order - b.order;
+    return a.question.localeCompare(b.question, undefined, { sensitivity: 'base' });
+  });
+}
+
 /**
  * Read a localized JSON blob from public/content
  * Tries /public/content/<locale>/<relPath>, then /public/content/<relPath>
@@ -55,6 +103,23 @@ export function readLocaleJSON<T = unknown>(locale: string, relPath: string): T 
     warnDev(`Failed parsing JSON: ${fileToRead} (${(err as Error).message})`);
     return null;
   }
+}
+
+export function readFaqs(locale: string): FaqEntry[] {
+  const data = readLocaleJSON<Record<string, unknown>>(locale, 'faqs.json');
+  if (!data) return [];
+  const res = FaqListSchema.safeParse(data);
+  if (!res.success) {
+    warnDev(`Invalid FAQs schema for locale=${locale}: ${res.error.issues.map(i => i.message).join('; ')}`);
+    return [];
+  }
+  const items = Array.isArray(res.data.items) ? res.data.items : [];
+  const normalized: FaqEntry[] = [];
+  items.forEach((item, idx) => {
+    const faq = normalizeFaqItem(item as RawFaqItem, idx);
+    if (faq) normalized.push(faq);
+  });
+  return sortFaqEntries(normalized);
 }
 
 /**
