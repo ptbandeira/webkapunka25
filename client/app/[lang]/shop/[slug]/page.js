@@ -1,4 +1,5 @@
 import { products as MODEL_PRODUCTS } from '../../../../src/data/products';
+import { readProducts, getProductBySlug } from '../../../../src/lib/products';
 import ProductGallery from '../../../../src/components/shop/ProductGallery';
 import { withLang } from '../../../../src/lib/locale';
 import AddToCart from '../../../../src/components/shop/AddToCart';
@@ -7,7 +8,8 @@ export const dynamicParams = false;
 
 export async function generateStaticParams(){
   const langs = ['en','pt','es'];
-  const slugs = MODEL_PRODUCTS.map(p => p.slug);
+  const decap = readProducts();
+  const slugs = Array.isArray(decap) && decap.length ? decap.map(p => p.slug) : MODEL_PRODUCTS.map(p => p.slug);
   return langs.flatMap(lang => slugs.map(slug => ({ lang, slug })));
 }
 
@@ -20,9 +22,25 @@ function Price({ value }){
 export default function PDP({ params }){
   const lang = params?.lang || 'en';
   const slug = params?.slug || '';
-  const product = MODEL_PRODUCTS.find(p => p.slug === slug) || MODEL_PRODUCTS[0];
+  const decap = getProductBySlug(slug);
+  const fallback = MODEL_PRODUCTS.find(p => p.slug === slug) || MODEL_PRODUCTS[0];
+  const product = decap ? {
+    id: decap.id,
+    slug: decap.slug,
+    name: decap.name,
+    image: Array.isArray(decap.images) ? decap.images[0] : '',
+    price: Array.isArray(decap.prices) ? decap.prices[0] : 0,
+    size: Array.isArray(decap.sizes) ? decap.sizes[0] : '',
+  } : fallback;
   if (!product) return null;
-  const related = MODEL_PRODUCTS.filter(p => p.slug !== product.slug).slice(0, 3);
+  const all = decap ? (readProducts() || []) : MODEL_PRODUCTS;
+  const related = (Array.isArray(all) ? all : []).filter(p => p.slug !== product.slug).slice(0, 3).map(p => ({
+    id: p.id,
+    slug: p.slug,
+    name: p.name,
+    image: Array.isArray(p.images) ? p.images[0] : p.image,
+    price: Array.isArray(p.prices) ? p.prices[0] : p.price,
+  }));
 
   return (
     <section className="padding-xlarge">

@@ -186,6 +186,38 @@ collections:
                 {label: "CTA label", name: "cta_label", widget: "string", required: false},
                 {label: "CTA link", name: "cta_link", widget: "string", required: false}
           ] }
+
+  # ---- Products (folder-based entries) ----
+  - name: "products"
+    label: "Products"
+    folder: "site/content/products"
+    create: true
+    format: "json"
+    extension: "json"
+    slug: "{{slug}}"
+    fields:
+      - { label: "ID", name: "id", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Sizes"
+        name: "sizes"
+        widget: "list"
+        field: { label: "Size", name: "size", widget: "string" }
+      - label: "Prices"
+        name: "prices"
+        widget: "list"
+        field: { label: "Price (EUR)", name: "price", widget: "number" }
+      - label: "Images"
+        name: "images"
+        widget: "list"
+        field: { label: "Image", name: "image", widget: "image" }
+      - label: "Badges"
+        name: "badges"
+        widget: "list"
+        field: { label: "Badge", name: "badge", widget: "string" }
+      - { label: "Category", name: "category", widget: "string", required: false }
+      - { label: "Display Order", name: "order", widget: "number", required: false, default: 0 }
+      - { label: "Active", name: "active", widget: "boolean", default: true }
           - { label: "Text Block", name: "text", widget: "object", fields: [
                 {label: "Heading", name: "heading", widget: "string"},
                 {label: "Body", name: "body", widget: "text"},

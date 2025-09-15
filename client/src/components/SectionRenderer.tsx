@@ -24,8 +24,18 @@ function warnDev(msg: string) {
 // Server-side helper: load shared products (optionally localized)
 function loadProducts(lang?: string) {
   const data = readLocaleJSON<any>(lang || 'en', 'products.json');
-  if (!data || !Array.isArray(data.items)) return [] as any[];
-  return data.items as any[];
+  if (!data) return [] as any[];
+  if (Array.isArray((data as any).items)) return (data as any).items as any[];
+  if (Array.isArray((data as any).products)) {
+    return (data as any).products.map((p: any) => ({
+      slug: p.slug,
+      name: p.name,
+      price: Array.isArray(p.prices) ? p.prices[0] : (p.price ?? 0),
+      image: Array.isArray(p.images) ? p.images[0] : p.image,
+      link: '#',
+    }));
+  }
+  return [] as any[];
 }
 
 // Server-side helper: load FAQs (optionally localized)

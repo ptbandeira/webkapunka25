@@ -2,6 +2,7 @@ import { products as MODEL_PRODUCTS } from '../../../src/data/products';
 import { withLang } from '../../../src/lib/locale';
 import { isFeatureEnabled } from '../../../src/lib/config';
 import { getDecapPage } from '../../../src/lib/cms/decap';
+import { readProducts } from '../../../src/lib/products';
 import SectionRenderer from '../../../src/components/SectionRenderer';
 
 export const dynamicParams = false;
@@ -22,8 +23,13 @@ export default async function ShopLocalePage({ params }){
     const sections = getDecapPage('shop', lang);
     if (sections && sections.length) return <SectionRenderer sections={sections} lang={lang} />;
   }
-  // Fallback: existing hardcoded grid
-  const items = MODEL_PRODUCTS.slice(0, 6);
+  // Prefer Decap products if present; fallback to MODEL_PRODUCTS
+  const decap = readProducts();
+  const items = Array.isArray(decap) && decap.length ? decap.map(p => ({
+    id: p.id, slug: p.slug, name: p.name,
+    image: Array.isArray(p.images) ? p.images[0] : '',
+    price: Array.isArray(p.prices) ? p.prices[0] : 0,
+  })) : MODEL_PRODUCTS.slice(0, 6);
   return (
     <section className="padding-xlarge product-store product-grid">
       <div className="container">
