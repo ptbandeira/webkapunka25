@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'fix/**'
+      - 'chore/**'
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or update PR to main
+        uses: repo-sync/pull-request@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_branch: main
+          pr_title: "Auto PR: ${{ github.ref_name }}"
+          pr_body: |
+            This PR was automatically created from branch `${{ github.ref_name }}`.
+
+            - Please update the title/body using the PR template as needed.
+            - Netlify Preview will attach on open; enable flags in Preview if required.
+
+            Checklist:
+            - [ ] No layout/CLS regressions
+            - [ ] A11y basics (focus, labels, ARIA)
+            - [ ] Locales render: /en, /pt, /es
+          pr_label: "auto-pr, ready-for-review"
