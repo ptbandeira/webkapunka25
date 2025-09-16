@@ -20,3 +20,14 @@ Em produção o loader não atua, a menos que se use `?cms-preview=1`.
 - Baseline estável; Decap configurado para Home (safe mapping) e lists (Products, FAQs).
 - Próximos passos: About/Shop/Contact no CMS, depois i18n por pastas `site/content/<lang>/pages/`.
 
+## Feature flags & fallbacks
+- `learn`, `training`, `clinics`: ligados por defeito em dev, podem ser desligados por env var (`NEXT_PUBLIC_FEATURE_*`).
+- `decapPages`: agora ativo por defeito (inclusive em produção) — páginas usam o JSON do Decap quando existe e recuam para o HTML legado / conteúdo markdown quando falta.
+- `reviews`: reservado (desligado por defeito).
+- `policies` e `cart`: mantêm-se ligados por defeito.
+
+### Painel de dev
+- Apenas em dev (`npm run dev`), surge um botão “Dev Flags” no canto inferior direito.
+- Permite mudar qualquer flag por browser (grava em `localStorage` + cookie) e força reload para ver o fallback imediatamente.
+- “Reset overrides” limpa e volta ao comportamento padrão.
+- Em produção o painel não aparece e os overrides ignorados.
