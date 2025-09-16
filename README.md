@@ -29,5 +29,13 @@ Em produção o loader não atua, a menos que se use `?cms-preview=1`.
 ### Painel de dev
 - Apenas em dev (`npm run dev`), surge um botão “Dev Flags” no canto inferior direito.
 - Permite mudar qualquer flag por browser (grava em `localStorage` + cookie) e força reload para ver o fallback imediatamente.
+- Legenda rápida:
+  - `learn` → mostra a área Learn (guias educativos).
+  - `training` → liga o conteúdo de formação.
+  - `clinics` → exibe a secção/links para clínicas.
+  - `policies` → mantém ligações de políticas no rodapé.
+  - `cart` → ativa mini‑cart e checkout.
+  - `reviews` → reservado para futuras integrações.
+  - `decapPages` → usa páginas geridas no Decap; desligar força HTML legado.
 - “Reset overrides” limpa e volta ao comportamento padrão.
 - Em produção o painel não aparece e os overrides ignorados.

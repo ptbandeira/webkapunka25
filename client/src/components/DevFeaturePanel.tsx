@@ -9,6 +9,16 @@ import {
   clearClientFeatureOverrides,
 } from '../lib/config';
 
+const FEATURE_INFO: Record<string, { label: string; description: string }> = {
+  learn: { label: 'learn', description: 'Show the Learn hub link and long-form guides.' },
+  training: { label: 'training', description: 'Expose Training content in the navigation.' },
+  clinics: { label: 'clinics', description: 'Display Clinics entry points and sections.' },
+  policies: { label: 'policies', description: 'Reveal footer policy links and pages.' },
+  cart: { label: 'cart', description: 'Enable the mini-cart and checkout button.' },
+  reviews: { label: 'reviews', description: 'Reserved flag for reviews integrations.' },
+  decapPages: { label: 'decapPages', description: 'Use Decap-managed pages. Off = legacy HTML fallback.' },
+};
+
 const isProd = process.env.NODE_ENV === 'production';
 
 const panelStyle: CSSProperties = {
@@ -72,18 +82,26 @@ export default function DevFeaturePanel(){
         <div style={{ marginTop: '0.75rem', fontSize: '0.85rem' }}>
           <p style={{ marginBottom: '0.5rem', opacity: 0.8 }}>Toggle for this browser (dev only).</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-            {features.map(key => (
-              <li key={key} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
-                <span>{key}</span>
-                <button
-                  type="button"
-                  style={{ ...buttonStyle, borderColor: flags[key] ? '#4ade80' : 'rgba(255,255,255,0.35)' }}
-                  onClick={() => toggle(key)}
-                >
-                  {flags[key] ? 'on' : 'off'}
-                </button>
-              </li>
-            ))}
+            {features.map(key => {
+              const info = FEATURE_INFO[key] ?? { label: key, description: '' };
+              return (
+                <li key={key} style={{ marginBottom: '0.5rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>{info.label}</span>
+                    <button
+                      type="button"
+                      style={{ ...buttonStyle, borderColor: flags[key] ? '#4ade80' : 'rgba(255,255,255,0.35)' }}
+                      onClick={() => toggle(key)}
+                    >
+                      {flags[key] ? 'on' : 'off'}
+                    </button>
+                  </div>
+                  {info.description ? (
+                    <p style={{ margin: '0.25rem 0 0', fontSize: '0.75rem', opacity: 0.65 }}>{info.description}</p>
+                  ) : null}
+                </li>
+              );
+            })}
           </ul>
           <button type="button" style={{ ...buttonStyle, width: '100%', marginTop: '0.75rem' }} onClick={reset}>
             Reset overrides
