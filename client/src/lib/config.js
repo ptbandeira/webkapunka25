@@ -15,9 +15,9 @@ function envToggle(value, fallback){
 
 function buildDefaultFeatureFlags(){
   return {
-    learn: envToggle(process.env.NEXT_PUBLIC_FEATURE_LEARN, !isProd),
-    clinics: envToggle(process.env.NEXT_PUBLIC_FEATURE_CLINICS, !isProd),
-    training: envToggle(process.env.NEXT_PUBLIC_FEATURE_TRAINING, !isProd),
+    learn: envToggle(process.env.NEXT_PUBLIC_FEATURE_LEARN, true),
+    clinics: envToggle(process.env.NEXT_PUBLIC_FEATURE_CLINICS, true),
+    training: envToggle(process.env.NEXT_PUBLIC_FEATURE_TRAINING, true),
     policies: envToggle(process.env.NEXT_PUBLIC_FEATURE_POLICIES, true),
     cart: envToggle(process.env.NEXT_PUBLIC_FEATURE_CART, true),
     reviews: envToggle(process.env.NEXT_PUBLIC_FEATURE_REVIEWS, false),
