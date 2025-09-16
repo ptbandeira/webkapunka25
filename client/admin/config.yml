@@ -6,6 +6,7 @@ media_folder: "client/public/images/uploads"
 public_folder: "/images/uploads"
 
 i18n:
+  structure: single_file
   locales: [en, pt, es]
   default_locale: en
 

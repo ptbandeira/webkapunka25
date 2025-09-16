@@ -5,6 +5,11 @@ backend:
 media_folder: "site/images/uploads"
 public_folder: "/images/uploads"
 
+i18n:
+  structure: single_file
+  locales: [en, pt, es]
+  default_locale: en
+
 collections:
   # ---- Default language (fallback) pages with the SECTION BUILDER ----
   - name: "pages"
