@@ -1,5 +1,5 @@
 import { products as MODEL_PRODUCTS } from '../../../src/data/products';
-import { withLang } from '../../../src/lib/locale';
+import { withLang, getCurrentLocale } from '../../../src/lib/locale';
 import { isFeatureEnabled } from '../../../src/lib/config';
 import { getDecapPage } from '../../../src/lib/cms/decap';
 import { readProducts } from '../../../src/lib/products';
@@ -18,7 +18,7 @@ function Price({ value }){
 }
 
 export default async function ShopLocalePage({ params }){
-  const lang = params?.lang || 'en';
+  const lang = getCurrentLocale(params?.lang);
   if (isFeatureEnabled('decapPages')){
     const sections = getDecapPage('shop', lang);
     if (sections && sections.length) return <SectionRenderer sections={sections} lang={lang} />;

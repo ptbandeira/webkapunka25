@@ -1,6 +1,7 @@
 import { getPage } from '../../../src/lib/content';
 import { contact as CONTACT, isFeatureEnabled } from '../../../src/lib/config';
 import { getDecapPage } from '../../../src/lib/cms/decap';
+import { getCurrentLocale } from '../../../src/lib/locale';
 import SectionRenderer from '../../../src/components/SectionRenderer';
 import ContactForm from '../../../src/components/contact/ContactForm';
 
@@ -11,7 +12,7 @@ export async function generateStaticParams(){
 }
 
 export default async function ContactLocalePage({ params }){
-  const lang = params?.lang || 'en';
+  const lang = getCurrentLocale(params?.lang);
   if (isFeatureEnabled('decapPages')){
     const sections = getDecapPage('contact', lang);
     if (sections && sections.length) return <SectionRenderer sections={sections} lang={lang} />;

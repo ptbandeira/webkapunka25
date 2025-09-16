@@ -1,3 +1,5 @@
+import { getCurrentLocale } from '../../../src/lib/locale';
+
 export const dynamicParams = false;
 
 export async function generateStaticParams(){
@@ -5,7 +7,7 @@ export async function generateStaticParams(){
 }
 
 export default function CheckoutStub({ params }){
-  const lang = params?.lang || 'en';
+  const lang = getCurrentLocale(params?.lang);
   return (
     <section className="padding-xlarge">
       <div className="container">
@@ -38,4 +40,3 @@ export default function CheckoutStub({ params }){
     </section>
   );
 }
-

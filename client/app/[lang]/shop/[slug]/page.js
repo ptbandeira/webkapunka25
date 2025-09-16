@@ -1,7 +1,7 @@
 import { products as MODEL_PRODUCTS } from '../../../../src/data/products';
 import { readProducts, getProductBySlug } from '../../../../src/lib/products';
 import ProductGallery from '../../../../src/components/shop/ProductGallery';
-import { withLang } from '../../../../src/lib/locale';
+import { withLang, getCurrentLocale } from '../../../../src/lib/locale';
 import AddToCart from '../../../../src/components/shop/AddToCart';
 
 export const dynamicParams = false;
@@ -20,7 +20,7 @@ function Price({ value }){
 }
 
 export default function PDP({ params }){
-  const lang = params?.lang || 'en';
+  const lang = getCurrentLocale(params?.lang);
   const slug = params?.slug || '';
   const decap = getProductBySlug(slug);
   const fallback = MODEL_PRODUCTS.find(p => p.slug === slug) || MODEL_PRODUCTS[0];

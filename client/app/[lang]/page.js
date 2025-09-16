@@ -1,6 +1,7 @@
 import { loadSiteFragment } from '../../src/lib/loadSiteFragment';
 import { isFeatureEnabled } from '../../src/lib/config';
 import { readPageSections } from '../../src/lib/cms/decap';
+import { getCurrentLocale } from '../../src/lib/locale';
 import SectionRenderer from '../../src/components/SectionRenderer';
 
 export const dynamicParams = false;
@@ -10,7 +11,7 @@ export async function generateStaticParams(){
 }
 
 export default async function LocaleHomePage({ params }){
-  const lang = params?.lang || 'en';
+  const lang = getCurrentLocale(params?.lang);
   if (isFeatureEnabled('decapPages')) {
     try {
       const sections = readPageSections(lang, 'home');

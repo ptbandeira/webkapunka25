@@ -1,8 +1,17 @@
 export const LOCALES = ['en','pt','es'];
 
+export function getCurrentLocale(input){
+  if (typeof input === 'string' && input) {
+    const value = input.trim().toLowerCase();
+    if (LOCALES.includes(value)) return value;
+    const match = value.match(/^\/?(en|pt|es)(?=\/|$)/i);
+    if (match) return match[1].toLowerCase();
+  }
+  return 'en';
+}
+
 export function getCurrentLang(pathname){
-  const m = typeof pathname === 'string' && pathname.match(/^\/(en|pt|es)(\/|$)/i);
-  return m ? m[1].toLowerCase() : 'en';
+  return getCurrentLocale(pathname);
 }
 
 export function stripLang(pathname){
@@ -15,4 +24,3 @@ export function withLang(lang, path){
   const suffix = clean === '/' ? '' : clean;
   return `/${lang}${suffix}`;
 }
-

@@ -1,5 +1,5 @@
 import { articles } from '../../../src/data/articles';
-import { withLang } from '../../../src/lib/locale';
+import { withLang, getCurrentLocale } from '../../../src/lib/locale';
 
 export const dynamicParams = false;
 
@@ -25,7 +25,7 @@ function ArticleCard({ a, href }){
 }
 
 export default function LearnIndex({ params }){
-  const lang = params?.lang || 'en';
+  const lang = getCurrentLocale(params?.lang);
   const items = articles;
   return (
     <section className="padding-xlarge">
@@ -47,4 +47,3 @@ export default function LearnIndex({ params }){
     </section>
   );
 }
-
