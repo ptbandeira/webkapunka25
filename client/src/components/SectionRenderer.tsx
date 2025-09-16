@@ -179,21 +179,19 @@ export default function SectionRenderer({ sections, lang }: Props) {
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }
-            : {};
+            : { background: '#f5f1eb' };
           out.push(
             <section key={`bn-${idx}`} className="padding-large">
               <div className="container">
                 <div className="row">
                   <div className="col-12">
                     <div
-                      className="position-relative overflow-hidden rounded-4 text-center text-white"
+                      className="position-relative overflow-hidden rounded-4 banner-legacy"
                       style={{ minHeight: '360px', ...backgroundStyle }}
                     >
-                      <div
-                        className="position-absolute top-50 start-50 translate-middle px-4 py-4"
-                        style={{ background: 'rgba(0,0,0,0.35)', borderRadius: '18px', minWidth: '260px' }}
-                      >
-                        {heading ? <h3 className="mb-3 text-white">{heading}</h3> : null}
+                      <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.35)' }} />
+                      <div className="position-relative h-100 d-flex flex-column justify-content-center align-items-start gap-3 px-4 px-md-5 py-5 text-white" style={{ maxWidth: '320px' }}>
+                        {heading ? <h3 className="mb-2 text-white">{heading}</h3> : null}
                         {button_label && button_link ? (
                           <a href={button_link} className="btn btn-light">{button_label}</a>
                         ) : null}
