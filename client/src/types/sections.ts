@@ -52,6 +52,14 @@ export const VideoSchema = z.object({
 });
 export type Video = z.infer<typeof VideoSchema>;
 
+export const MetaSectionSchema = z.object({
+  type: z.literal('meta'),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  ogImage: z.string().optional(),
+});
+export type MetaSection = z.infer<typeof MetaSectionSchema>;
+
 export const SectionSchema = z.discriminatedUnion('type', [
   HeroSchema,
   TextBlockSchema,
@@ -59,6 +67,7 @@ export const SectionSchema = z.discriminatedUnion('type', [
   FAQsSchema,
   BannerSchema,
   VideoSchema,
+  MetaSectionSchema,
 ]);
 export type Section = z.infer<typeof SectionSchema>;
 
@@ -67,4 +76,3 @@ export const PageSchema = z.object({
   sections: z.array(SectionSchema).default([]),
 });
 export type Page = z.infer<typeof PageSchema>;
-

@@ -1,6 +1,6 @@
 import { getPage } from '../../../src/lib/content';
 import { isFeatureEnabled } from '../../../src/lib/config';
-import { getDecapPage } from '../../../src/lib/cms/decap';
+import { getDecapPage, extractPageMeta } from '../../../src/lib/cms/decap';
 import { getCurrentLocale } from '../../../src/lib/locale';
 import SectionRenderer from '../../../src/components/SectionRenderer';
 
@@ -32,4 +32,17 @@ export default async function AboutLocalePage({ params }){
       </div>
     </section>
   );
+}
+
+export function generateMetadata({ params }){
+  const lang = getCurrentLocale(params?.lang);
+  if (isFeatureEnabled('decapPages')){
+    const sections = getDecapPage('about', lang);
+    const meta = extractPageMeta(sections);
+    if (meta) return meta;
+  }
+  return {
+    title: lang === 'pt' ? 'Sobre – Kapunka' : lang === 'es' ? 'Acerca de – Kapunka' : 'About – Kapunka',
+    description: 'Our story — 100% pure, cold-pressed argan oil.',
+  };
 }
