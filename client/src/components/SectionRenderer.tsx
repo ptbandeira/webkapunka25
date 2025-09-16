@@ -140,10 +140,10 @@ export default function SectionRenderer({ sections, lang }: Props) {
           out.push(
             <section key={`faq-${idx}`} className="padding-large">
               <div className="container">
-                <div className="row">
-                  <div className="col-12">
+                <div className="row justify-content-center">
+                  <div className="col-12 col-lg-8">
                     {s.title ? <h3 className="mb-4">{s.title}</h3> : null}
-                    <div>{faqNodes}</div>
+                    <div className="faq-accordion list-unstyled">{faqNodes}</div>
                   </div>
                 </div>
               </div>
@@ -155,11 +155,17 @@ export default function SectionRenderer({ sections, lang }: Props) {
           const { heading, button_label, button_link } = s;
           out.push(
             <section key={`bn-${idx}`} className="padding-large">
-              <div className="container text-center">
-                {heading ? <h3 className="mb-3">{heading}</h3> : null}
-                {button_label && button_link ? (
-                  <a href={button_link} className="btn">{button_label}</a>
-                ) : null}
+              <div className="container">
+                <div className="row">
+                  <div className="col-12">
+                    <div className="p-5 text-center" style={{ background: '#f5f1eb', borderRadius: '24px' }}>
+                      {heading ? <h3 className="mb-3">{heading}</h3> : null}
+                      {button_label && button_link ? (
+                        <a href={button_link} className="btn">{button_label}</a>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
           );
