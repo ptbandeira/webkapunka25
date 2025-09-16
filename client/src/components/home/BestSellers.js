@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { buildImageSources } from '../../lib/image-sources';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -13,7 +14,7 @@ function Price({ value }) {
   return <>{fmt.format(isFinite(num) ? num : 0)}</>;
 }
 
-export default function BestSellers({ items = [] }) {
+export default function BestSellers({ items = [], imageManifest = {} }) {
   const containerRef = useRef(null);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -69,20 +70,32 @@ export default function BestSellers({ items = [] }) {
           {items.map((p, i) => (
             <SwiperSlide key={`s-${i}`}>
               <div className="product-card position-relative">
-                <div className="image-holder zoom-effect" style={{ aspectRatio: '1 / 1' }}>
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    className="img-fluid zoom-in"
-                    loading="lazy"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                  <div className="cart-concern position-absolute">
-                    <div className="cart-button">
-                      <a href={p.link || '#'} className="btn">Add to Cart</a>
+                {(() => {
+                  const sources = buildImageSources(imageManifest, p.image);
+                  const placeholderStyle = sources?.lqip ? {
+                    backgroundImage: `url(${sources.lqip})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  } : null;
+                  return (
+                    <div className="image-holder zoom-effect" style={{ aspectRatio: '1 / 1', ...(placeholderStyle || {}) }}>
+                      <img
+                        src={sources?.src || p.image}
+                        srcSet={sources?.srcSet}
+                        sizes="(min-width: 1200px) 20vw, (min-width: 768px) 33vw, 80vw"
+                        alt={p.name}
+                        className="img-fluid zoom-in"
+                        loading="lazy"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                      <div className="cart-concern position-absolute">
+                        <div className="cart-button">
+                          <a href={p.link || '#'} className="btn">Add to Cart</a>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  );
+                })()}
                 <div className="card-detail text-center pt-3 pb-2">
                   <h5 className="card-title fs-3 text-capitalize">
                     <a href={p.link || '#'}>{p.name}</a>
@@ -97,4 +110,3 @@ export default function BestSellers({ items = [] }) {
     </section>
   );
 }
-

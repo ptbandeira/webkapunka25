@@ -4,6 +4,8 @@ import { isFeatureEnabled } from '../../../src/lib/config';
 import { getDecapPage } from '../../../src/lib/cms/decap';
 import { readProducts } from '../../../src/lib/products';
 import SectionRenderer from '../../../src/components/SectionRenderer';
+import { getImageManifest } from '../../../src/lib/image-manifest';
+import { buildImageSources } from '../../../src/lib/image-sources';
 
 export const dynamicParams = false;
 
@@ -30,6 +32,7 @@ export default async function ShopLocalePage({ params }){
     image: Array.isArray(p.images) ? p.images[0] : '',
     price: Array.isArray(p.prices) ? p.prices[0] : 0,
   })) : MODEL_PRODUCTS.slice(0, 6);
+  const imageManifest = getImageManifest();
   return (
     <section className="padding-xlarge product-store product-grid">
       <div className="container">
@@ -42,16 +45,33 @@ export default async function ShopLocalePage({ params }){
           {items.map((p, i) => (
             <div className="col-md-4" key={i}>
               <div className="product-card position-relative">
-                <div className="image-holder zoom-effect">
-                  <a href={withLang(lang, `/shop/${p.slug}`)}>
-                    <img src={p.image} alt={p.name} className="img-fluid zoom-in" loading="lazy" />
-                  </a>
-                  <div className="cart-concern position-absolute">
-                    <div className="cart-button">
-                      <a href={withLang(lang, `/shop/${p.slug}`)} className="btn">View</a>
+                {(() => {
+                  const sources = buildImageSources(imageManifest, p.image);
+                  const placeholder = sources?.lqip ? {
+                    backgroundImage: `url(${sources.lqip})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  } : null;
+                  return (
+                    <div className="image-holder zoom-effect" style={placeholder || undefined}>
+                      <a href={withLang(lang, `/shop/${p.slug}`)}>
+                        <img
+                          src={sources?.src || p.image}
+                          srcSet={sources?.srcSet}
+                          sizes="(min-width: 1200px) 20vw, (min-width: 768px) 33vw, 90vw"
+                          alt={p.name}
+                          className="img-fluid zoom-in"
+                          loading="lazy"
+                        />
+                      </a>
+                      <div className="cart-concern position-absolute">
+                        <div className="cart-button">
+                          <a href={withLang(lang, `/shop/${p.slug}`)} className="btn">View</a>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  );
+                })()}
                 <div className="card-detail text-center pt-3 pb-2">
                   <h5 className="card-title fs-3 text-capitalize">
                     <a href={withLang(lang, `/shop/${p.slug}`)}>{p.name}</a>

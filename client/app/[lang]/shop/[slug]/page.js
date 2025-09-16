@@ -3,6 +3,8 @@ import { readProducts, getProductBySlug } from '../../../../src/lib/products';
 import ProductGallery from '../../../../src/components/shop/ProductGallery';
 import { withLang, getCurrentLocale } from '../../../../src/lib/locale';
 import AddToCart from '../../../../src/components/shop/AddToCart';
+import { getImageManifest } from '../../../../src/lib/image-manifest';
+import { buildImageSources } from '../../../../src/lib/image-sources';
 
 export const dynamicParams = false;
 
@@ -33,6 +35,7 @@ export default function PDP({ params }){
     size: Array.isArray(decap.sizes) ? decap.sizes[0] : '',
   } : fallback;
   if (!product) return null;
+  const imageManifest = getImageManifest();
   const all = decap ? (readProducts() || []) : MODEL_PRODUCTS;
   const related = (Array.isArray(all) ? all : []).filter(p => p.slug !== product.slug).slice(0, 3).map(p => ({
     id: p.id,
@@ -47,7 +50,7 @@ export default function PDP({ params }){
       <div className="container">
         <div className="row g-5">
           <div className="col-md-6">
-            <ProductGallery image={product.image} alt={product.name} />
+            <ProductGallery image={product.image} alt={product.name} imageManifest={imageManifest} />
           </div>
           <div className="col-md-6">
             <h1 className="mb-2">{product.name}</h1>
@@ -85,11 +88,28 @@ export default function PDP({ params }){
             {related.map(p => (
               <div className="col-md-4" key={p.id}>
                 <div className="product-card position-relative">
-                  <div className="image-holder zoom-effect">
-                    <a href={withLang(lang, `/shop/${p.slug}`)}>
-                      <img src={p.image} alt={p.name} className="img-fluid zoom-in" loading="lazy" />
-                    </a>
-                  </div>
+                  {(() => {
+                    const sources = buildImageSources(imageManifest, p.image);
+                    const placeholder = sources?.lqip ? {
+                      backgroundImage: `url(${sources.lqip})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    } : null;
+                    return (
+                      <div className="image-holder zoom-effect" style={placeholder || undefined}>
+                        <a href={withLang(lang, `/shop/${p.slug}`)}>
+                          <img
+                            src={sources?.src || p.image}
+                            srcSet={sources?.srcSet}
+                            sizes="(min-width: 1200px) 20vw, (min-width: 768px) 33vw, 80vw"
+                            alt={p.name}
+                            className="img-fluid zoom-in"
+                            loading="lazy"
+                          />
+                        </a>
+                      </div>
+                    );
+                  })()}
                   <div className="card-detail text-center pt-3 pb-2">
                     <h5 className="card-title fs-5 text-capitalize"><a href={withLang(lang, `/shop/${p.slug}`)}>{p.name}</a></h5>
                     <span className="item-price text-primary fw-light"><Price value={p.price} /></span>

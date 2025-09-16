@@ -4,6 +4,8 @@ import Hero from './home/Hero';
 import BestSellers from './home/BestSellers';
 import VideoStrip from './home/VideoStrip';
 import { readLocaleJSON, readFaqs, type FaqEntry } from '../lib/cms/decap';
+import { getImageManifest } from '../lib/image-manifest';
+import { buildImageSources } from '../lib/image-sources';
 
 type Props = {
   sections: Section[];
@@ -56,6 +58,7 @@ export default function SectionRenderer({ sections, lang }: Props) {
   // Preload shared content once per render for simple mapping
   let cachedProducts: any[] | null = null;
   let cachedFaqs: FaqEntry[] | null = null;
+  const imageManifest = getImageManifest();
 
   const getProducts = () => {
     if (!cachedProducts) cachedProducts = loadProducts(lang);
@@ -77,7 +80,7 @@ export default function SectionRenderer({ sections, lang }: Props) {
         }
         case 'hero': {
           const { title, subtitle } = s;
-          out.push(<Hero key={`hero-${idx}`} title={title} subtitle={subtitle} />);
+          out.push(<Hero key={`hero-${idx}`} title={title} subtitle={subtitle} imageManifest={imageManifest} />);
           break;
         }
         case 'text': {
@@ -105,7 +108,7 @@ export default function SectionRenderer({ sections, lang }: Props) {
           let items = Array.isArray(anyS.ids) && anyS.ids.length
             ? all.filter(p => anyS.ids.includes(p.slug))
             : all.slice(0, typeof s.count === 'number' ? s.count : all.length);
-          out.push(<BestSellers key={`pg-${idx}`} items={items} />);
+          out.push(<BestSellers key={`pg-${idx}`} items={items} imageManifest={imageManifest} />);
           break;
         }
         case 'faqs': {
@@ -173,13 +176,13 @@ export default function SectionRenderer({ sections, lang }: Props) {
         }
         case 'banner': {
           const { heading, button_label, button_link } = s;
-          const backgroundStyle = s.background_image
-            ? {
-              backgroundImage: `url(${s.background_image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }
-            : { background: '#f5f1eb' };
+          const image = s.background_image || '';
+          const sources = image ? buildImageSources(imageManifest, image) : null;
+          const placeholderStyle = sources?.lqip ? {
+            backgroundImage: `url(${sources.lqip})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          } : null;
           out.push(
             <section key={`bn-${idx}`} className="padding-large">
               <div className="container">
@@ -187,9 +190,19 @@ export default function SectionRenderer({ sections, lang }: Props) {
                   <div className="col-12">
                     <div
                       className="position-relative overflow-hidden rounded-4 banner-legacy"
-                      style={{ minHeight: '360px', ...backgroundStyle }}
+                      style={{ minHeight: '360px', background: image ? undefined : '#f5f1eb', ...(placeholderStyle || {}) }}
                     >
-                      <div className="position-absolute top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.35)' }} />
+                      {image ? (
+                        <img
+                          src={sources?.src || image}
+                          srcSet={sources?.srcSet}
+                          sizes="(min-width: 1200px) 100vw, 100vw"
+                          alt=""
+                          role="presentation"
+                          className="position-absolute top-0 start-0 w-100 h-100"
+                          style={{ objectFit: 'cover', filter: 'brightness(0.65)' }}
+                        />
+                      ) : null}
                       <div className="position-relative h-100 d-flex flex-column justify-content-center align-items-start gap-3 px-4 px-md-5 py-5 text-white" style={{ maxWidth: '320px' }}>
                         {heading ? <h3 className="mb-2 text-white">{heading}</h3> : null}
                         {button_label && button_link ? (

@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "site/images/uploads"
-public_folder: "/images/uploads"
+media_folder: "site/static/uploads"
+public_folder: "/uploads"
 
 i18n:
   structure: single_file
@@ -238,6 +238,25 @@ collections:
       - { label: "Category", name: "category", widget: "string", required: false }
       - { label: "Display Order", name: "order", widget: "number", required: false, default: 0 }
       - { label: "Active", name: "active", widget: "boolean", default: true }
+
+  - name: "faqs"
+    label: "FAQs"
+    folder: "site/content/faqs"
+    create: true
+    format: "json"
+    extension: "json"
+    slug: "{{slug}}"
+    i18n:
+      structure: multiple_folders
+    fields:
+      - { label: "Status", name: "status", widget: "select", options: ["published", "draft"], default: "published" }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", required: false }
+      - { label: "Author", name: "author", widget: "string", required: false }
+      - { label: "Question", name: "question", widget: "string", i18n: translate }
+      - { label: "Answer", name: "answer", widget: text, i18n: translate }
+      - { label: "Category", name: "category", widget: string, required: false, i18n: translate }
+      - { label: "Order", name: "order", widget: number, required: false, default: 0, i18n: duplicate }
+      - { label: "Active", name: "active", widget: boolean, default: true, i18n: duplicate }
           - { label: "Text Block", name: "text", widget: "object", fields: [
                 {label: "Heading", name: "heading", widget: "string"},
                 {label: "Body", name: "body", widget: "text"},
