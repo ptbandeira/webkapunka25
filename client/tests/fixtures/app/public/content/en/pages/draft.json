@@ -1,0 +1,6 @@
+{
+  "status": "draft",
+  "sections": [
+    { "type": "text", "heading": "Draft Heading", "body": "Should not render." }
+  ]
+}

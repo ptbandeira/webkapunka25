@@ -20,6 +20,7 @@ function toNumber(v){
 }
 
 function normalizeEntry(entry){
+  if (isDraft(entry.status)) return null;
   const id = String(entry.id || '').trim();
   const slug = String(entry.slug || '').trim();
   const name = String(entry.title || entry.name || '').trim();
@@ -33,6 +34,12 @@ function normalizeEntry(entry){
   const active = typeof entry.active === 'boolean' ? entry.active : true;
   const order = typeof entry.order === 'number' ? entry.order : 0;
   return { id, slug, name, sizes, prices, images, category, badges, active, order };
+}
+
+function isDraft(status){
+  if (typeof status === 'string') return status.toLowerCase().trim() === 'draft';
+  if (typeof status === 'boolean') return !status;
+  return false;
 }
 
 function main(){
@@ -55,7 +62,7 @@ function main(){
     try{
       const data = readJSON(path.join(productsDir, file));
       const norm = normalizeEntry(data);
-      if (norm.id && norm.slug && norm.name) products.push(norm);
+      if (norm && norm.id && norm.slug && norm.name) products.push(norm);
       else warnDev(`Skipping ${file}: missing id/slug/name`);
     }catch(e){
       warnDev(`Failed to parse ${file}: ${e.message}`);
@@ -75,4 +82,3 @@ function main(){
 try{ main(); }catch(e){
   warnDev(`Failed building products: ${e.message}`);
 }
-

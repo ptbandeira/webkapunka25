@@ -35,6 +35,11 @@ describe('decap loaders', () => {
     ]);
   });
 
+  it('ignores pages marked as draft', () => {
+    const sections = readPageSections('en', 'draft');
+    expect(sections).toEqual([]);
+  });
+
   it('normalizes FAQs with ordering', () => {
     const faqs = readFaqs('en');
     expect(faqs).toEqual([

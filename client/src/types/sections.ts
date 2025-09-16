@@ -72,6 +72,9 @@ export const SectionSchema = z.discriminatedUnion('type', [
 export type Section = z.infer<typeof SectionSchema>;
 
 export const PageSchema = z.object({
+  status: z.union([z.string(), z.boolean()]).optional(),
+  updatedAt: z.string().optional(),
+  author: z.string().optional(),
   takeover: z.boolean().optional(),
   sections: z.array(SectionSchema).default([]),
 });

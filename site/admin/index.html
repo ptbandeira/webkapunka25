@@ -253,6 +253,83 @@
 
       CMS.registerPreviewTemplate('faqs', FaqEntryPreview);
 
+      function getEntrySlug(entry){
+        if (!entry) return '';
+        if (entry.getIn) {
+          const fromData = entry.getIn(['data', 'slug']);
+          if (fromData) return String(fromData);
+        }
+        if (entry.get) {
+          const slug = entry.get('slug');
+          if (slug) return String(slug);
+        }
+        return '';
+      }
+
+      function buildPreviewPath(collectionName, slug){
+        const cleanSlug = String(slug || '').replace(/\/+$/,'');
+        const defaultHome = cleanSlug === '' ? 'home' : cleanSlug;
+        const slugOrHome = cleanSlug || defaultHome;
+        const pathForLocale = (locale) => slugOrHome === 'home' ? `/${locale}` : `/${locale}/${slugOrHome}`;
+
+        switch(collectionName){
+          case 'pages':
+            return slugOrHome === 'home' ? '/' : `/${slugOrHome}`;
+          case 'pages_en':
+            return pathForLocale('en');
+          case 'pages_pt':
+            return pathForLocale('pt');
+          case 'pages_es':
+            return pathForLocale('es');
+          case 'products':
+            return slugOrHome ? `/en/shop/${slugOrHome}` : '/en/shop';
+          case 'faqs':
+            return '/en';
+          default:
+            return '/';
+        }
+      }
+
+      function ensurePreviewButton(url){
+        const toolbar = document.querySelector('.nc-entry-actions') || document.querySelector('.nc-entry-header') || document.querySelector('.nc-entryHeader');
+        if (!toolbar) return;
+        let btn = toolbar.querySelector('.nc-preview-link');
+        if (!url){
+          if (btn) btn.remove();
+          return;
+        }
+        if (!btn){
+          btn = document.createElement('a');
+          btn.className = 'nc-btn nc-preview-link';
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+          btn.style.marginLeft = '0.5rem';
+          btn.textContent = 'View Preview';
+          toolbar.appendChild(btn);
+        }
+        btn.href = url;
+      }
+
+      function updatePreviewLink(event){
+        try {
+          const collection = event && event.collection && event.collection.get ? event.collection.get('name') : null;
+          const entry = event && event.entry;
+          if (!collection || !entry) {
+            ensurePreviewButton(null);
+            return;
+          }
+          const slug = getEntrySlug(entry);
+          const path = buildPreviewPath(collection, slug);
+          const base = window.location.origin.replace(/\/admin.*/, '');
+          ensurePreviewButton(base + path);
+        } catch(e){
+          ensurePreviewButton(null);
+        }
+      }
+
+      CMS.registerEventListener('entry-loaded', updatePreviewLink);
+      CMS.registerEventListener('entry-change', updatePreviewLink);
+
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', function(user) {
           if (!user) window.netlifyIdentity.on('login', function(){ document.location.href = '/admin/'; });

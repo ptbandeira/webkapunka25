@@ -139,7 +139,13 @@ export function readPageSections(locale: string, slug: string): Section[] {
     warnDev(`Invalid page schema for slug=${slug}: ${res.error.issues.map(i => i.message).join('; ')}`);
     return [];
   }
-  const { sections } = res.data;
+  const { sections, status } = res.data;
+
+  if (status !== undefined) {
+    const value = typeof status === 'string' ? status.toLowerCase().trim() : status ? 'published' : 'draft';
+    const isPublished = value === 'published' || value === 'true';
+    if (!isPublished) return [];
+  }
 
   // Extra safety: validate each section individually (defensive)
   const valid: Section[] = [];

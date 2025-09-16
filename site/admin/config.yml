@@ -20,6 +20,9 @@ collections:
     extension: "json"
     slug: "{{slug}}"
     fields:
+      - { label: "Status", name: "status", widget: "select", options: ["published", "draft"], default: "published" }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", required: false }
+      - { label: "Author", name: "author", widget: "string", required: false }
       - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
       - label: "Sections"
         name: "sections"
@@ -84,6 +87,9 @@ collections:
     extension: "json"
     slug: "{{slug}}"
     fields:
+      - { label: "Status", name: "status", widget: "select", options: ["published", "draft"], default: "published" }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", required: false }
+      - { label: "Author", name: "author", widget: "string", required: false }
       - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
       - label: "Sections"
         name: "sections"
@@ -131,6 +137,9 @@ collections:
     extension: "json"
     slug: "{{slug}}"
     fields:
+      - { label: "Status", name: "status", widget: "select", options: ["published", "draft"], default: "published" }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", required: false }
+      - { label: "Author", name: "author", widget: "string", required: false }
       - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
       - label: "Sections"
         name: "sections"
@@ -178,6 +187,9 @@ collections:
     extension: "json"
     slug: "{{slug}}"
     fields:
+      - { label: "Status", name: "status", widget: "select", options: ["published", "draft"], default: "published" }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", required: false }
+      - { label: "Author", name: "author", widget: "string", required: false }
       - { label: "Take over page", name: "takeover", widget: "boolean", default: false }
       - label: "Sections"
         name: "sections"
@@ -201,6 +213,9 @@ collections:
     extension: "json"
     slug: "{{slug}}"
     fields:
+      - { label: "Status", name: "status", widget: "select", options: ["published", "draft"], default: "published" }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", required: false }
+      - { label: "Author", name: "author", widget: "string", required: false }
       - { label: "ID", name: "id", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string" }
       - { label: "Title", name: "title", widget: "string" }

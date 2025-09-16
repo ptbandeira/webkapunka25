@@ -50,7 +50,14 @@ function toBoolean(value, fallback = true) {
   return Boolean(value);
 }
 
+function isDraft(status) {
+  if (typeof status === 'string') return status.toLowerCase().trim() === 'draft';
+  if (typeof status === 'boolean') return !status;
+  return false;
+}
+
 function normalizeEntry(raw, slug) {
+  if (isDraft(raw.status)) return null;
   const questionSrc = raw.question ?? raw.q;
   const answerSrc = raw.answer ?? raw.a;
   const question = typeof questionSrc === 'string' ? questionSrc.trim() : '';

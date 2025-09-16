@@ -1,4 +1,7 @@
 {
+  "status": "published",
+  "updatedAt": "2025-01-01T12:00:00Z",
+  "author": "Fixture Author",
   "sections": [
     { "type": "meta", "title": "Fixture Home", "description": "Localized home description", "ogImage": "/images/home-og.png" },
     { "type": "hero", "title": "Fixture Hero", "subtitle": "Localized intro", "align": "left" },
