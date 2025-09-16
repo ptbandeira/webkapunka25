@@ -1,41 +1,22 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
-type RawFaq = {
-  question?: unknown;
-  answer?: unknown;
-  category?: unknown;
-  order?: unknown;
-  active?: unknown;
-  q?: unknown;
-  a?: unknown;
-};
-
-type NormalizedFaq = {
-  slug: string;
-  question: string;
-  answer: string;
-  category?: string;
-  order: number;
-};
+const fs = require('fs');
+const path = require('path');
 
 const LOG_PREFIX = '[build-faqs]';
 const SUPPORTED_LOCALES = ['en', 'pt', 'es'];
 const DEFAULT_LOCALE = 'en';
 
-const repoRoot = path.resolve(__dirname, '..');
+const repoRoot = path.resolve(__dirname, '..', '..');
 const contentRoot = path.join(repoRoot, 'site', 'content');
 const faqsSourceDir = path.join(contentRoot, 'faqs');
 const publicContentDir = path.join(repoRoot, 'client', 'public', 'content');
 
-function warn(msg: string) {
+function warn(msg) {
   if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line no-console
     console.warn(`${LOG_PREFIX} ${msg}`);
   }
 }
 
-function readJSON(file: string): unknown {
+function readJSON(file) {
   const raw = fs.readFileSync(file, 'utf8');
   try {
     return JSON.parse(raw);
@@ -45,7 +26,7 @@ function readJSON(file: string): unknown {
   }
 }
 
-function toNumber(value: unknown, fallback = 0): number {
+function toNumber(value, fallback = 0) {
   if (typeof value === 'number' && Number.isFinite(value)) return value;
   if (typeof value === 'string') {
     const trimmed = value.trim();
@@ -57,7 +38,7 @@ function toNumber(value: unknown, fallback = 0): number {
   return fallback;
 }
 
-function toBoolean(value: unknown, fallback = true): boolean {
+function toBoolean(value, fallback = true) {
   if (typeof value === 'boolean') return value;
   if (typeof value === 'string') {
     const normalized = value.trim().toLowerCase();
@@ -69,7 +50,7 @@ function toBoolean(value: unknown, fallback = true): boolean {
   return Boolean(value);
 }
 
-function normalizeEntry(raw: RawFaq, slug: string): NormalizedFaq | null {
+function normalizeEntry(raw, slug) {
   const questionSrc = raw.question ?? raw.q;
   const answerSrc = raw.answer ?? raw.a;
   const question = typeof questionSrc === 'string' ? questionSrc.trim() : '';
@@ -82,7 +63,7 @@ function normalizeEntry(raw: RawFaq, slug: string): NormalizedFaq | null {
   const order = toNumber(raw.order, 0);
   const active = toBoolean(raw.active, true);
   if (!active) return null;
-  const entry: NormalizedFaq = {
+  const entry = {
     slug,
     question,
     answer,
@@ -92,9 +73,9 @@ function normalizeEntry(raw: RawFaq, slug: string): NormalizedFaq | null {
   return entry;
 }
 
-function collectDirEntries(dir: string): NormalizedFaq[] {
+function collectDirEntries(dir) {
   if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) return [];
-  const entries: NormalizedFaq[] = [];
+  const entries = [];
   for (const name of fs.readdirSync(dir)) {
     if (!name.endsWith('.json')) continue;
     const filePath = path.join(dir, name);
@@ -105,7 +86,7 @@ function collectDirEntries(dir: string): NormalizedFaq[] {
         continue;
       }
       const slug = path.basename(name, path.extname(name));
-      const normalized = normalizeEntry(data as RawFaq, slug);
+      const normalized = normalizeEntry(data, slug);
       if (normalized) entries.push(normalized);
     } catch (err) {
       warn(err instanceof Error ? err.message : String(err));
@@ -114,28 +95,28 @@ function collectDirEntries(dir: string): NormalizedFaq[] {
   return entries;
 }
 
-function readLegacyListFile(file: string): NormalizedFaq[] {
+function readLegacyListFile(file) {
   if (!fs.existsSync(file) || !fs.statSync(file).isFile()) return [];
   try {
-    const data = readJSON(file) as { items?: RawFaq[] };
+    const data = readJSON(file);
     if (!data || !Array.isArray(data.items)) return [];
     return data.items
       .map((item, idx) => normalizeEntry(item, `legacy-${idx + 1}`))
-      .filter((item): item is NormalizedFaq => Boolean(item));
+      .filter(Boolean);
   } catch (err) {
     warn(err instanceof Error ? err.message : String(err));
     return [];
   }
 }
 
-function sortEntries(entries: NormalizedFaq[]): NormalizedFaq[] {
+function sortEntries(entries) {
   return entries.sort((a, b) => {
     if (a.order !== b.order) return a.order - b.order;
     return a.question.localeCompare(b.question, undefined, { sensitivity: 'base' });
   });
 }
 
-function writeFaqFile(outFile: string, items: NormalizedFaq[]): void {
+function writeFaqFile(outFile, items) {
   const payload = {
     items: items.map(({ question, answer, category, order }) => ({
       question,
@@ -148,11 +129,10 @@ function writeFaqFile(outFile: string, items: NormalizedFaq[]): void {
   fs.mkdirSync(path.dirname(outFile), { recursive: true });
   fs.writeFileSync(outFile, JSON.stringify(payload, null, 2));
   const rel = path.relative(repoRoot, outFile);
-  // eslint-disable-next-line no-console
   console.log(`${LOG_PREFIX} Wrote ${rel} (${payload.items.length} items)`);
 }
 
-function collectDefaultEntries(): NormalizedFaq[] {
+function collectDefaultEntries() {
   const localeDir = path.join(faqsSourceDir, DEFAULT_LOCALE);
   let entries = collectDirEntries(localeDir);
   if (entries.length === 0) {
@@ -165,7 +145,7 @@ function collectDefaultEntries(): NormalizedFaq[] {
   return sortEntries(entries);
 }
 
-function main(): void {
+function main() {
   if (!fs.existsSync(faqsSourceDir)) {
     warn(`Source directory not found: ${path.relative(repoRoot, faqsSourceDir)}`);
   }
@@ -189,7 +169,6 @@ try {
   main();
 } catch (err) {
   const message = err instanceof Error ? err.message : String(err);
-  // eslint-disable-next-line no-console
   console.error(`${LOG_PREFIX} Failed: ${message}`);
   process.exitCode = 1;
 }

@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "scripts": {
     "clean": "rm -rf .next",
-    "predev": "npm run sync-images && npm run sync-content && npm run build-products && npm run sync-admin && npm run sync-i18n && npm run sync-static",
-    "preexport": "npm run sync-images && npm run sync-content && npm run build-products && npm run sync-admin && npm run sync-i18n && npm run sync-static",
-    "prebuild": "npm run sync-images && npm run sync-content && npm run build-products && npm run sync-admin && npm run sync-i18n && npm run sync-static",
+    "predev": "npm run sync-images && npm run sync-content && npm run build-products && npm run build-faqs && npm run write-content-rev && npm run sync-admin && npm run sync-i18n && npm run sync-static",
+    "preexport": "npm run sync-images && npm run sync-content && npm run build-products && npm run build-faqs && npm run write-content-rev && npm run sync-admin && npm run sync-i18n && npm run sync-static",
+    "prebuild": "npm run sync-images && npm run sync-content && npm run build-products && npm run build-faqs && npm run write-content-rev && npm run sync-admin && npm run sync-i18n && npm run sync-static",
     "postbuild": "node scripts/generate-sitemap.js",
     "postexport": "node scripts/generate-sitemap.js",
     "dev": "npm run clean && next dev",
@@ -18,6 +18,8 @@
     "sync-i18n": "node scripts/sync-i18n.js",
     "sync-static": "node scripts/sync-static.js",
     "build-products": "node scripts/build-products.js",
+    "build-faqs": "node scripts/build-faqs.js",
+    "write-content-rev": "node scripts/write-content-rev.js",
     "export": "next build"
   },
   "dependencies": {
