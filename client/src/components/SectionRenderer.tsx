@@ -110,40 +110,60 @@ export default function SectionRenderer({ sections, lang }: Props) {
         }
         case 'faqs': {
           const faqs = getFaqs();
-          const hasCategories = faqs.some(f => Boolean(f.category));
-          const renderFaq = (faq: FaqEntry, i: number) => (
-            <details key={`q-${i}-${faq.question}`} className="mb-3">
-              <summary className="fw-semibold">{faq.question}</summary>
-              <div className="mt-2">{faq.answer}</div>
-            </details>
-          );
-          let faqNodes: React.ReactNode = null;
-          if (hasCategories) {
-            const nodes: React.ReactNode[] = [];
-            let lastCategory = '';
-            faqs.forEach((faq, i) => {
-              const category = (faq.category || '').trim();
-              if (category && category !== lastCategory) {
-                nodes.push(
-                  <h4 key={`cat-${i}-${category}`} className="mt-4">{category}</h4>
-                );
-                lastCategory = category;
-              } else if (!category) {
-                lastCategory = '';
-              }
-              nodes.push(renderFaq(faq, i));
-            });
-            faqNodes = <>{nodes}</>;
-          } else {
-            faqNodes = <>{faqs.map(renderFaq)}</>;
-          }
+          const accordionId = `faq-accordion-${idx}`;
+          const nodes: React.ReactNode[] = [];
+          let lastCategory = '';
+
+          faqs.forEach((faq, i) => {
+            const category = (faq.category || '').trim();
+            if (category && category !== lastCategory) {
+              nodes.push(
+                <h4 key={`cat-${idx}-${category}-${i}`} className="mt-4">{category}</h4>
+              );
+              lastCategory = category;
+            } else if (!category) {
+              lastCategory = '';
+            }
+
+            const collapseId = `${accordionId}-collapse-${i}`;
+            const headingId = `${accordionId}-heading-${i}`;
+            nodes.push(
+              <div className="accordion-item" key={`${collapseId}`}>
+                <h4 className="accordion-header" id={headingId}>
+                  <button
+                    className="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target={`#${collapseId}`}
+                    aria-expanded="false"
+                    aria-controls={collapseId}
+                  >
+                    {faq.question}
+                  </button>
+                </h4>
+                <div
+                  id={collapseId}
+                  className="accordion-collapse collapse"
+                  aria-labelledby={headingId}
+                  data-bs-parent={`#${accordionId}`}
+                >
+                  <div className="accordion-body">
+                    <p className="mb-0">{faq.answer}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          });
+
           out.push(
             <section key={`faq-${idx}`} className="padding-large">
               <div className="container">
                 <div className="row justify-content-center">
                   <div className="col-12 col-lg-8">
-                    {s.title ? <h3 className="mb-4">{s.title}</h3> : null}
-                    <div className="faq-accordion list-unstyled">{faqNodes}</div>
+                    {s.title ? <h3 className="text-center mb-5">{s.title}</h3> : null}
+                    <div className="accordion accordion-flush" id={accordionId}>
+                      {nodes}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -153,16 +173,31 @@ export default function SectionRenderer({ sections, lang }: Props) {
         }
         case 'banner': {
           const { heading, button_label, button_link } = s;
+          const backgroundStyle = s.background_image
+            ? {
+              backgroundImage: `url(${s.background_image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }
+            : {};
           out.push(
             <section key={`bn-${idx}`} className="padding-large">
               <div className="container">
                 <div className="row">
                   <div className="col-12">
-                    <div className="p-5 text-center" style={{ background: '#f5f1eb', borderRadius: '24px' }}>
-                      {heading ? <h3 className="mb-3">{heading}</h3> : null}
-                      {button_label && button_link ? (
-                        <a href={button_link} className="btn">{button_label}</a>
-                      ) : null}
+                    <div
+                      className="position-relative overflow-hidden rounded-4 text-center text-white"
+                      style={{ minHeight: '360px', ...backgroundStyle }}
+                    >
+                      <div
+                        className="position-absolute top-50 start-50 translate-middle px-4 py-4"
+                        style={{ background: 'rgba(0,0,0,0.35)', borderRadius: '18px', minWidth: '260px' }}
+                      >
+                        {heading ? <h3 className="mb-3 text-white">{heading}</h3> : null}
+                        {button_label && button_link ? (
+                          <a href={button_link} className="btn btn-light">{button_label}</a>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 </div>
