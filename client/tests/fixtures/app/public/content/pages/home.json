@@ -1,0 +1,5 @@
+{
+  "sections": [
+    { "type": "text", "heading": "Fallback Heading", "body": "This is fallback content." }
+  ]
+}

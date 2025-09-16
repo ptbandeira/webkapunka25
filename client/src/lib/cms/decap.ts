@@ -151,6 +151,27 @@ export function readPageSections(locale: string, slug: string): Section[] {
   return valid;
 }
 
+export type PageMeta = {
+  title?: string;
+  description?: string;
+  openGraph?: { images: { url: string }[] };
+};
+
+export function extractPageMeta(sections?: Section[] | null): PageMeta | null {
+  if (!Array.isArray(sections)) return null;
+  const firstMeta = sections.find(sec => (sec as any).type === 'meta') as
+    | { type: 'meta'; title?: string; description?: string; ogImage?: string }
+    | undefined;
+  if (!firstMeta) return null;
+  const { title, description, ogImage } = firstMeta;
+  if (!title && !description && !ogImage) return null;
+  const meta: PageMeta = {};
+  if (title) meta.title = title;
+  if (description) meta.description = description;
+  if (ogImage) meta.openGraph = { images: [{ url: ogImage }] };
+  return meta;
+}
+
 /**
  * Convenience helper to return sections for a page or null when unavailable.
  */

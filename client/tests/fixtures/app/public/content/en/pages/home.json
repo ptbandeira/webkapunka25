@@ -1,0 +1,7 @@
+{
+  "sections": [
+    { "type": "meta", "title": "Fixture Home", "description": "Localized home description", "ogImage": "/images/home-og.png" },
+    { "type": "hero", "title": "Fixture Hero", "subtitle": "Localized intro", "align": "left" },
+    { "type": "text", "heading": "Localized Heading", "body": "Localized body copy.", "align": "center" }
+  ]
+}

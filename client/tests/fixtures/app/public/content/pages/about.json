@@ -1,0 +1,6 @@
+{
+  "sections": [
+    { "type": "meta", "title": "About Default", "description": "Default about description" },
+    { "type": "text", "heading": "Fallback About", "body": "Default about body." }
+  ]
+}

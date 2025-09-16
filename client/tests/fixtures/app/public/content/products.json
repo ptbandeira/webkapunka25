@@ -1,0 +1,5 @@
+{
+  "products": [
+    { "id": "p1", "slug": "fixture-product", "name": "Fixture Product", "prices": [12], "images": ["/images/prod.jpg"] }
+  ]
+}

@@ -20,7 +20,9 @@
     "build-products": "node scripts/build-products.js",
     "build-faqs": "node scripts/build-faqs.js",
     "write-content-rev": "node scripts/write-content-rev.js",
-    "export": "next build"
+    "export": "next build",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
@@ -29,5 +31,12 @@
     "react-dom": "^18.2.0",
     "swiper": "^11.2.10",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2",
+    "@types/node": "24.5.0",
+    "@types/react": "19.1.13",
+    "typescript": "5.9.2",
+    "vitest": "^1.6.0"
   }
 }

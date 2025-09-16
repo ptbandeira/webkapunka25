@@ -71,6 +71,10 @@ export default function SectionRenderer({ sections, lang }: Props) {
   sections.forEach((s, idx) => {
     try {
       switch (s.type) {
+        case 'meta': {
+          // Meta sections are consumed for metadata only; skip rendering
+          break;
+        }
         case 'hero': {
           const { title, subtitle } = s;
           out.push(<Hero key={`hero-${idx}`} title={title} subtitle={subtitle} />);
