@@ -75,19 +75,19 @@ export default function DevFeaturePanel(){
 
   return (
     <div style={panelStyle} aria-live="polite">
-      <button type="button" style={{ ...buttonStyle, width: '100%' }} onClick={() => setOpen(v => !v)}>
+      <button type="button" style={{ ...buttonStyle, width: '100%', color: '#fff' }} onClick={() => setOpen(v => !v)}>
         Dev Flags
       </button>
       {open ? (
         <div style={{ marginTop: '0.75rem', fontSize: '0.85rem' }}>
-          <p style={{ marginBottom: '0.5rem', opacity: 0.8 }}>Toggle for this browser (dev only).</p>
+          <p style={{ marginBottom: '0.5rem', color: 'rgba(255,255,255,0.85)' }}>Toggle for this browser (dev only).</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {features.map(key => {
               const info = FEATURE_INFO[key] ?? { label: key, description: '' };
               return (
                 <li key={key} style={{ marginBottom: '0.5rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span>{info.label}</span>
+                    <span style={{ color: '#fff' }}>{info.label}</span>
                     <button
                       type="button"
                       style={{ ...buttonStyle, borderColor: flags[key] ? '#4ade80' : 'rgba(255,255,255,0.35)' }}
@@ -97,13 +97,13 @@ export default function DevFeaturePanel(){
                     </button>
                   </div>
                   {info.description ? (
-                    <p style={{ margin: '0.25rem 0 0', fontSize: '0.75rem', opacity: 0.65 }}>{info.description}</p>
+                    <p style={{ margin: '0.25rem 0 0', fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)' }}>{info.description}</p>
                   ) : null}
                 </li>
               );
             })}
           </ul>
-          <button type="button" style={{ ...buttonStyle, width: '100%', marginTop: '0.75rem' }} onClick={reset}>
+          <button type="button" style={{ ...buttonStyle, width: '100%', marginTop: '0.75rem', color: '#fff' }} onClick={reset}>
             Reset overrides
           </button>
         </div>
