@@ -160,6 +160,7 @@ async function main() {
     const candidates = [
       path.join(publicDir, rel),
       path.join(repoRoot, 'site', rel),
+      path.join(repoRoot, 'site', 'static', rel),
     ];
     const srcPath = candidates.find(p => fs.existsSync(p));
     if (!srcPath) {

@@ -1,4 +1,5 @@
 import { articles } from '../../../../src/data/articles';
+import { buildOgUrl } from '../../../../src/lib/og';
 
 export const dynamicParams = false;
 
@@ -12,7 +13,17 @@ export function generateMetadata({ params }){
   const a = articles.find(x => x.slug === params.slug);
   const title = a ? `${a.title} — Learn` : 'Learn';
   const description = a?.excerpt || 'Education hub';
-  return { title, description };
+  const ogUrl = buildOgUrl({ title, category: a?.category || null });
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      images: [{ url: ogUrl, width: 1200, height: 630 }],
+    },
+  };
 }
 
 function JsonLd({ a }){
@@ -64,4 +75,3 @@ export default function LearnArticle({ params }){
     </section>
   );
 }
-

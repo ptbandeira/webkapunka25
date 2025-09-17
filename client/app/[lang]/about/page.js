@@ -10,6 +10,10 @@ export async function generateStaticParams(){
   return [ { lang: 'en' }, { lang: 'pt' }, { lang: 'es' } ];
 }
 
+function findHeroImage(sections) {
+  return Array.isArray(sections) ? sections.find((s) => s.type === 'hero' && s.background_image)?.background_image : undefined;
+}
+
 export default async function AboutLocalePage({ params }){
   const lang = getCurrentLocale(params?.lang);
   if (isFeatureEnabled('decapPages')){
@@ -38,7 +42,9 @@ export function generateMetadata({ params }){
   const lang = getCurrentLocale(params?.lang);
   if (isFeatureEnabled('decapPages')){
     const sections = getDecapPage('about', lang);
-    const meta = extractPageMeta(sections);
+    const heroImage = findHeroImage(sections);
+    const fallbackTitle = lang === 'pt' ? 'Sobre – Kapunka' : lang === 'es' ? 'Acerca de – Kapunka' : 'About – Kapunka';
+    const meta = extractPageMeta(sections, { autoOg: { image: heroImage, title: fallbackTitle } });
     if (meta) return meta;
   }
   return {

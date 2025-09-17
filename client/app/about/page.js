@@ -3,10 +3,15 @@ import { isFeatureEnabled } from '../../src/lib/config';
 import { getDecapPage, extractPageMeta } from '../../src/lib/cms/decap';
 import SectionRenderer from '../../src/components/SectionRenderer';
 
+function findHeroImage(sections) {
+  return Array.isArray(sections) ? sections.find((s) => s.type === 'hero' && s.background_image)?.background_image : undefined;
+}
+
 export async function generateMetadata() {
   if (isFeatureEnabled('decapPages')) {
     const sections = getDecapPage('about', 'en');
-    const meta = extractPageMeta(sections);
+    const heroImage = findHeroImage(sections);
+    const meta = extractPageMeta(sections, { autoOg: { image: heroImage, title: 'About – Kapunka' } });
     if (meta) return meta;
   }
   return { title: 'About – Kapunka', description: 'Our story — 100% pure, cold-pressed argan oil.' };

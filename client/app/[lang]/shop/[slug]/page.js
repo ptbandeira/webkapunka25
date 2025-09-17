@@ -5,6 +5,7 @@ import { withLang, getCurrentLocale } from '../../../../src/lib/locale';
 import AddToCart from '../../../../src/components/shop/AddToCart';
 import { getImageManifest } from '../../../../src/lib/image-manifest';
 import { buildImageSources } from '../../../../src/lib/image-sources';
+import { buildOgUrl } from '../../../../src/lib/og';
 
 export const dynamicParams = false;
 
@@ -122,4 +123,22 @@ export default function PDP({ params }){
       </div>
     </section>
   );
+}
+
+export function generateMetadata({ params }){
+  const lang = getCurrentLocale(params?.lang);
+  const slug = params?.slug || '';
+  const product = getProductBySlug(slug);
+  const name = product?.name || slug || 'Product';
+  const image = Array.isArray(product?.images) && product?.images.length ? product?.images[0] : '';
+  const category = Array.isArray(product?.badges) && product?.badges[0] ? product?.badges[0] : null;
+  const title = `${name} – Kapunka`;
+  const ogUrl = buildOgUrl({ title: name, image, category });
+  return {
+    title,
+    openGraph: {
+      title,
+      images: [{ url: ogUrl, width: 1200, height: 630 }],
+    },
+  };
 }

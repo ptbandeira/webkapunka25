@@ -3,8 +3,8 @@
   "updatedAt": "2025-01-01T12:00:00Z",
   "author": "Fixture Author",
   "sections": [
-    { "type": "meta", "title": "Fixture Home", "description": "Localized home description", "ogImage": "/images/home-og.png" },
-    { "type": "hero", "title": "Fixture Hero", "subtitle": "Localized intro", "align": "left" },
+    { "type": "meta", "title": "Fixture Home", "description": "Localized home description", "ogImage": "auto" },
+    { "type": "hero", "title": "Fixture Hero", "subtitle": "Localized intro", "align": "left", "background_image": "/images/banner-image.jpg" },
     { "type": "text", "heading": "Localized Heading", "body": "Localized body copy.", "align": "center" }
   ]
 }

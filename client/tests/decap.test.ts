@@ -17,11 +17,11 @@ describe('decap loaders', () => {
   it('loads localized sections and extracts meta', () => {
     const sections = readPageSections('en', 'home');
     expect(sections.length).toBeGreaterThan(0);
-    const meta = extractPageMeta(sections);
+    const meta = extractPageMeta(sections, { autoOg: { image: '/images/banner-image.jpg', title: 'Fixture Home' } });
     expect(meta).toBeTruthy();
     expect(meta?.title).toBe('Fixture Home');
     expect(meta?.description).toContain('Localized home');
-    expect(meta?.openGraph?.images?.[0]?.url).toBe('/images/home-og.png');
+    expect(meta?.openGraph?.images?.[0]?.url).toContain('/api/og?');
   });
 
   it('falls back to default locale when localized page missing', () => {
@@ -38,6 +38,15 @@ describe('decap loaders', () => {
   it('ignores pages marked as draft', () => {
     const sections = readPageSections('en', 'draft');
     expect(sections).toEqual([]);
+  });
+
+  it('builds og image url when meta requests auto', () => {
+    const sections = [
+      { type: 'meta', title: 'Auto Title', ogImage: 'auto' },
+      { type: 'hero', title: 'Hero', subtitle: 'Sub', align: 'left', background_image: '/images/banner-image.jpg' },
+    ] as any;
+    const meta = extractPageMeta(sections, { autoOg: { title: 'Auto Title', image: '/images/banner-image.jpg', category: 'Hero' } });
+    expect(meta?.openGraph?.images?.[0]?.url).toContain('/api/og');
   });
 
   it('normalizes FAQs with ordering', () => {

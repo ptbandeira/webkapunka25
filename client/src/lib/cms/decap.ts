@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
 import { PageSchema, Section, SectionSchema } from '../../types/sections';
+import { buildOgUrl } from '../og';
 
 // Utility: resolve a path inside Next public folder
 function publicPath(...parts: string[]) {
@@ -163,7 +164,13 @@ export type PageMeta = {
   openGraph?: { images: { url: string }[] };
 };
 
-export function extractPageMeta(sections?: Section[] | null): PageMeta | null {
+type AutoOgOptions = {
+  image?: string | null;
+  title?: string | null;
+  category?: string | null;
+};
+
+export function extractPageMeta(sections?: Section[] | null, opts?: { autoOg?: AutoOgOptions }): PageMeta | null {
   if (!Array.isArray(sections)) return null;
   const firstMeta = sections.find(sec => (sec as any).type === 'meta') as
     | { type: 'meta'; title?: string; description?: string; ogImage?: string }
@@ -174,7 +181,16 @@ export function extractPageMeta(sections?: Section[] | null): PageMeta | null {
   const meta: PageMeta = {};
   if (title) meta.title = title;
   if (description) meta.description = description;
-  if (ogImage) meta.openGraph = { images: [{ url: ogImage }] };
+  if (ogImage) {
+    if (ogImage === 'auto') {
+      const auto = opts?.autoOg || {};
+      const autoTitle = auto.title || title || 'Kapunka';
+      const url = buildOgUrl({ title: autoTitle, image: auto.image || null, category: auto.category || null });
+      meta.openGraph = { images: [{ url }] };
+    } else {
+      meta.openGraph = { images: [{ url: ogImage }] };
+    }
+  }
   return meta;
 }
 
