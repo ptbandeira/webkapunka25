@@ -229,7 +229,14 @@ export default function SectionRenderer({ sections, lang }: Props) {
                           className="position-absolute top-0 start-0 w-100 h-100"
                           style={{ objectFit: 'cover', filter: 'brightness(0.65)' }}
                         />
-                        <div className="banner-content-text position-absolute">
+                        <div
+                          className="banner-content-text position-absolute"
+                          data-aos="fade"
+                          data-aos-delay="1000"
+                          data-aos-easing="ease-in"
+                          data-aos-duration="1000"
+                          data-aos-once="true"
+                        >
                           <h2>{card.title}</h2>
                           <a href={card.href} className="btn">{card.cta}</a>
                         </div>
