@@ -199,34 +199,39 @@ export default function SectionRenderer({ sections, lang }: Props) {
 
           out.push(
             <section key={`bn-${idx}`} className="padding-large">
-              <div className="container">
-                <div className="row g-0">
+              <div className="container-fluid px-0">
+                <div id="banner" className="banner-grid">
                   {cards.map((card, cardIdx) => {
                     const sources = buildImageSources(imageManifest, card.image);
                     const placeholderStyle = sources?.lqip ? {
                       backgroundImage: `url(${sources.lqip})`,
                       backgroundSize: 'cover',
-                      backgroundPosition: 'center'
+                      backgroundPosition: 'center',
                     } : null;
+                    const className = `banner-content-${cardIdx + 1} position-relative`;
                     return (
-                      <div className="col-12 col-md-4" key={`banner-${idx}-${cardIdx}`}>
-                        <div
-                          className="position-relative overflow-hidden"
-                          style={{ minHeight: '360px', background: placeholderStyle ? undefined : '#f5f1eb', ...(placeholderStyle || {}) }}
-                        >
-                          <img
-                            src={sources?.src || card.image}
-                            srcSet={sources?.srcSet}
-                            sizes="(min-width: 1200px) 33vw, 100vw"
-                            alt=""
-                            role="presentation"
-                            className="position-absolute top-0 start-0 w-100 h-100"
-                            style={{ objectFit: 'cover', filter: 'brightness(0.65)' }}
-                          />
-                          <div className="position-relative h-100 d-flex flex-column justify-content-center align-items-start gap-3 px-4 px-md-5 py-5 text-white" style={{ maxWidth: '320px' }}>
-                            <h3 className="mb-2 text-white">{card.title}</h3>
-                            <a href={card.href} className="btn btn-light">{card.cta}</a>
-                          </div>
+                      <div
+                        key={`banner-${idx}-${cardIdx}`}
+                        className={className}
+                        style={{
+                          minHeight: '360px',
+                          background: placeholderStyle ? undefined : `url('${card.image}') no-repeat left`,
+                          backgroundSize: 'cover',
+                          ...(placeholderStyle || {}),
+                        }}
+                      >
+                        <img
+                          src={sources?.src || card.image}
+                          srcSet={sources?.srcSet}
+                          sizes="(min-width: 1200px) 33vw, 100vw"
+                          alt=""
+                          role="presentation"
+                          className="position-absolute top-0 start-0 w-100 h-100"
+                          style={{ objectFit: 'cover', filter: 'brightness(0.65)' }}
+                        />
+                        <div className="banner-content-text position-absolute">
+                          <h2>{card.title}</h2>
+                          <a href={card.href} className="btn">{card.cta}</a>
                         </div>
                       </div>
                     );
