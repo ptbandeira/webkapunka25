@@ -21,8 +21,28 @@ jobs:
       - name: Install deps (client)
         run: npm --prefix client ci || npm --prefix client install
 
+      - name: Validate Decap content
+        run: npm --prefix client run validate:content
+
+      - name: Install Playwright browsers
+        run: npx --prefix client playwright install --with-deps
+
+      - name: Run unit tests
+        run: npm --prefix client run test
+
+      - name: Run e2e tests
+        run: npm --prefix client run test:e2e
+
       - name: Build static export (Next.js)
         run: npm --prefix client run build
+
+      - name: Link check (internal)
+        uses: lycheeverse/lychee-action@v1.7.0
+        with:
+          args: --offline --base ./client/out --recursive ./client/out
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Compute preview alias
         id: alias

@@ -23,6 +23,7 @@
     "build-reviews": "ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/build-reviews.ts",
     "gen-images": "ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/gen-images.ts",
     "write-content-rev": "node scripts/write-content-rev.js",
+    "validate:content": "ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/validate-content.ts",
     "export": "next build",
     "test": "vitest run",
     "test:e2e": "playwright test"
