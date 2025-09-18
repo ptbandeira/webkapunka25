@@ -3,6 +3,8 @@
   # Temporary: use install instead of ci until package-lock.json includes swiper
   command = "npm --prefix client install && npm --prefix client run build"
 
+# Redirect rules mirror config/redirects.json for legacy kapunkargan.com paths
+
 [[redirects]]
   from = "/index.html"
   to = "/"
@@ -36,6 +38,68 @@
   status = 301
   force = true
 
+# Legacy product detail pages
+[[redirects]]
+  from = "/product-50ml.html"
+  to = "/en/shop/argan-oil-50ml"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/product-100ml.html"
+  to = "/en/shop/argan-oil-100ml"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/product-200ml.html"
+  to = "/en/shop/argan-oil-200ml"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/product-dropper.html"
+  to = "/en/shop"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/product-gift.html"
+  to = "/en/shop"
+  status = 301
+  force = true
+
+# Spanish legacy storefront
+[[redirects]]
+  from = "/tienda"
+  to = "/en/shop"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tienda/argan-oil-50ml"
+  to = "/en/shop/argan-oil-50ml"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tienda/argan-oil-100ml"
+  to = "/en/shop/argan-oil-100ml"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tienda/argan-oil-200ml"
+  to = "/en/shop/argan-oil-200ml"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tienda/argan-oil-travel-duo"
+  to = "/en/shop/argan-oil-travel-duo"
+  status = 301
+  force = true
+
 # Default locale redirects (clean routes → /en/*)
 [[redirects]]
   from = "/"
@@ -58,5 +122,24 @@
 [[redirects]]
   from = "/contact"
   to = "/en/contact"
+  status = 301
+  force = true
+
+# Wildcard fallbacks
+[[redirects]]
+  from = "/tienda/*"
+  to = "/en/shop"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/tienda/*"
+  to = "/es/shop"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/productos/*"
+  to = "/en/shop"
   status = 301
   force = true

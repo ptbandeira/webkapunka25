@@ -1,9 +1,10 @@
-'use client';
-
 import Link from 'next/link';
 
-export default function Error({ error, reset }) {
-  const message = error?.message ? String(error.message) : null;
+export const metadata = {
+  title: 'Server error – Kapunka'
+};
+
+export default function ServerErrorPage() {
   return (
     <section className="padding-xlarge">
       <div className="container">
@@ -12,14 +13,14 @@ export default function Error({ error, reset }) {
             <p className="text-uppercase text-muted mb-3">500</p>
             <h1 className="display-5 mb-3">Something went wrong.</h1>
             <p className="text-muted mb-4">
-              {message || 'We ran into an unexpected issue. You can try again or head back to the homepage.'}
+              We ran into an unexpected issue. Refresh the page or head back to safety while we fix it.
             </p>
             <div className="d-flex flex-column flex-md-row gap-3 justify-content-center">
-              <button type="button" className="btn btn-primary" onClick={() => reset?.()}>
-                Retry
-              </button>
-              <Link href="/en" className="btn btn-outline-secondary">
-                Go to homepage
+              <Link href="/en" className="btn btn-primary">
+                Return home
+              </Link>
+              <Link href="/en/contact" className="btn btn-outline-secondary">
+                Contact support
               </Link>
             </div>
           </div>
