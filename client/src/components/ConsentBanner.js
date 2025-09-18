@@ -16,26 +16,28 @@ const containerStyle = {
   left: '50%',
   transform: 'translateX(-50%)',
   zIndex: 1050,
-  maxWidth: '420px',
-  width: 'calc(100% - 2rem)',
+  maxWidth: '440px',
+  width: 'calc(100% - 2.5rem)',
 };
 
 const cardStyle = {
-  background: 'rgba(33, 37, 41, 0.95)',
-  color: '#fff',
-  borderRadius: '999px',
-  padding: '0.5rem 0.75rem',
-  boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+  background: '#ffffff',
+  color: '#2d2a26',
+  borderRadius: '18px',
+  padding: '0.85rem 1rem',
+  boxShadow: '0 18px 45px rgba(33, 30, 25, 0.15)',
+  border: '1px solid rgba(33, 30, 25, 0.12)',
   display: 'flex',
   flexWrap: 'wrap',
   alignItems: 'center',
-  gap: '0.5rem 0.75rem',
+  gap: '0.65rem 0.75rem',
 };
 
 const textStyle = {
-  fontSize: '0.85rem',
+  fontSize: '0.9rem',
   margin: 0,
   flex: '1 1 auto',
+  lineHeight: 1.4,
 };
 
 export default function ConsentBanner() {
@@ -74,13 +76,13 @@ export default function ConsentBanner() {
     <div style={containerStyle} role="dialog" aria-live="polite" aria-label="Analytics consent prompt">
       <div style={cardStyle}>
         <p style={textStyle} className="mb-0">
-          We use privacy-friendly analytics to improve the site. May we collect anonymous usage data?
+          We use lightweight analytics to understand what’s working. May we enable them for your visit?
         </p>
         <div className="d-flex gap-2 flex-nowrap">
           <button type="button" className="btn btn-primary btn-sm" onClick={accept}>
             Accept
           </button>
-          <button type="button" className="btn btn-outline-light btn-sm" onClick={decline}>
+          <button type="button" className="btn btn-outline-secondary btn-sm" onClick={decline}>
             No thanks
           </button>
         </div>
