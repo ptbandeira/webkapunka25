@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "scripts": {
     "clean": "rm -rf .next",
-    "predev": "npm run sync-images && npm run sync-content && npm run build-products && npm run build-faqs && npm run gen-images && npm run write-content-rev && npm run sync-admin && npm run sync-i18n && npm run sync-static",
-    "preexport": "npm run sync-images && npm run sync-content && npm run build-products && npm run build-faqs && npm run gen-images && npm run write-content-rev && npm run sync-admin && npm run sync-i18n && npm run sync-static",
-    "prebuild": "npm run sync-images && npm run sync-content && npm run build-products && npm run build-faqs && npm run gen-images && npm run write-content-rev && npm run sync-admin && npm run sync-i18n && npm run sync-static",
+    "predev": "npm run sync-images && npm run sync-content && npm run build-products && npm run build-faqs && npm run build-search && npm run gen-images && npm run write-content-rev && npm run sync-admin && npm run sync-i18n && npm run sync-static",
+    "preexport": "npm run sync-images && npm run sync-content && npm run build-products && npm run build-faqs && npm run build-search && npm run gen-images && npm run write-content-rev && npm run sync-admin && npm run sync-i18n && npm run sync-static",
+    "prebuild": "npm run sync-images && npm run sync-content && npm run build-products && npm run build-faqs && npm run build-search && npm run gen-images && npm run write-content-rev && npm run sync-admin && npm run sync-i18n && npm run sync-static",
     "postbuild": "node scripts/generate-sitemap.js",
     "postexport": "node scripts/generate-sitemap.js",
     "dev": "npm run clean && next dev",
@@ -19,6 +19,7 @@
     "sync-static": "node scripts/sync-static.js",
     "build-products": "node scripts/build-products.js",
     "build-faqs": "node scripts/build-faqs.js",
+    "build-search": "ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/build-search.ts",
     "gen-images": "ts-node --compiler-options '{\"module\":\"commonjs\"}' scripts/gen-images.ts",
     "write-content-rev": "node scripts/write-content-rev.js",
     "export": "next build",
@@ -27,6 +28,7 @@
   },
   "dependencies": {
     "framer-motion": "^11.0.0",
+    "fuse.js": "^7.1.0",
     "next": "^14.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

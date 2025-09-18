@@ -23,6 +23,7 @@ function buildDefaultFeatureFlags(){
     reviews: envToggle(process.env.NEXT_PUBLIC_FEATURE_REVIEWS, false),
     // Decap-driven pages (SSG/ISR only)
     decapPages: envToggle(process.env.NEXT_PUBLIC_FEATURE_DECAP_PAGES, true),
+    search: envToggle(process.env.NEXT_PUBLIC_FEATURE_SEARCH, false),
   };
 }
 

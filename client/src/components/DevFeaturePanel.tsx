@@ -17,6 +17,7 @@ const FEATURE_INFO: Record<string, { label: string; description: string }> = {
   cart: { label: 'cart', description: 'Enable the mini-cart and checkout button.' },
   reviews: { label: 'reviews', description: 'Reserved flag for reviews integrations.' },
   decapPages: { label: 'decapPages', description: 'Use Decap-managed pages. Off = legacy HTML fallback.' },
+  search: { label: 'search', description: 'Enable the search drawer with product and article results.' },
 };
 
 const isProd = process.env.NODE_ENV === 'production';
