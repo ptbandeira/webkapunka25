@@ -46,6 +46,32 @@ const FaqListSchema = z.object({
 });
 type RawFaqItem = z.infer<typeof FaqItemSchema>;
 
+const ReviewItemSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  quote: z.string().min(1),
+  role: z.string().optional(),
+  source: z.string().optional(),
+  rating: z.number().optional(),
+  productSlug: z.string().optional(),
+  locale: z.string().optional(),
+});
+const ReviewListSchema = z.object({
+  items: z.array(ReviewItemSchema).default([]),
+});
+type RawReviewItem = z.infer<typeof ReviewItemSchema>;
+
+export type ReviewEntry = {
+  id: string;
+  name: string;
+  quote: string;
+  role?: string;
+  source?: string;
+  rating?: number;
+  productSlug?: string;
+  locale?: string;
+};
+
 export type FaqEntry = {
   question: string;
   answer: string;
@@ -121,6 +147,48 @@ export function readFaqs(locale: string): FaqEntry[] {
     if (faq) normalized.push(faq);
   });
   return sortFaqEntries(normalized);
+}
+
+function clampRating(value?: number | null) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return undefined;
+  const clamped = Math.min(5, Math.max(1, Math.round(value)));
+  return clamped;
+}
+
+function normalizeReview(item: RawReviewItem): ReviewEntry | null {
+  const id = item.id?.trim();
+  const name = item.name?.trim();
+  const quote = item.quote?.trim();
+  if (!id || !name || !quote) return null;
+  const role = item.role?.trim() || undefined;
+  const source = item.source?.trim() || undefined;
+  const rating = clampRating(item.rating);
+  const productSlug = item.productSlug?.trim() || undefined;
+  const locale = item.locale?.trim() || undefined;
+  const entry: ReviewEntry = { id, name, quote };
+  if (role) entry.role = role;
+  if (source) entry.source = source;
+  if (typeof rating === 'number') entry.rating = rating;
+  if (productSlug) entry.productSlug = productSlug;
+  if (locale) entry.locale = locale;
+  return entry;
+}
+
+export function readReviews(locale: string): ReviewEntry[] {
+  const data = readLocaleJSON<Record<string, unknown>>(locale, 'reviews.json');
+  if (!data) return [];
+  const res = ReviewListSchema.safeParse(data);
+  if (!res.success) {
+    warnDev(`Invalid reviews schema for locale=${locale}: ${res.error.issues.map(i => i.message).join('; ')}`);
+    return [];
+  }
+  const items = Array.isArray(res.data.items) ? res.data.items : [];
+  const normalized: ReviewEntry[] = [];
+  items.forEach(raw => {
+    const review = normalizeReview(raw as RawReviewItem);
+    if (review) normalized.push(review);
+  });
+  return normalized;
 }
 
 /**

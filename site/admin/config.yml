@@ -257,27 +257,23 @@ collections:
       - { label: "Category", name: "category", widget: string, required: false, i18n: translate }
       - { label: "Order", name: "order", widget: number, required: false, default: 0, i18n: duplicate }
       - { label: "Active", name: "active", widget: boolean, default: true, i18n: duplicate }
-          - { label: "Text Block", name: "text", widget: "object", fields: [
-                {label: "Heading", name: "heading", widget: "string"},
-                {label: "Body", name: "body", widget: "text"},
-                {label: "Align", name: "align", widget: "select", options: ["left","center","right"], default: "left"}
-          ] }
-          - { label: "Product Grid", name: "productGrid", widget: "object", fields: [
-                {label: "Title", name: "title", widget: "string"},
-                {label: "Source file", name: "source", widget: "string", default: "products.json"},
-                {label: "How many", name: "count", widget: "number", default: 6, min: 1, max: 50}
-          ] }
-          - { label: "FAQs", name: "faqs", widget: "object", fields: [
-                {label: "Title", name: "title", widget: "string"},
-                {label: "Source file", name: "source", widget: "string", default: "faqs.json"}
-          ] }
-          - { label: "Banner", name: "banner", widget: "object", fields: [
-                {label: "Heading", name: "heading", widget: "string"},
-                {label: "Button label", name: "button_label", widget: "string", required: false},
-                {label: "Button link", name: "button_link", widget: "string", required: false},
-                {label: "Background image (use /images/... or upload)", name: "background_image", widget: "string"}
-          ] }
-          - { label: "Video", name: "video", widget: "object", fields: [
-                {label: "YouTube URL", name: "youtube_url", widget: "string"},
-                {label: "Caption text", name: "caption", widget: "string", required: false}
-          ] }
+
+  - name: "reviews"
+    label: "Reviews"
+    folder: "site/content/reviews"
+    create: true
+    format: "json"
+    extension: "json"
+    slug: "{{slug}}"
+    fields:
+      - { label: "Status", name: "status", widget: "select", options: ["published", "draft"], default: "published" }
+      - { label: "Updated At", name: "updatedAt", widget: "datetime", required: false }
+      - { label: "Author", name: "author", widget: "string", required: false }
+      - { label: "Reviewer Name", name: "name", widget: "string" }
+      - { label: "Role/Title", name: "role", widget: "string", required: false }
+      - { label: "Source", name: "source", widget: "string", required: false }
+      - { label: "Rating (1-5)", name: "rating", widget: "number", min: 1, max: 5, default: 5 }
+      - { label: "Quote", name: "quote", widget: "text" }
+      - { label: "Product Slug", name: "productSlug", widget: "string", required: false }
+      - { label: "Locale", name: "locale", widget: "select", options: ["","en","pt","es"], default: "" }
+      - { label: "Active", name: "active", widget: "boolean", default: true }
