@@ -1,9 +1,14 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
+import { captureError } from '../src/lib/monitoring';
 
 export default function Error({ error, reset }) {
   const message = error?.message ? String(error.message) : null;
+  useEffect(() => {
+    if (error) captureError(error, { tags: { source: 'route-error' } });
+  }, [error]);
   return (
     <section className="padding-xlarge">
       <div className="container">

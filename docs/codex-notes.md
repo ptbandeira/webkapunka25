@@ -9,4 +9,5 @@
 - Progress (cont.): sitemap generation now creates locale-specific page/product/learn sitemaps plus RSS feeds at `/learn/rss.xml` and `/<locale>/learn/rss.xml`, using content timestamps or `.rev` as fallbacks.
 - Progress (cont.): centralised legacy redirect mapping (`config/redirects.json`) reflected in `netlify.toml`; custom /404 and /500 views reuse the primary layout styling.
 - Progress (cont.): analytics now respect a consent banner (feature-flagged, stored in localStorage, DNT-aware) and block tracking until accepted.
+- Progress (cont.): added root error boundary + Sentry integration (env guarded, low sample rate) with friendly fallback; contact/clinics API logs now include timestamps & request ids.
 - Outstanding: revisit OG image route build error (`app/api/og/route.ts`) if it should compile cleanly; wire optional Turnstile/Recaptcha widgets on the client when product decides (server is ready).

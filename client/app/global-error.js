@@ -1,7 +1,13 @@
 'use client';
 
+import { useEffect } from 'react';
+import { captureError } from '../src/lib/monitoring';
+
 export default function GlobalError({ error, reset }) {
   const message = error?.message ? String(error.message) : null;
+  useEffect(() => {
+    if (error) captureError(error, { tags: { source: 'global-error' } });
+  }, [error]);
   return (
     <html lang="en">
       <body>

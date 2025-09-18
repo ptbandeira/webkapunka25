@@ -16,6 +16,7 @@ import NewsletterTracker from '../src/components/NewsletterTracker';
 import AnalyticsLoader from '../src/components/AnalyticsLoader';
 import ConsentBanner from '../src/components/ConsentBanner';
 import DevFeaturePanel from '../src/components/DevFeaturePanel';
+import RootShell from '../src/components/RootShell';
 
 const manrope = Manrope({ subsets: ['latin'] });
 
@@ -46,7 +47,7 @@ export default function RootLayout({ children }) {
         <LegacyReinit />
         {/* Load only Bootstrap JS on Home (React Home mode) so accordions/toggles work */}
         <BootstrapOnHome />
-        {children}
+        <RootShell>{children}</RootShell>
         <Footer />
         {/* Legacy JS only on non-Home routes */}
         <LegacyScripts />
