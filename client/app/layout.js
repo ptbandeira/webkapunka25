@@ -14,6 +14,7 @@ import MiniCart from '../src/components/cart/MiniCart';
 import PromoBar from '../src/components/PromoBar';
 import NewsletterTracker from '../src/components/NewsletterTracker';
 import AnalyticsLoader from '../src/components/AnalyticsLoader';
+import ConsentBanner from '../src/components/ConsentBanner';
 import DevFeaturePanel from '../src/components/DevFeaturePanel';
 
 const manrope = Manrope({ subsets: ['latin'] });
@@ -54,6 +55,7 @@ export default function RootLayout({ children }) {
         {/* Cart drawer */}
         <MiniCart />
         <NewsletterTracker />
+        <ConsentBanner />
         <AnalyticsLoader />
         {process.env.NODE_ENV !== 'production' ? <DevFeaturePanel /> : null}
       </body>

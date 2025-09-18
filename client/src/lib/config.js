@@ -21,6 +21,7 @@ function buildDefaultFeatureFlags(){
     policies: envToggle(process.env.NEXT_PUBLIC_FEATURE_POLICIES, true),
     cart: envToggle(process.env.NEXT_PUBLIC_FEATURE_CART, true),
     reviews: envToggle(process.env.NEXT_PUBLIC_FEATURE_REVIEWS, false),
+    consent: envToggle(process.env.NEXT_PUBLIC_FEATURE_CONSENT, isProd ? true : false),
     // Decap-driven pages (SSG/ISR only)
     decapPages: envToggle(process.env.NEXT_PUBLIC_FEATURE_DECAP_PAGES, true),
     search: envToggle(process.env.NEXT_PUBLIC_FEATURE_SEARCH, false),

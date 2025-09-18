@@ -16,6 +16,7 @@ const FEATURE_INFO: Record<string, { label: string; description: string }> = {
   policies: { label: 'policies', description: 'Reveal footer policy links and pages.' },
   cart: { label: 'cart', description: 'Enable the mini-cart and checkout button.' },
   reviews: { label: 'reviews', description: 'Reserved flag for reviews integrations.' },
+  consent: { label: 'consent', description: 'Display the analytics consent banner before loading trackers.' },
   decapPages: { label: 'decapPages', description: 'Use Decap-managed pages. Off = legacy HTML fallback.' },
   search: { label: 'search', description: 'Enable the search drawer with product and article results.' },
 };
