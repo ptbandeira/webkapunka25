@@ -1,10 +1,20 @@
 import { articles } from '../../../src/data/articles';
 import { withLang, getCurrentLocale } from '../../../src/lib/locale';
+import { buildAlternateLinks } from '../../../src/lib/seo/locale';
 
 export const dynamicParams = false;
 
 export async function generateStaticParams(){
   return [ { lang: 'en' }, { lang: 'pt' }, { lang: 'es' } ];
+}
+
+export function generateMetadata({ params }){
+  const lang = getCurrentLocale(params?.lang);
+  const alternates = buildAlternateLinks(lang, ['learn']);
+  return {
+    title: 'Learn – Kapunka',
+    alternates: { canonical: alternates.canonical, languages: alternates.languages },
+  };
 }
 
 function ArticleCard({ a, href }){

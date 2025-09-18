@@ -6,6 +6,7 @@ import AddToCart from '../../../../src/components/shop/AddToCart';
 import { getImageManifest } from '../../../../src/lib/image-manifest';
 import { buildImageSources } from '../../../../src/lib/image-sources';
 import { buildOgUrl } from '../../../../src/lib/og';
+import { buildAlternateLinks } from '../../../../src/lib/seo/locale';
 
 export const dynamicParams = false;
 
@@ -134,11 +135,16 @@ export function generateMetadata({ params }){
   const category = Array.isArray(product?.badges) && product?.badges[0] ? product?.badges[0] : null;
   const title = `${name} – Kapunka`;
   const ogUrl = buildOgUrl({ title: name, image, category });
+  const alternates = buildAlternateLinks(lang, ['shop', slug]);
   return {
     title,
     openGraph: {
       title,
       images: [{ url: ogUrl, width: 1200, height: 630 }],
+    },
+    alternates: {
+      canonical: alternates.canonical,
+      languages: alternates.languages,
     },
   };
 }

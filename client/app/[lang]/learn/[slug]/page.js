@@ -1,5 +1,7 @@
 import { articles } from '../../../../src/data/articles';
 import { buildOgUrl } from '../../../../src/lib/og';
+import { buildAlternateLinks } from '../../../../src/lib/seo/locale';
+import { getCurrentLocale } from '../../../../src/lib/locale';
 
 export const dynamicParams = false;
 
@@ -10,10 +12,12 @@ export async function generateStaticParams(){
 }
 
 export function generateMetadata({ params }){
+  const lang = getCurrentLocale(params?.lang);
   const a = articles.find(x => x.slug === params.slug);
   const title = a ? `${a.title} — Learn` : 'Learn';
   const description = a?.excerpt || 'Education hub';
   const ogUrl = buildOgUrl({ title, category: a?.category || null });
+  const alternates = buildAlternateLinks(lang, ['learn', params.slug]);
   return {
     title,
     description,
@@ -23,6 +27,7 @@ export function generateMetadata({ params }){
       type: 'article',
       images: [{ url: ogUrl, width: 1200, height: 630 }],
     },
+    alternates: { canonical: alternates.canonical, languages: alternates.languages },
   };
 }
 

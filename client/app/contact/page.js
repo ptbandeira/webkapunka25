@@ -1,6 +1,14 @@
+import { buildAlternateLinks } from '../../src/lib/seo/locale';
+
+const contactAlternates = buildAlternateLinks('en', ['contact']);
+
 export const metadata = {
   title: 'Contact – Kapunka',
   description: 'Questions or wholesale? We’ll reply within 1 business day.',
+  alternates: {
+    canonical: contactAlternates.canonical,
+    languages: contactAlternates.languages,
+  },
 };
 
 import { loadSiteFragment } from '../../src/lib/loadSiteFragment';

@@ -2,6 +2,7 @@ import { loadSiteFragment } from '../../src/lib/loadSiteFragment';
 import { isFeatureEnabled } from '../../src/lib/config';
 import { getDecapPage, extractPageMeta } from '../../src/lib/cms/decap';
 import SectionRenderer from '../../src/components/SectionRenderer';
+import { buildAlternateLinks } from '../../src/lib/seo/locale';
 
 function findHeroImage(sections) {
   return Array.isArray(sections) ? sections.find((s) => s.type === 'hero' && s.background_image)?.background_image : undefined;
@@ -12,9 +13,17 @@ export async function generateMetadata() {
     const sections = getDecapPage('about', 'en');
     const heroImage = findHeroImage(sections);
     const meta = extractPageMeta(sections, { autoOg: { image: heroImage, title: 'About – Kapunka' } });
-    if (meta) return meta;
+    if (meta) {
+      const alternates = buildAlternateLinks('en', ['about']);
+      return { ...meta, alternates: { canonical: alternates.canonical, languages: alternates.languages } };
+    }
   }
-  return { title: 'About – Kapunka', description: 'Our story — 100% pure, cold-pressed argan oil.' };
+  const alternates = buildAlternateLinks('en', ['about']);
+  return {
+    title: 'About – Kapunka',
+    description: 'Our story — 100% pure, cold-pressed argan oil.',
+    alternates: { canonical: alternates.canonical, languages: alternates.languages },
+  };
 }
 
 export default async function AboutPage() {

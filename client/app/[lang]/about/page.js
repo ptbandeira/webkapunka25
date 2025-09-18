@@ -2,6 +2,7 @@ import { getPage } from '../../../src/lib/content';
 import { isFeatureEnabled } from '../../../src/lib/config';
 import { getDecapPage, extractPageMeta } from '../../../src/lib/cms/decap';
 import { getCurrentLocale } from '../../../src/lib/locale';
+import { buildAlternateLinks } from '../../../src/lib/seo/locale';
 import SectionRenderer from '../../../src/components/SectionRenderer';
 
 export const dynamicParams = false;
@@ -40,15 +41,19 @@ export default async function AboutLocalePage({ params }){
 
 export function generateMetadata({ params }){
   const lang = getCurrentLocale(params?.lang);
+  const alternates = buildAlternateLinks(lang, ['about']);
   if (isFeatureEnabled('decapPages')){
     const sections = getDecapPage('about', lang);
     const heroImage = findHeroImage(sections);
     const fallbackTitle = lang === 'pt' ? 'Sobre – Kapunka' : lang === 'es' ? 'Acerca de – Kapunka' : 'About – Kapunka';
     const meta = extractPageMeta(sections, { autoOg: { image: heroImage, title: fallbackTitle } });
-    if (meta) return meta;
+    if (meta) {
+      return { ...meta, alternates: { canonical: alternates.canonical, languages: alternates.languages } };
+    }
   }
   return {
     title: lang === 'pt' ? 'Sobre – Kapunka' : lang === 'es' ? 'Acerca de – Kapunka' : 'About – Kapunka',
     description: 'Our story — 100% pure, cold-pressed argan oil.',
+    alternates: { canonical: alternates.canonical, languages: alternates.languages },
   };
 }

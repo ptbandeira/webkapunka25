@@ -4,11 +4,22 @@ import { getDecapPage } from '../../../src/lib/cms/decap';
 import { getCurrentLocale } from '../../../src/lib/locale';
 import SectionRenderer from '../../../src/components/SectionRenderer';
 import ContactForm from '../../../src/components/contact/ContactForm';
+import { buildAlternateLinks } from '../../../src/lib/seo/locale';
 
 export const dynamicParams = false;
 
 export async function generateStaticParams(){
   return [ { lang: 'en' }, { lang: 'pt' }, { lang: 'es' } ];
+}
+
+export function generateMetadata({ params }){
+  const lang = getCurrentLocale(params?.lang);
+  const alternates = buildAlternateLinks(lang, ['contact']);
+  return {
+    title: 'Contact – Kapunka',
+    description: 'Questions or wholesale? We’ll reply within 1 business day.',
+    alternates: { canonical: alternates.canonical, languages: alternates.languages },
+  };
 }
 
 export default async function ContactLocalePage({ params }){

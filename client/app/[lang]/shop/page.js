@@ -6,11 +6,21 @@ import { readProducts } from '../../../src/lib/products';
 import SectionRenderer from '../../../src/components/SectionRenderer';
 import { getImageManifest } from '../../../src/lib/image-manifest';
 import { buildImageSources } from '../../../src/lib/image-sources';
+import { buildAlternateLinks } from '../../../src/lib/seo/locale';
 
 export const dynamicParams = false;
 
 export async function generateStaticParams(){
   return [ { lang: 'en' }, { lang: 'pt' }, { lang: 'es' } ];
+}
+
+export function generateMetadata({ params }){
+  const lang = getCurrentLocale(params?.lang);
+  const alternates = buildAlternateLinks(lang, ['shop']);
+  return {
+    title: 'Shop – Kapunka',
+    alternates: { canonical: alternates.canonical, languages: alternates.languages },
+  };
 }
 
 function Price({ value }){
