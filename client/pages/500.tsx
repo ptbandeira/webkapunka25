@@ -1,10 +1,6 @@
 import Link from 'next/link';
 
-export const metadata = {
-  title: 'Server error – Kapunka'
-};
-
-export default function ServerErrorPage() {
+export default function Custom500() {
   return (
     <section className="padding-xlarge">
       <div className="container">

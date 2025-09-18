@@ -63,14 +63,16 @@ export async function POST(request: NextRequest) {
 
     const timing = checkTiming(startedAt);
     if (!timing.ok) {
-      log('warn', 'timing-check-failed', timing.message);
-      return buildErrorResponse(400, timing.message);
+      const message = timing.message || 'Form submitted too quickly.';
+      log('warn', 'timing-check-failed', message);
+      return buildErrorResponse(400, message);
     }
 
     const captcha = await verifyCaptcha(captchaToken, ip);
     if (!captcha.ok) {
-      log('warn', 'captcha-failed', captcha.message);
-      return buildErrorResponse(403, captcha.message ?? 'Captcha verification failed.');
+      const message = captcha.message || 'Captcha verification failed.';
+      log('warn', 'captcha-failed', message);
+      return buildErrorResponse(403, message);
     }
 
     log('info', 'submission-received', { ...form, ip: ip || 'unknown' });

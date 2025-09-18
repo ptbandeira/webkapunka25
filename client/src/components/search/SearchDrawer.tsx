@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Fuse from 'fuse.js';
+import type { IFuseOptions } from 'fuse.js';
 
 export type SearchEntry = {
   type: 'product' | 'article';
@@ -25,7 +26,7 @@ type Props = {
 };
 
 const DEFAULT_LOCALE = 'en';
-const FUSE_OPTIONS: Fuse.IFuseOptions<SearchEntry> = {
+const FUSE_OPTIONS: IFuseOptions<SearchEntry> = {
   keys: ['title', 'summary', 'category'],
   threshold: 0.3,
   includeScore: true,

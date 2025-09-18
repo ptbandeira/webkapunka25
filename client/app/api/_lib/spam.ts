@@ -22,9 +22,9 @@ export function getClientIp(req: NextRequest): string | null {
     const [first] = header.split(',');
     if (first) return first.trim();
   }
-  // @ts-expect-error — NextRequest exposes ip in edge/runtime >= 13.2
-  if (typeof req.ip === 'string' && req.ip) {
-    return req.ip;
+  const anyReq = req as any;
+  if (typeof anyReq?.ip === 'string' && anyReq.ip) {
+    return anyReq.ip as string;
   }
   return null;
 }

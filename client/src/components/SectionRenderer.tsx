@@ -102,13 +102,15 @@ export default function SectionRenderer({ sections, lang }: Props) {
           break;
         }
         case 'productGrid': {
-          const all = getProducts();
+          const all = getProducts() || [];
           // Support optional ids (if provided) or fall back to count/source
           const anyS: any = s as any;
-          let items = Array.isArray(anyS.ids) && anyS.ids.length
+          const items = (Array.isArray(anyS.ids) && anyS.ids.length
             ? all.filter(p => anyS.ids.includes(p.slug))
-            : all.slice(0, typeof s.count === 'number' ? s.count : all.length);
-          out.push(<BestSellers key={`pg-${idx}`} items={items} imageManifest={imageManifest} />);
+            : all.slice(0, typeof s.count === 'number' ? s.count : all.length)) as any[];
+          out.push(
+            <BestSellers key={`pg-${idx}`} items={items as any} imageManifest={imageManifest as any} /> as any
+          );
           break;
         }
         case 'faqs': {
