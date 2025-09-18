@@ -12,32 +12,32 @@ import {
 
 const containerStyle = {
   position: 'fixed',
-  bottom: '1.5rem',
+  bottom: '1.25rem',
   left: '50%',
   transform: 'translateX(-50%)',
   zIndex: 1050,
-  maxWidth: '440px',
+  maxWidth: '460px',
   width: 'calc(100% - 2.5rem)',
 };
 
 const cardStyle = {
-  background: '#ffffff',
-  color: '#2d2a26',
-  borderRadius: '18px',
-  padding: '0.85rem 1rem',
-  boxShadow: '0 18px 45px rgba(33, 30, 25, 0.15)',
-  border: '1px solid rgba(33, 30, 25, 0.12)',
+  background: '#fdf8f3',
+  color: '#3a2f24',
+  borderRadius: '20px',
+  padding: '1rem 1.2rem',
+  boxShadow: '0 24px 48px rgba(58, 47, 36, 0.18)',
+  border: '1px solid rgba(58, 47, 36, 0.12)',
   display: 'flex',
   flexWrap: 'wrap',
   alignItems: 'center',
-  gap: '0.65rem 0.75rem',
+  gap: '0.75rem 1rem',
 };
 
 const textStyle = {
-  fontSize: '0.9rem',
+  fontSize: '0.92rem',
   margin: 0,
   flex: '1 1 auto',
-  lineHeight: 1.4,
+  lineHeight: 1.45,
 };
 
 export default function ConsentBanner() {
@@ -76,14 +76,14 @@ export default function ConsentBanner() {
     <div style={containerStyle} role="dialog" aria-live="polite" aria-label="Analytics consent prompt">
       <div style={cardStyle}>
         <p style={textStyle} className="mb-0">
-          We use lightweight analytics to understand what’s working. May we enable them for your visit?
+          We quietly observe anonymous usage to improve Kapunka. Would you allow these analytics today?
         </p>
         <div className="d-flex gap-2 flex-nowrap">
           <button type="button" className="btn btn-primary btn-sm" onClick={accept}>
-            Accept
+            Allow analytics
           </button>
           <button type="button" className="btn btn-outline-secondary btn-sm" onClick={decline}>
-            No thanks
+            Not now
           </button>
         </div>
       </div>
